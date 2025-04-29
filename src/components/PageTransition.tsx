@@ -9,10 +9,14 @@ interface PageTransitionProps {
 export const PageTransition = ({ children }: PageTransitionProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
+      exit={{ opacity: 0, y: -25 }}
+      transition={{ 
+        duration: 0.6, 
+        ease: [0.22, 1, 0.36, 1] 
+      }}
+      className="w-full h-full"
     >
       {children}
     </motion.div>
