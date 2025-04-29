@@ -15,48 +15,79 @@ const NotFound = () => {
     );
   }, [location.pathname]);
 
+  const letterVariants = {
+    hidden: { y: -100, opacity: 0 },
+    visible: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.8,
+        ease: [0.17, 0.67, 0.83, 0.67]
+      }
+    })
+  };
+
+  const errorText = "404";
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <motion.div 
-        className="text-center max-w-md px-4"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.h1 
-          className="text-9xl font-bold text-gradient"
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-        >
-          404
-        </motion.h1>
-        <motion.p 
-          className="text-2xl font-semibold mt-6 mb-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Page Not Found
-        </motion.p>
-        <motion.p 
-          className="text-muted-foreground mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          The page you're looking for doesn't exist or has been moved.
-        </motion.p>
+    <div className="min-h-screen flex items-center justify-center bg-black/90 backdrop-blur-3xl overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/5 bg-[size:60px_60px] opacity-20" />
+      </div>
+      
+      <div className="relative z-10 text-center max-w-md px-6 py-20">
+        <div className="mb-8 flex justify-center">
+          {errorText.split("").map((letter, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={letterVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-[120px] md:text-[180px] font-extrabold text-primary inline-block"
+              style={{ textShadow: '0 0 40px rgba(139, 92, 246, 0.8)' }}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </div>
+        
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="space-y-6"
         >
-          <Button asChild className="bg-primary hover:bg-primary/90 text-white">
-            <Link to="/">Return to Home</Link>
-          </Button>
+          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-vision-blue">
+            Page Not Found
+          </h2>
+          
+          <p className="text-muted-foreground text-lg">
+            The page you're looking for doesn't exist or has been moved.
+          </p>
+          
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button 
+              asChild 
+              className="bg-transparent border border-primary text-primary backdrop-blur-sm hover:bg-primary/20 hover:text-white mt-6 px-8 py-6 text-lg group relative overflow-hidden"
+            >
+              <Link to="/">
+                <span className="relative z-10">Return to Home</span>
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-primary to-vision-blue opacity-0 group-hover:opacity-100"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                />
+              </Link>
+            </Button>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };
