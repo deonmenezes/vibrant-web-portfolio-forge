@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Calendar } from "lucide-react";
+import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
 import {
   Sheet,
   SheetContent,
@@ -12,6 +12,7 @@ import {
 
 const navItems = [
   { name: "Home", path: "/" },
+  { name: "Services", path: "/services" },
   { name: "Portfolio", path: "/portfolio" },
   { name: "About", path: "/about" },
   { name: "Team", path: "/team" },
@@ -31,21 +32,27 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const openWhatsAppBooking = () => {
+    const message = "Hello! I'd like to book a 15-minute free consultation call. Please let me know your available time slots. Thank you!";
+    const phoneNumber = "918104796542";
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
         scrolled
-          ? "py-2 bg-background/90 backdrop-blur-lg shadow-md"
+          ? "py-2 bg-background/90 backdrop-blur-lg shadow-md border-b border-vision-gold/20"
           : "py-4 bg-transparent"
       )}
     >
       <nav className="container flex items-center justify-between">
         <Link
           to="/"
-          className="flex items-center gap-2 text-2xl font-bold text-gradient"
+          className="flex items-center gap-2 font-bold gold-shine"
         >
-          <span className="text-3xl">Team Vision</span>
+          <img src="/vision_logo.png" alt="Team Vision Logo" className="h-10" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -55,9 +62,9 @@ export const Navbar = () => {
               <Link
                 to={item.path}
                 className={cn(
-                  "text-lg font-medium transition-colors hover:text-primary relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                  "text-lg font-medium transition-colors hover:text-vision-gold-light relative animated-underline",
                   location.pathname === item.path
-                    ? "text-primary after:scale-x-100"
+                    ? "text-vision-gold"
                     : "text-muted-foreground"
                 )}
               >
@@ -68,9 +75,15 @@ export const Navbar = () => {
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
-          <Button className="bg-primary hover:bg-primary/90 text-white transition-all duration-300">
-            Get in Touch
-          </Button>
+          <HoverImageEffect isNavbar={true}>
+            <Button 
+              onClick={openWhatsAppBooking}
+              className="gold-gradient hover:gold-glow text-vision-black transition-all duration-300 shadow-lg flex items-center gap-2"
+            >
+              <Calendar className="h-4 w-4" />
+              Book a Free Call
+            </Button>
+          </HoverImageEffect>
         </div>
 
         {/* Mobile Navigation */}
@@ -80,35 +93,44 @@ export const Navbar = () => {
               variant="ghost"
               size="icon"
               className="md:hidden"
-              aria-label="Open Menu"
             >
               <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[300px]">
-            <div className="flex flex-col gap-8 py-8">
-              <div className="text-2xl font-bold text-gradient">Team Vision</div>
-              <ul className="flex flex-col gap-4">
+          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <nav className="flex flex-col h-full">
+              <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b">
+                <img src="/vision_logo.png" alt="Team Vision Logo" className="h-8" />
+              </Link>
+              <div className="flex flex-col gap-3 py-4">
                 {navItems.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      to={item.path}
-                      className={cn(
-                        "text-lg font-medium block py-2 transition-colors",
-                        location.pathname === item.path
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-primary"
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={cn(
+                      "text-lg py-2 px-4 rounded-lg transition-colors",
+                      location.pathname === item.path
+                        ? "bg-vision-gold/20 text-vision-gold font-medium"
+                        : "text-muted-foreground hover:bg-muted"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
                 ))}
-              </ul>
-              <Button className="bg-primary hover:bg-primary/90 text-white">
-                Get in Touch
-              </Button>
-            </div>
+              </div>
+              <div className="mt-auto">
+                <HoverImageEffect>
+                  <Button
+                    onClick={openWhatsAppBooking}
+                    className="gold-gradient hover:gold-glow text-vision-black flex items-center gap-2 justify-center"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    Book a Free Call
+                  </Button>
+                </HoverImageEffect>
+              </div>
+            </nav>
           </SheetContent>
         </Sheet>
       </nav>

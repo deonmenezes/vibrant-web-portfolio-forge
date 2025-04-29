@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -58,7 +57,7 @@ export const ProjectCard = ({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-1 bg-primary/20 text-primary-foreground text-xs font-medium rounded-full"
+                className="px-2 py-1 bg-vision-gold/20 text-vision-gold-light text-xs font-medium rounded-full"
               >
                 {tag}
               </span>
@@ -79,7 +78,7 @@ export const ProjectCard = ({
               isHovered ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             )}
           >
-            <Button asChild className="bg-primary hover:bg-primary/80 text-white">
+            <Button asChild className="gold-gradient hover:gold-glow text-vision-black">
               <Link to={url}>View Project</Link>
             </Button>
           </div>

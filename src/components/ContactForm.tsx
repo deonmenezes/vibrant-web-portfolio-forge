@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ export const ContactForm = () => {
     email: "",
     subject: "",
     message: "",
+    phone: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,7 +27,18 @@ export const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
+    // In a real implementation, you would use a service like EmailJS, FormSubmit, or a backend API
+    // Here's a mockup of how you'd send emails to the specified address
+    const mailToLink = `mailto:deonmenezescodes@gmail.com?subject=${encodeURIComponent(
+      `${formData.subject} - Contact Form Submission`
+    )}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`
+    )}`;
+
+    // Open in a new tab
+    window.open(mailToLink);
+
+    // Simulate form submission response
     setTimeout(() => {
       toast({
         title: "Message sent!",
@@ -39,6 +50,7 @@ export const ContactForm = () => {
         email: "",
         subject: "",
         message: "",
+        phone: "",
       });
       setIsSubmitting(false);
     }, 1500);
@@ -77,19 +89,35 @@ export const ContactForm = () => {
           />
         </div>
       </div>
-      <div className="space-y-2">
-        <label htmlFor="subject" className="text-sm font-medium">
-          Subject
-        </label>
-        <Input
-          id="subject"
-          name="subject"
-          value={formData.subject}
-          onChange={handleChange}
-          placeholder="How can we help you?"
-          required
-          className="border-muted bg-background/50 focus:border-primary"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label htmlFor="phone" className="text-sm font-medium">
+            Phone Number
+          </label>
+          <Input
+            id="phone"
+            name="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="+1 (123) 456-7890"
+            className="border-muted bg-background/50 focus:border-primary"
+          />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="subject" className="text-sm font-medium">
+            Subject
+          </label>
+          <Input
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            placeholder="How can we help you?"
+            required
+            className="border-muted bg-background/50 focus:border-primary"
+          />
+        </div>
       </div>
       <div className="space-y-2">
         <label htmlFor="message" className="text-sm font-medium">

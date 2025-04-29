@@ -1,8 +1,7 @@
-
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { ContactForm } from "@/components/ContactForm";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, MessageSquare } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
 import { motion } from "framer-motion";
 
@@ -11,26 +10,26 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6 text-primary" />,
       title: "Email Us",
-      details: "info@teamvision.com",
+      details: "deonmenezescodes@gmail.com",
       description: "We'll respond within 24 hours",
     },
     {
       icon: <Phone className="h-6 w-6 text-primary" />,
       title: "Call Us",
-      details: "(123) 456-7890",
+      details: "+918104796542",
       description: "Mon-Fri from 9am to 6pm",
     },
     {
       icon: <MapPin className="h-6 w-6 text-primary" />,
       title: "Visit Us",
-      details: "123 Tech Avenue, Silicon Valley, CA 94043",
-      description: "Get directions on Google Maps",
+      details: "Mumbai, India",
+      description: "Get in touch for our exact location",
     },
     {
-      icon: <Clock className="h-6 w-6 text-primary" />,
-      title: "Working Hours",
-      details: "Monday to Friday",
-      description: "9:00 AM - 6:00 PM",
+      icon: <MessageSquare className="h-6 w-6 text-primary" />,
+      title: "WhatsApp",
+      details: "+918104796542",
+      description: "Chat with us anytime",
     },
   ];
 

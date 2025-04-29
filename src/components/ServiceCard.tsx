@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -27,23 +26,23 @@ export const ServiceCard = ({
       whileHover={{ 
         y: -10, 
         transition: { duration: 0.3 },
-        boxShadow: "0 20px 40px rgba(139, 92, 246, 0.15)"
+        boxShadow: "0 20px 40px rgba(245, 158, 11, 0.15)"
       }}
       className={cn(
-        "group relative p-8 rounded-xl bg-black/20 backdrop-blur-sm border-t border-white/10",
+        "group relative p-8 rounded-xl metallic-card",
         "transition-all duration-500",
-        "hover:bg-primary/10",
+        "hover:gold-glow",
         "overflow-hidden"
       )}
     >
       <motion.div 
-        className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 bg-gradient-to-br from-vision-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         initial={{ opacity: 0 }}
         whileHover={{ opacity: 1 }}
       />
       
       <motion.div 
-        className="h-16 w-16 rounded-xl bg-primary/10 flex items-center justify-center mb-8 text-primary relative z-10"
+        className="h-16 w-16 rounded-xl gold-gradient flex items-center justify-center mb-8 text-vision-black relative z-10"
         whileHover={{ 
           scale: 1.1,
           rotate: 5,
@@ -53,14 +52,14 @@ export const ServiceCard = ({
         <motion.div className="text-3xl">{icon}</motion.div>
       </motion.div>
       
-      <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors duration-300 relative z-10">
+      <h3 className="text-2xl font-bold mb-4 group-hover:text-vision-gold transition-colors duration-300 relative z-10">
         {title}
       </h3>
       
       <p className="text-muted-foreground relative z-10">{description}</p>
       
       <motion.div 
-        className="absolute bottom-0 left-0 h-1 bg-primary/70"
+        className="absolute bottom-0 left-0 h-1 gold-gradient"
         initial={{ width: 0 }}
         whileHover={{ width: "100%" }}
         transition={{ duration: 0.5 }}

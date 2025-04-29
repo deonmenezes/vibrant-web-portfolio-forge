@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -55,12 +54,14 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         vision: {
-          purple: "#8B5CF6",
-          "purple-light": "#A78BFA",
-          blue: "#3B82F6",
-          "blue-light": "#60A5FA",
-          dark: "#1E293B",
-          light: "#F8FAFC",
+          gold: "#F59E0B", 
+          "gold-light": "#FBBF24",
+          "gold-dark": "#B78628",
+          "gold-metallic": "#D4AF37",
+          black: "#0A0805",
+          "black-light": "#1A1508",
+          dark: "#121008",
+          "dark-light": "#1B180C",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
