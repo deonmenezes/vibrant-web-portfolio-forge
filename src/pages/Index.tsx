@@ -8,6 +8,49 @@ import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
 import { ProjectCard } from "@/components/ProjectCard";
 import { useRef, useEffect, useState } from "react";
 
+// Add this new component for the animated counter
+const AnimatedCounter = ({ end, duration = 2, suffix = "", className = "" }) => {
+  const [count, setCount] = useState(0);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          let startTime;
+          const step = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+            setCount(Math.floor(progress * end));
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            }
+          };
+          requestAnimationFrame(step);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, [end, duration]);
+
+  return (
+    <span ref={counterRef} className={className}>
+      {count}
+      {suffix}
+    </span>
+  );
+};
+
 const Index = () => {
   // Section refs for scroll animations
   const heroRef = useRef(null);
@@ -61,7 +104,7 @@ const Index = () => {
     {
       title: "Web Development",
       description:
-        "We build responsive, high-performance websites and web applications tailored to your business needs.",
+        "We build responsive, high-performance AI Agents and web applications tailored to your business needs.",
       icon: <Code className="h-8 w-8 text-vision-gold" />,
       link: "/services",
       bgImage: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1000",
@@ -241,12 +284,29 @@ const Index = () => {
                       Digital Innovation Agency
                     </span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                      We build <span className="text-gradient">digital experiences</span> that transform businesses
+                      We build <span className="text-gradient">AI Agents</span> that transform businesses
                     </h1>
-                    <p className="text-xl text-muted-foreground max-w-lg">
-                      Team Vision delivers cutting-edge web solutions, mobile apps, and digital
-                      strategies that drive growth and innovation.
-                    </p>
+                    <div className="flex flex-col space-y-2 text-xl text-muted-foreground max-w-lg">
+                      <p className="font-medium">
+                        Increase productivity by <AnimatedCounter 
+                          end={100} 
+                          suffix="%" 
+                          className="text-vision-gold font-bold" 
+                        /> through AI integration
+                      </p>
+                      <p className="font-medium">
+                        Boost sales by <AnimatedCounter 
+                          end={100} 
+                          suffix="%" 
+                          className="text-vision-gold font-bold"
+                          duration={1.5} 
+                        /> with our solutions
+                      </p>
+                      <p>
+                        Team Vision delivers cutting-edge web solutions, mobile apps, and digital
+                        strategies that drive growth and innovation.
+                      </p>
+                    </div>
                   </motion.div>
 
                   <motion.div 
