@@ -37,7 +37,7 @@ const Portfolio = () => {
     {
       title: "InnerMech",
       description: "Client portal for a mechanical engineering firm featuring project tracking, document management, and communication tools for better client relationships.",
-      image: "https://images.unsplash.com/photo-1581094794329-c8112c4e25d6?auto=format&fit=crop&q=80&w=1000",
+      image: "/inermech.png",
       tags: ["B2B", "React", "TypeScript"],
       category: "web",
       url: "https://clientinermech.vercel.app/",
@@ -48,7 +48,7 @@ const Portfolio = () => {
       image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1000",
       tags: ["Social Media", "NextJS", "Tailwind"],
       category: "web",
-      url: "https://vercel.com/deonmenezes-projects/instagram-clone",
+      url: "https://instagram-internship.vercel.app/Login",
     },
     {
       title: "GlobeOx",

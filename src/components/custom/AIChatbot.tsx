@@ -23,6 +23,7 @@ export const AIChatbot = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
 
   // Function to send message to Gemini API
   const sendMessage = async (userMessage: string) => {
@@ -76,10 +77,29 @@ export const AIChatbot = () => {
     }
   };
 
+  // Close chatbot when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (chatRef.current && !chatRef.current.contains(event.target as Node) && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   // Auto-scroll to bottom of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Close the chatbot
+  const closeChat = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -94,7 +114,10 @@ export const AIChatbot = () => {
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-[350px] h-[500px] bg-card border border-border rounded-lg shadow-xl flex flex-col z-50">
+        <div 
+          ref={chatRef}
+          className="fixed bottom-24 right-6 w-[350px] h-[500px] bg-card border border-border rounded-lg shadow-xl flex flex-col z-50"
+        >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center space-x-2">
@@ -102,7 +125,7 @@ export const AIChatbot = () => {
               <h3 className="font-semibold">Team Vision Assistant (AI)</h3>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={closeChat}
               className="text-muted-foreground hover:text-foreground"
               aria-label="Close chat"
             >
@@ -163,6 +186,18 @@ export const AIChatbot = () => {
                 className="bg-primary hover:bg-primary/90"
               >
                 <Send className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Close button at the bottom */}
+            <div className="mt-2 flex justify-center">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={closeChat} 
+                className="w-full text-muted-foreground"
+              >
+                Close Chat
               </Button>
             </div>
           </form>
