@@ -137,7 +137,7 @@ const Contact = () => {
             <div className="max-w-3xl mx-auto space-y-6">
               {[
                 {
-                  q: "What services does Team Vision offer?",
+                  q: "What services does Virelity.com offer?",
                   a: "We offer a comprehensive range of digital services including web development, mobile app development, UI/UX design, branding, and digital strategy consulting.",
                 },
                 {

@@ -303,7 +303,7 @@ const Index = () => {
                         /> with our solutions
                       </p>
                       <p>
-                        Team Vision delivers cutting-edge web solutions, mobile apps, and digital
+                        Virelity.com delivers cutting-edge web solutions, mobile apps, and digital
                         strategies that drive growth and innovation.
                       </p>
                     </div>
@@ -339,7 +339,7 @@ const Index = () => {
                   <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 animate-floating">
                     <img
                       src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1000"
-                      alt="Team Vision Workspace"
+                      alt="Virelity.com Workspace"
                       className="w-full h-auto"
                     />
                   </div>

@@ -1,4 +1,3 @@
-
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { ServiceCard } from "@/components/ServiceCard";
@@ -112,9 +111,9 @@ const About = () => {
                   className="relative z-10 rounded-2xl overflow-hidden shadow-xl"
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000"
-                    alt="Team Vision Office"
-                    className="w-full h-auto"
+                    src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    alt="Virelity.com Office"
+                    className="w-full h-auto rounded-lg shadow-lg"
                   />
                 </motion.div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[80%] max-h-[80%] rounded-full bg-primary/20 blur-3xl -z-10" />
@@ -129,7 +128,7 @@ const About = () => {
               >
                 <h2 className="text-3xl font-bold">Who We Are</h2>
                 <p className="text-muted-foreground">
-                  Founded in 2018, Team Vision has been at the forefront of digital innovation, helping businesses transform their online presence and leverage technology to achieve their goals.
+                  Founded in 2018, Virelity.com has been at the forefront of digital innovation, helping businesses transform their online presence and leverage technology to achieve their goals.
                 </p>
                 <p className="text-muted-foreground">
                   Our team of expert designers, developers, and strategists combines creativity with technical expertise to deliver solutions that not only look great but perform exceptionally well.

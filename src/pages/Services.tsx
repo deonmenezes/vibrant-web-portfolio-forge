@@ -319,7 +319,7 @@ const Services = () => {
                     </div>
                   </div>
                   <div className="absolute top-4 right-4 bg-black/70 text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-sm">
-                    <img src="/vision_logo.png" alt="Team Vision" className="h-5 w-auto" />
+                    <img src="/virelity_logo_transparent.png" alt="Virelity.com" className="h-5 w-auto" />
                   </div>
                 </motion.div>
               ))}

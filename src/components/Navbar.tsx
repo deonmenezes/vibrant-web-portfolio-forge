@@ -52,7 +52,7 @@ export const Navbar = () => {
           to="/"
           className="flex items-center gap-2 font-bold gold-shine"
         >
-          <img src="/vision_logo.png" alt="Team Vision Logo" className="h-10" />
+          <img src="/virelity_logo_transparent.png" alt="Virelity.com Logo" className="h-12" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -101,7 +101,7 @@ export const Navbar = () => {
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <nav className="flex flex-col h-full">
               <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b">
-                <img src="/vision_logo.png" alt="Team Vision Logo" className="h-8" />
+                <img src="/virelity_logo_transparent.png" alt="Virelity.com Logo" className="h-6" />
               </Link>
               <div className="flex flex-col gap-3 py-4">
                 {navItems.map((item) => (

@@ -38,7 +38,7 @@ export const AIChatbot = () => {
       
       // Add context about the website/company to guide responses
       const promptContext = `
-        You are an AI assistant for a web development and digital services company called Team Vision.
+        You are an AI assistant for a web development and digital services company called Virelity.com.
         We provide services like web development, mobile app development, UI/UX design, and digital marketing.
         We're located in Mumbai, India.
         Our contact email is deonmenezescodes@gmail.com and phone number is +918104796542.
@@ -122,7 +122,7 @@ export const AIChatbot = () => {
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center space-x-2">
               <MessageSquare className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Team Vision Assistant (AI)</h3>
+              <h3 className="font-semibold">Virelity.com Assistant (AI)</h3>
             </div>
             <button
               onClick={closeChat}

@@ -16,7 +16,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <div className="mb-4">
-              <img src="/vision_logo.png" alt="Team Vision Logo" className="h-12 mb-2" />
+              <img src="/virelity_logo_transparent.png" alt="Virelity.com Logo" className="h-12 mb-2" />
             </div>
             <p className="text-gray-300 mb-6">
               Creating innovative digital experiences that transform businesses and delight users.
@@ -112,7 +112,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">&copy; 2025 Team Vision. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">&copy; 2025 Virelity.com. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#privacy" className="text-gray-400 hover:text-primary text-sm transition-colors duration-300">Privacy Policy</a>
             <a href="#terms" className="text-gray-400 hover:text-primary text-sm transition-colors duration-300">Terms & Conditions</a>
