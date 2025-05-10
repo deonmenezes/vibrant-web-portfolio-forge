@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Calendar, Code, Palette, Zap, BarChart3, MousePointerClick, ChevronDown, ArrowDown } from "lucide-react";
 import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
 import { ProjectCard } from "@/components/ProjectCard";
+import { SEOBreadcrumbs } from "@/components/SEOBreadcrumbs";
 import { useRef, useEffect, useState } from "react";
 
 // Add this new component for the animated counter
@@ -226,6 +227,7 @@ const Index = () => {
         ease: [0.17, 0.67, 0.83, 0.67] 
       }}
     >
+      <SEOBreadcrumbs title="Home" />
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
