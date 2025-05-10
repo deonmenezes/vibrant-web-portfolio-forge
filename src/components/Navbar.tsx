@@ -90,7 +90,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
     "@type": "Organization",
     "name": "Virelity.com",
     "url": "https://virelity.com",
-    "logo": "https://virelity.com/virelity_logo_transparent.png",
+    "logo": "https://virelity.com/favicon.png",
     "description": "We build AI Agents that transform businesses",
     "address": {
       "@type": "PostalAddress",
@@ -164,7 +164,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
             className="flex items-center gap-2 font-bold gold-shine"
             aria-label="Virelity.com Homepage"
           >
-            <img src="/virelity_logo_transparent.png" alt="Virelity.com Logo" className="h-12" width="48" height="48" />
+            {/* Mobile view: Show favicon only */}
+            <img src="/virelity_favicon.png" alt="Virelity.com Logo" className="h-12 md:hidden" width="48" height="48" />
+            
+            {/* Desktop view: Show full navbar logo */}
+            <img src="/vireality_navbar.png" alt="Virelity.com Logo" className="hidden md:block h-10" width="auto" height="40" />
           </Link>
 
           {/* Desktop Navigation */}
