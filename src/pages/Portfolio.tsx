@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 
 const Portfolio = () => {
   const [filter, setFilter] = useState("all");
-  
+
   const projects = [
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes on any topic. Helps users learn efficiently with adaptive question paths and instant feedback.",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
+      image: "/quizitt.png",
       tags: ["AI", "EdTech", "React"],
       category: "web",
       url: "https://quizitt.com",
@@ -58,11 +58,26 @@ const Portfolio = () => {
       category: "web",
       url: "https://globeox-navinsir.vercel.app/",
     },
+    {
+      title: "Quizitt Mobile",
+      description: "Mobile version of Quizitt app built with React Native for seamless quiz experience on phones.",
+      image: "/quizit.png",
+      tags: ["Mobile", "React Native", "Health"],
+      category: "mobile",
+      url: "https://quizitt.com",
+    },
+    {
+      title: "Suraj Jamani - Personal Brand Development",
+      description: "Virelity helped shape Suraj Jamani's digital identity through creative strategy, content planning, and impactful storytelling across platforms like LinkedIn and Instagram.",
+      image: "/vision_logo.png",
+      tags: ["Branding", "Personal Brand", "Storytelling"],
+      category: "branding",
+      url: "/suraj-branding.pdf",
+    },
   ];
 
-  const filteredProjects = filter === "all" 
-    ? projects 
-    : projects.filter(project => project.category === filter);
+  const filteredProjects =
+    filter === "all" ? projects : projects.filter((project) => project.category === filter);
 
   return (
     <PageTransition>
@@ -94,8 +109,8 @@ const Portfolio = () => {
                   variant={filter === category ? "default" : "outline"}
                   onClick={() => setFilter(category)}
                   className={cn(
-                    filter === category 
-                      ? "bg-primary text-white" 
+                    filter === category
+                      ? "bg-primary text-white"
                       : "border-muted-foreground/30 text-muted-foreground hover:border-primary hover:text-primary"
                   )}
                 >
@@ -104,19 +119,49 @@ const Portfolio = () => {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  title={project.title}
-                  description={project.description}
-                  image={project.image}
-                  tags={project.tags}
-                  url={project.url}
-                  index={index}
-                />
-              ))}
-            </div>
+            {/* Conditional Rendering */}
+            {filter === "branding" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="group border border-muted-foreground/10 rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src="/vision_logo.png"
+                      alt="Suraj Jamani"
+                      className="w-full h-full object-contain bg-white p-4"
+                    />
+                  </div>
+                  <div className="p-6 flex flex-col gap-3">
+                    <h3 className="text-xl font-semibold">Suraj Jamani — Personal Brand</h3>
+                    <p className="text-muted-foreground text-sm">
+                      From digital presence to content strategy, Virelity built a personal brand for Suraj Jamani that connects and grows.
+                    </p>
+                    <a
+                      href="/suraj-branding.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-2 text-sm font-medium text-primary hover:underline"
+                    >
+                      View Case Study →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ) : (
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProjects.map((project, index) => (
+                  <ProjectCard
+                    key={project.title}
+                    title={project.title}
+                    description={project.description}
+                    image={project.image}
+                    tags={project.tags}
+                    url={project.url}
+                    index={index}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -124,9 +169,7 @@ const Portfolio = () => {
         <section className="py-20 bg-muted/30 mt-20">
           <div className="container">
             <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-6">
-                Have a project in mind?
-              </h2>
+              <h2 className="text-3xl font-bold mb-6">Have a project in mind?</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Let's discuss how we can help you achieve your goals with our expertise in digital solutions.
               </p>
