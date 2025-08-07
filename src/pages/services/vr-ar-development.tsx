@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import {
@@ -18,6 +18,10 @@ import {
 } from 'lucide-react';
 
 const VRARDevelopmentService = () => {
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, []);
     const features = [
         {
             icon: Eye,

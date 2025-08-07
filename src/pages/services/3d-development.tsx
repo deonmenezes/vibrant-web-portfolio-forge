@@ -193,6 +193,10 @@ const Interactive3DBackground = () => {
 };
 
 const ThreeDDevelopmentService = () => {
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, []);
     const features = [
         {
             icon: Eye,

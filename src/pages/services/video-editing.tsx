@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import {
@@ -18,6 +18,10 @@ import {
 } from 'lucide-react';
 
 const VideoEditingService = () => {
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, []);
     const features = [
         {
             icon: Video,
@@ -189,16 +193,6 @@ const VideoEditingService = () => {
 
     return (
         <div className="min-h-screen bg-background relative overflow-hidden">
-            {/* Background Video */}
-            <video
-                className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-30"
-                src="/videos/video-edit.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                poster="/virelity_navbar.png"
-            />
             {/* Navbar */}
             <Navbar 
                 title="Video Editing Services - Virelity.com"
@@ -206,10 +200,20 @@ const VideoEditingService = () => {
             />
             
             {/* Hero Section */}
-            <section className="pt-32 pb-20 bg-gradient-to-br from-orange-600/10 to-red-600/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-                <div className="container relative z-10">
-                    <div className="max-w-4xl mx-auto text-center">
+            <section className="h-screen min-h-[500px] bg-gradient-to-br from-orange-600/10 to-red-600/10 relative overflow-hidden flex items-center justify-center">
+                {/* Background Video only in hero */}
+                <video
+                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-30"
+                    src="/videos/video-edit.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster="/virelity_navbar.png"
+                />
+                <div className="absolute inset-0 bg-grid-pattern opacity-5 z-10" />
+                <div className="container relative z-20 flex flex-col items-center justify-center h-full">
+                    <div className="max-w-4xl mx-auto text-center w-full">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
