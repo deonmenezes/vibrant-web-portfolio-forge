@@ -107,7 +107,7 @@ const Index = () => {
       description:
         "We build responsive, high-performance AI Agents and web applications tailored to your business needs.",
       icon: <Code className="h-8 w-8 text-vision-gold" />,
-      link: "/services",
+      link: "/services/web-development",
       bgImage: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1000",
     },
     {
@@ -115,7 +115,7 @@ const Index = () => {
       description:
         "Native and cross-platform mobile applications designed for seamless user experiences.",
       icon: <Zap className="h-8 w-8 text-vision-gold" />,
-      link: "/services",
+      link: "/services/mobile-apps",
       bgImage: "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=1000",
     },
     {
@@ -123,7 +123,7 @@ const Index = () => {
       description:
         "Human-centered design solutions that create engaging and intuitive digital experiences.",
       icon: <Palette className="h-8 w-8 text-vision-gold" />,
-      link: "/services",
+      link: "/services/ui-ux-design",
       bgImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=1000",
     },
     {
@@ -131,7 +131,7 @@ const Index = () => {
       description:
         "Implement cutting-edge AI and machine learning solutions to solve complex business problems.",
       icon: <BarChart3 className="h-8 w-8 text-vision-gold" />,
-      link: "/services",
+      link: "/services/ai-solutions",
       bgImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000",
     },
   ];
@@ -140,7 +140,7 @@ const Index = () => {
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes on any topic. Helps users learn efficiently with adaptive question paths.",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
+      image: "/quizitt.png",
       tags: ["AI", "EdTech", "React"],
       url: "https://quizitt.com",
     },
@@ -195,7 +195,7 @@ const Index = () => {
           <h3 className="text-xl font-semibold mb-2">{title}</h3>
           <p className="text-muted-foreground flex-grow mb-4">{description}</p>
           <Link
-            to="/services"
+            to={services[index].link}
             className="text-vision-gold font-medium hover:text-vision-gold-light transition-colors inline-flex items-center"
           >
             Learn more
@@ -339,11 +339,17 @@ const Index = () => {
                   className="relative"
                 >
                   <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 animate-floating">
-                    <img
-                      src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1000"
-                      alt="Virelity.com Workspace"
-                      className="w-full h-auto"
-                    />
+                    <video
+                      src="/videos/homepage.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full min-h-[320px] md:min-h-[420px] lg:min-h-[480px] xl:min-h-[520px] object-cover aspect-video"
+                      poster="/virelity_navbar.png"
+                    >
+                      Sorry, your browser does not support embedded videos.
+                    </video>
                   </div>
                   <div className="absolute -top-8 -right-8 w-40 h-40 bg-primary/30 rounded-full blur-3xl" />
                   <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-vision-blue/30 rounded-full blur-3xl" />
