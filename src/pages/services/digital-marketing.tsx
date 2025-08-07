@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import {
@@ -18,6 +18,10 @@ import {
 } from 'lucide-react';
 
 const DigitalMarketingService = () => {
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, []);
     const features = [
         {
             icon: TrendingUp,
@@ -187,18 +191,32 @@ const DigitalMarketingService = () => {
         }
     ];
 
+    // Lenis smooth scroll integration
+    const lenisRef = useRef(null);
+    useEffect(() => {
+        import('lenis').then(({ default: Lenis }) => {
+            if (!lenisRef.current) {
+                lenisRef.current = new Lenis({
+                    smooth: true,
+                    lerp: 0.08,
+                });
+                function raf(time) {
+                    lenisRef.current.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }
+        });
+        return () => {
+            if (lenisRef.current) {
+                lenisRef.current.destroy();
+                lenisRef.current = null;
+            }
+        };
+    }, []);
+
     return (
         <div className="min-h-screen bg-background relative overflow-hidden">
-            {/* Background Video */}
-            <video
-                className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-30"
-                src="/videos/digital-market.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                poster="/virelity_navbar.png"
-            />
             {/* Navbar */}
             <Navbar 
                 title="Digital Marketing Services - Virelity.com"
@@ -206,10 +224,20 @@ const DigitalMarketingService = () => {
             />
             
             {/* Hero Section */}
-            <section className="pt-32 pb-20 bg-gradient-to-br from-green-600/10 to-emerald-600/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-                <div className="container relative z-10">
-                    <div className="max-w-4xl mx-auto text-center">
+            <section className="h-screen min-h-[500px] bg-gradient-to-br from-green-600/10 to-emerald-600/10 relative overflow-hidden flex items-center justify-center">
+                {/* Background Video only in hero */}
+                <video
+                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-30"
+                    src="/videos/digital-market.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster="/virelity_navbar.png"
+                />
+                <div className="absolute inset-0 bg-grid-pattern opacity-5 z-10" />
+                <div className="container relative z-20 flex flex-col items-center justify-center h-full">
+                    <div className="max-w-4xl mx-auto text-center w-full">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}

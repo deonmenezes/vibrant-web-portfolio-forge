@@ -111,10 +111,19 @@ const Contact = () => {
                     <div className="text-center p-8">
                       <h3 className="text-xl font-semibold mb-2">Find Us On The Map</h3>
                       <p className="text-muted-foreground mb-4">
-                        123 Tech Avenue, Silicon Valley, CA 94043
+                        Piramal Revanta Tower 2 - Rohin, Piramal Revanta, Moti Nagar, Mulund Colony, Mulund West, Mumbai, Maharashtra 400080
                       </p>
-                      <div className="w-full h-[300px] bg-muted-foreground/20 rounded-lg flex items-center justify-center">
-                        <span className="text-muted-foreground">Map placeholder</span>
+                      <div className="w-full h-[300px] bg-muted-foreground/20 rounded-lg overflow-hidden">
+                        <iframe
+                          title="Virelity Mumbai Location"
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0 }}
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          src="https://www.google.com/maps/embed/v1/place?q=Piramal%20Revanta%20Tower%202%20-%20Rohin%2C%20Piramal%20Revanta%2C%20Moti%20Nagar%2C%20Mulund%20Colony%2C%20Mulund%20West%2C%20Mumbai%2C%20Maharashtra%20400080&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+                        ></iframe>
                       </div>
                     </div>
                   </div>
