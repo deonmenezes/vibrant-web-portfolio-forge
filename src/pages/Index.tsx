@@ -102,48 +102,36 @@ function ServiceCard({ title, description, icon, index, bgImage, link }) {
   );
 }
 
-// 3. Interactive Testimonials Component
+// 3. Static Testimonials Component (UPDATED)
 const testimonialsData = [
     {
       img: "https://randomuser.me/api/portraits/women/44.jpg",
       name: "Sarah K.",
       role: "UX Designer @Brello",
       text: "I was looking for a way to streamline my design process and the Anima's Landing Page UI Kit was a lifesaver! The intuitive design and ease of customisation have saved me hours of time and effort. Highly recommend!",
-      initial: 5,
+      rating: 5, // Using 'rating' for clarity
     },
     {
       img: "https://randomuser.me/api/portraits/men/32.jpg",
       name: "Michael L.",
       role: "Creative Director @Yo",
       text: "The Landing Page UI Kit has been a game changer for my agency. The pre-designed components and templates have helped us deliver projects faster and with more consistency. Great job!",
-      initial: 4,
+      rating: 5,
     },
     {
       img: "https://randomuser.me/api/portraits/men/44.jpg",
       name: "Lauren M.",
       role: "UI Designer @Boo",
       text: "Anima's Landing Page UI Kit has become a staple in my design toolkit. Whether I'm working on a new project or need to make updates to an existing one, this kit has everything I need to get the job done quickly and efficiently.",
-      initial: 5,
+      rating: 5,
     },
 ];
 
 function Testimonials() {
-  const [ratings, setRatings] = useState(testimonialsData.map(t => t.initial));
-  const [hovered, setHovered] = useState([-1, -1, -1]);
-
-  const handleStar = (idx, star) => {
-    setRatings(ratings.map((r, i) => (i === idx ? star : r)));
-  };
-  const handleHover = (idx, star) => {
-    setHovered(hovered.map((h, i) => (i === idx ? star : h)));
-  };
-  const handleLeave = idx => {
-    setHovered(hovered.map((h, i) => (i === idx ? -1 : h)));
-  };
-
+  // All state and handlers have been removed for a static display.
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {testimonialsData.map((t, idx) => (
+      {testimonialsData.map((t) => (
         <div
           key={t.name}
           className="bg-[#18181b] rounded-3xl shadow-lg p-8 flex flex-col items-center text-center border border-white/10"
@@ -154,18 +142,12 @@ function Testimonials() {
           <p className="text-gray-200 mb-6">"{t.text}"</p>
           <div className="flex justify-center mb-2">
             {[...Array(5)].map((_, starIdx) => (
-              <button
-                key={starIdx}
-                type="button"
-                aria-label={`Rate ${starIdx + 1} star${starIdx > 0 ? 's' : ''}`}
-                onClick={() => handleStar(idx, starIdx + 1)}
-                onMouseEnter={() => handleHover(idx, starIdx + 1)}
-                onMouseLeave={() => handleLeave(idx)}
-                className="focus:outline-none"
-              >
+              // The <button> is replaced with a non-interactive <span>.
+              // The className logic is simplified to check if the star's index is less than the rating.
+              <span key={starIdx}>
                 <svg
-                  className={`w-7 h-7 transition-colors duration-150 ${
-                    (hovered[idx] !== -1 ? starIdx < hovered[idx] : starIdx < ratings[idx])
+                  className={`w-7 h-7 ${
+                    starIdx < t.rating
                       ? 'text-vision-gold'
                       : 'text-gray-600'
                   }`}
@@ -174,7 +156,7 @@ function Testimonials() {
                 >
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z" />
                 </svg>
-              </button>
+              </span>
             ))}
           </div>
         </div>
@@ -182,6 +164,7 @@ function Testimonials() {
     </div>
   );
 }
+
 
 // --- MAIN PAGE COMPONENT ---
 
@@ -470,7 +453,7 @@ const Index = () => {
             <div className="container">
               <div className="text-center max-w-2xl mx-auto mb-16">
                  {/* ... section content ... */}
-                 <motion.h2
+                <motion.h2
                   {...sharedAnimationProps}
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="text-3xl md:text-4xl font-bold mb-4"
@@ -490,7 +473,7 @@ const Index = () => {
             </div>
           </motion.section>
           
-          {/* Testimonials Section - NOW USING THE DYNAMIC COMPONENT */}
+          {/* Testimonials Section - NOW USING THE STATIC COMPONENT */}
           <section className="py-20 bg-vision-dark">
             <div className="container">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">What Our Clients Say</h2>
