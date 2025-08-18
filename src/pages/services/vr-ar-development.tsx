@@ -20,7 +20,12 @@ import {
 const VRARDevelopmentService = () => {
     // Scroll to top on mount
     useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        const lenis = (window as any).lenis;
+        if (lenis && typeof lenis.scrollTo === 'function') {
+            lenis.scrollTo(0, { immediate: true });
+        } else {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
     }, []);
     const features = [
         {
@@ -203,24 +208,18 @@ const VRARDevelopmentService = () => {
             />
             
             {/* Hero Section */}
-            <section className="pt-32 pb-20 bg-gradient-to-br from-purple-600/10 to-pink-600/10 relative overflow-hidden">
-                {/* Video Background - Only in Hero Section */}
-                <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-                    <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-contain opacity-30"
-                        style={{ filter: 'brightness(0.3) contrast(1.2)' }}
-                    >
-                        <source src="/videos/vr-bg.MP4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10" />
-                </div>
-                <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-                <div className="container relative z-10">
+            <section className="h-screen min-h-[500px] bg-gradient-to-br from-purple-600/10 to-pink-600/10 relative overflow-hidden flex items-center justify-center">
+                {/* Background Video only in hero */}
+                <video
+                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-30"
+                    src="/videos/vr-bg.MP4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                />
+                <div className="absolute inset-0 bg-grid-pattern opacity-5 z-10" />
+                <div className="container relative z-20 flex flex-col items-center justify-center h-full">
                     <div className="max-w-4xl mx-auto text-center">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
@@ -253,7 +252,57 @@ const VRARDevelopmentService = () => {
                 </div>
             </section>
 
-            {/* Features Section */}
+
+            {/* Portfolio Section - moved up */}
+            <section className="py-20 bg-muted/30">
+                <div className="container">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">VR/AR Projects We've Built</h2>
+                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                            Explore our portfolio of immersive experiences across different industries.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {portfolio.map((project, index) => (
+                            <motion.div
+                                key={project.title}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="group relative overflow-hidden rounded-xl bg-card border border-border hover:border-purple-400/30 hover:shadow-lg transition-all duration-300"
+                            >
+                                <div className="aspect-video overflow-hidden relative">
+                                    <video
+                                        src={project.video}
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                    <div className="absolute top-4 left-4">
+                                        <span className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-lg font-bold shadow ${project.iconBg}`}>{project.icon}</span>
+                                    </div>
+                                </div>
+                                <div className="p-6 absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+                                    <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">{project.title}</h3>
+                                    <p className="text-white/90 mb-4 drop-shadow-lg">{project.description}</p>
+                                                                        <a href="#" className="learn-more-btn">
+                                                                            <span>Learn more</span>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                                            </svg>
+                                                                        </a>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Features Section - moved down */}
             <section className="py-20">
                 <div className="container">
                     <div className="text-center mb-16">

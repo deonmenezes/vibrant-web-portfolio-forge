@@ -34,7 +34,7 @@ export const AIChatbot = () => {
       setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
       
       // Generate content with Gemini
-      const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
       
       // Add context about the website/company to guide responses
       const promptContext = `

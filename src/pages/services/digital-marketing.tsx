@@ -20,7 +20,12 @@ import {
 const DigitalMarketingService = () => {
     // Scroll to top on mount
     useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        const lenis = (window as any).lenis;
+        if (lenis && typeof lenis.scrollTo === 'function') {
+            lenis.scrollTo(0, { immediate: true });
+        } else {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
     }, []);
     const features = [
         {
@@ -197,7 +202,7 @@ const DigitalMarketingService = () => {
         import('lenis').then(({ default: Lenis }) => {
             if (!lenisRef.current) {
                 lenisRef.current = new Lenis({
-                    smooth: true,
+                    // smooth: true, // Removed invalid property
                     lerp: 0.08,
                 });
                 function raf(time) {
