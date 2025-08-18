@@ -1,3 +1,43 @@
+/* Learn More Button Animation */
+.learn-more-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.learn-more-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: #c84747;
+  transition: width 0.3s ease-out;
+}
+
+.learn-more-btn:hover::after {
+  width: 100%;
+}
+
+.learn-more-btn svg {
+  transition: transform 0.2s, color 0.2s;
+  color: hsl(var(--muted-foreground));
+}
+
+.learn-more-btn:hover svg {
+  transform: translateX(4px);
+  color: #c84747;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

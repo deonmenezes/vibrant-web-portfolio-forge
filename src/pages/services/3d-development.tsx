@@ -380,9 +380,11 @@ const ThreeDDevelopmentService = () => {
             {/* Content Overlay */}
             <div className="relative z-10">
                 {/* Hero Section */}
-                <section className="pt-32 pb-20 bg-gradient-to-br from-purple-600/10 to-pink-600/10 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-                    <div className="container relative z-10">
+                <section className="h-screen min-h-[500px] bg-gradient-to-br from-purple-600/10 to-pink-600/10 relative overflow-hidden flex items-center justify-center">
+                    {/* Background Video only in hero */}
+                   
+                    <div className="absolute inset-0 bg-grid-pattern opacity-5 z-10" />
+                    <div className="container relative z-20 flex flex-col items-center justify-center h-full">
                         <div className="max-w-4xl mx-auto text-center">
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}

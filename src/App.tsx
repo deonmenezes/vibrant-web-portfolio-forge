@@ -19,6 +19,7 @@ import DesignServices from "./pages/services/design-services";
 import DigitalMarketing from "./pages/services/digital-marketing";
 import MobileApps from "./pages/services/mobile-apps";
 import UIUXDesign from "./pages/services/ui-ux-design";
+import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
 
@@ -29,6 +30,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+  {/* Global Lenis smooth scroll */}
+  <LenisSmoothScroll />
       <BrowserRouter>
         <AnimatePresence mode="wait">
           <Routes>

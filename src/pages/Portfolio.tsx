@@ -125,7 +125,7 @@ const Portfolio = () => {
                 <div className="group border border-muted-foreground/10 rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
                   <div className="h-48 overflow-hidden">
                     <img
-                      src="/vision_logo.png"
+                      src="/virelity_logo_transparent.png"
                       alt="Suraj Jamani"
                       className="w-full h-full object-contain bg-white p-4"
                     />

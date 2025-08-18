@@ -111,9 +111,9 @@ const About = () => {
                   className="relative z-10 rounded-2xl overflow-hidden shadow-xl"
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    src="/office.png"
                     alt="Virelity.com Office"
-                    className="w-full h-auto rounded-lg shadow-lg"
+                    className="w-full max-h-[420px] object-cover rounded-lg shadow-lg"
                   />
                 </motion.div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[80%] max-h-[80%] rounded-full bg-primary/20 blur-3xl -z-10" />

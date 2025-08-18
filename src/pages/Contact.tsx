@@ -57,23 +57,59 @@ const Contact = () => {
         <section className="py-12">
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {contactInfo.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
-                >
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="font-medium mb-1">{item.details}</p>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                </motion.div>
-              ))}
+              {contactInfo.map((item, index) => {
+                // Determine link and click behavior for each card
+                let cardProps = {};
+                if (item.title === "Email Us") {
+                  cardProps = {
+                    as: 'a',
+                    href: `https://mail.google.com/mail/?view=cm&fs=1&to=${item.details}`,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    style: { cursor: 'pointer', textDecoration: 'none' },
+                  };
+                } else if (item.title === "Call Us") {
+                  cardProps = {
+                    as: 'a',
+                    href: `tel:${item.details.replace(/\s+/g, '')}`,
+                    style: { cursor: 'pointer', textDecoration: 'none' },
+                  };
+                } else if (item.title === "Visit Us") {
+                  cardProps = {
+                    as: 'a',
+                    href: 'https://maps.app.goo.gl/wHLjQ1UsfPixzmSPA',
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    style: { cursor: 'pointer', textDecoration: 'none' },
+                  };
+                } else if (item.title === "WhatsApp") {
+                  cardProps = {
+                    as: 'a',
+                    href: `https://wa.me/${item.details.replace(/\D/g, '')}`,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    style: { cursor: 'pointer', textDecoration: 'none' },
+                  };
+                }
+                return (
+                  <motion.a
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 block"
+                    {...cardProps}
+                  >
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                    <p className="font-medium mb-1">{item.details}</p>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                  </motion.a>
+                );
+              })}
             </div>
           </div>
         </section>

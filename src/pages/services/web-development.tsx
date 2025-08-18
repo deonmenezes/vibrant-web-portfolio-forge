@@ -20,7 +20,13 @@ import {
 const WebDevelopmentService = () => {
     // Scroll to top on mount
     useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        // Use Lenis if available, else fallback
+        const lenis = (window as any).lenis;
+        if (lenis && typeof lenis.scrollTo === 'function') {
+            lenis.scrollTo(0, { immediate: true });
+        } else {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
     }, []);
     const features = [
         {

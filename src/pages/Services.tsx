@@ -94,51 +94,57 @@ const Services = () => {
 
   const ServiceCard = ({ title, description, icon, index, bgImage, link }) => {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        viewport={{ once: true }}
-        className="bg-card border border-border rounded-xl p-6 hover:border-vision-gold/30 hover:shadow-lg transition-all duration-300 flex flex-col h-full overflow-hidden group relative"
-        style={{ minHeight: "320px" }}
+      <Link
+        to={link}
+        className="block h-full"
+        tabIndex={0}
+        style={{ textDecoration: 'none' }}
       >
-        {/* Background image with overlay */}
-        <div className="absolute inset-0 w-full h-full">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-background/80 to-background z-10 group-hover:opacity-60 transition-opacity duration-500" />
-          <img
-            src={bgImage}
-            alt={title}
-            className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-20">
-          <div className="bg-vision-gold/10 backdrop-blur-sm p-3 rounded-lg w-fit mb-4 group-hover:bg-vision-gold/20 transition-all duration-300">
-            {icon}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={{ once: true }}
+          className="bg-card border border-border rounded-xl p-6 hover:border-vision-gold/30 hover:shadow-lg transition-all duration-300 flex flex-col h-full overflow-hidden group relative cursor-pointer focus:ring-2 focus:ring-vision-gold"
+          style={{ minHeight: "320px" }}
+        >
+          {/* Background image with overlay */}
+          <div className="absolute inset-0 w-full h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-background/80 to-background z-10 group-hover:opacity-60 transition-opacity duration-500" />
+            <img
+              src={bgImage}
+              alt={title}
+              className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
+            />
           </div>
-          <h3 className="text-xl font-semibold mb-2">{title}</h3>
-          <p className="text-muted-foreground flex-grow mb-4">{description}</p>
-          <Link
-            to={link}
-            className="text-vision-gold font-medium hover:text-vision-gold-light transition-colors inline-flex items-center"
-          >
-            Learn more
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 ml-1"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </Link>
-        </div>
-      </motion.div>
+
+          {/* Content */}
+          <div className="relative z-20">
+            <div className="bg-vision-gold/10 backdrop-blur-sm p-3 rounded-lg w-fit mb-4 group-hover:bg-vision-gold/20 transition-all duration-300">
+              {icon}
+            </div>
+            <h3 className="text-xl font-semibold mb-2">{title}</h3>
+            <p className="text-muted-foreground flex-grow mb-4">{description}</p>
+            <span className="text-vision-gold font-medium hover:text-vision-gold-light transition-colors inline-flex items-center">
+              <span className="learn-more-btn">
+                Learn more
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </motion.div>
+      </Link>
     );
   };
 
