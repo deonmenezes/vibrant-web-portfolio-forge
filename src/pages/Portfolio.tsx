@@ -5,11 +5,54 @@ import { Button } from "@/components/ui/button";
 import { PageTransition } from "@/components/PageTransition";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+
+// --- REDESIGNED VideoProjectCard to match your image ---
+const VideoProjectCard = ({ title, description, video, icon, iconBg, index }) => {
+  return (
+    <motion.div
+      className="group relative rounded-2xl overflow-hidden shadow-lg h-80 transition-all duration-300"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+    >
+      {/* Video Background */}
+      <video
+        src={video}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+      {/* Icon in the corner */}
+      <div className={`absolute top-4 left-4 p-2 rounded-md z-10 ${iconBg}`}>
+        {icon}
+      </div>
+
+      {/* Content Overlay */}
+      <div className="relative z-10 p-6 h-full flex flex-col justify-end text-white">
+        <h3 className="text-2xl font-bold">{title}</h3>
+        <p className="text-gray-300 text-sm mt-2">{description}</p>
+        <div className="mt-4 font-semibold flex items-center gap-2 opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+          <span>Learn more</span>
+          <span className="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 
 const Portfolio = () => {
   const [filter, setFilter] = useState("all");
 
   const projects = [
+    // --- All Your Original Web Projects ---
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes on any topic. Helps users learn efficiently with adaptive question paths and instant feedback.",
@@ -17,6 +60,22 @@ const Portfolio = () => {
       tags: ["AI", "EdTech", "React"],
       category: "web",
       url: "https://quizitt.com",
+    },
+    {
+      title: "Casa",
+      description: "An e-commerce fashion platform with a Tinder-like swipe experience for discovering clothes you love",
+      image: "/casa_logo.png",
+      tags: ["E-commerce", "Web", "Fashion"],
+      category: "web",
+      url: "https://casashop.in/",
+    },
+    {
+      title: "PetroGo",
+      description: "PetroGo: The smarter way to manage petrol pumps—no paperwork, no Excel.",
+      image: "/petrol_logo.png",
+      tags: ["Web","React", "Automation"],
+      category: "web",
+      url: "#",
     },
     {
       title: "CatchPhish",
@@ -58,6 +117,7 @@ const Portfolio = () => {
       category: "web",
       url: "https://globeox-navinsir.vercel.app/",
     },
+    // --- All Your Original Mobile Projects ---
     {
       title: "Quizitt Mobile",
       description: "Mobile version of Quizitt app built with React Native for seamless quiz experience on phones.",
@@ -67,12 +127,60 @@ const Portfolio = () => {
       url: "https://quizitt.com",
     },
     {
+      title: "Zecurity",
+      description: "On-demand bodyguard booking for instant protection and peace of mind.",
+      image: "/bodyguard_logo.png",
+      tags: ["Mobile","Flutter","Security"],
+      category: "mobile",
+      url: "#",
+    },
+    {
+      title: "PetroGo",
+      description: "PetroGo: The smarter way to manage petrol pumps—no paperwork, no Excel.",
+      image: "/petrol_logo.png",
+      tags: ["Mobile", "React Native"],
+      category: "mobile",
+      url: "#",
+    },
+    // --- Your Original Branding Project ---
+    {
       title: "Suraj Jamani - Personal Brand Development",
       description: "Virelity helped shape Suraj Jamani's digital identity through creative strategy, content planning, and impactful storytelling across platforms like LinkedIn and Instagram.",
-      image: "/vision_logo.png",
+      image: "/suraj.png",
       tags: ["Branding", "Personal Brand", "Storytelling"],
       category: "branding",
       url: "/suraj-branding.pdf",
+    },
+    // --- YOUR ACTUAL AR/VR PROJECTS ---
+    {
+      title: "Walk The Plank",
+      description: "Experience the thrill of walking the plank on a 200th Storey Building in VR!",
+      video: "/videos/walkThePlank.mp4",
+      iconBg: "bg-blue-500",
+      icon: <span className="inline-block text-white text-xl">⚡</span>,
+      category: "ar-vr",
+      tags: [],
+      url: "#",
+    },
+    {
+      title: "Roller Coaster Simulation",
+      description: "Ride A Roller Coaster in the comfort of your Home",
+      video: "/videos/roller.mp4",
+      iconBg: "bg-yellow-400",
+      icon: <span className="inline-block text-white text-xl">≡</span>,
+      category: "ar-vr",
+      tags: [],
+      url: "#",
+    },
+    {
+      title: "Tower Crane Simulation",
+      description: "Our Industrial level Virtual Simulation for the piloting of a Crane",
+      video: "/videos/craneSimulator.mp4",
+      iconBg: "bg-red-500",
+      icon: <span className="inline-block text-white text-xl">T</span>,
+      category: "ar-vr",
+      tags: [],
+      url: "#",
     },
   ];
 
@@ -103,7 +211,7 @@ const Portfolio = () => {
         <section className="py-10">
           <div className="container">
             <div className="flex flex-wrap justify-center gap-4 mb-12">
-              {["all", "web", "mobile", "design", "branding"].map((category) => (
+              {["all", "web", "mobile", "branding", "ar-vr"].map((category) => (
                 <Button
                   key={category}
                   variant={filter === category ? "default" : "outline"}
@@ -114,18 +222,18 @@ const Portfolio = () => {
                       : "border-muted-foreground/30 text-muted-foreground hover:border-primary hover:text-primary"
                   )}
                 >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                  {category === 'ar-vr' ? 'AR/VR' : category.charAt(0).toUpperCase() + category.slice(1)}
                 </Button>
               ))}
             </div>
 
-            {/* Conditional Rendering */}
+            {/* Conditional Rendering Logic */}
             {filter === "branding" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div className="group border border-muted-foreground/10 rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
                   <div className="h-48 overflow-hidden">
                     <img
-                      src="/virelity_logo_transparent.png"
+                      src="/suraj.png"
                       alt="Suraj Jamani"
                       className="w-full h-full object-contain bg-white p-4"
                     />
@@ -145,22 +253,39 @@ const Portfolio = () => {
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
+            ) : filter === "ar-vr" ? (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="text-center max-w-3xl mx-auto mb-12">
+                  <h2 className="text-3xl font-bold mb-4">VR/AR Projects We've Built</h2>
+                  <p className="text-lg text-muted-foreground">
+                    Explore our portfolio of immersive experiences across different industries.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredProjects.map((project, index) => (
+                    <VideoProjectCard
+                      key={project.title}
+                      title={project.title}
+                      description={project.description}
+                      video={project.video}
+                      icon={project.icon}
+                      iconBg={project.iconBg}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </motion.div>
             ) : (
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProjects.map((project, index) => (
                   <ProjectCard
                     key={project.title}
-                    title={project.title}
-                    description={project.description}
-                    image={project.image}
-                    tags={project.tags}
-                    url={project.url}
+                    {...project}
                     index={index}
                   />
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         </section>

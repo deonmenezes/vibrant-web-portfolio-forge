@@ -10,7 +10,7 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6 text-primary" />,
       title: "Email Us",
-      details: "deonmenezescodes@gmail.com",
+      details: "deon.menezes@virelity.com",
       description: "We'll respond within 24 hours",
     },
     {

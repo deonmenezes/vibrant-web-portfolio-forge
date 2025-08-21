@@ -102,39 +102,42 @@ function ServiceCard({ title, description, icon, index, bgImage, link }) {
   );
 }
 
-// 3. Static Testimonials Component (UPDATED)
+// 3. Testimonials Component (UPDATED WITH HOVER/GLOW EFFECT)
 const testimonialsData = [
     {
-      img: "https://randomuser.me/api/portraits/women/44.jpg",
-      name: "Sarah K.",
-      role: "UX Designer @Brello",
-      text: "I was looking for a way to streamline my design process and the Anima's Landing Page UI Kit was a lifesaver! The intuitive design and ease of customisation have saved me hours of time and effort. Highly recommend!",
-      rating: 5, // Using 'rating' for clarity
-    },
-    {
-      img: "https://randomuser.me/api/portraits/men/32.jpg",
-      name: "Michael L.",
-      role: "Creative Director @Yo",
-      text: "The Landing Page UI Kit has been a game changer for my agency. The pre-designed components and templates have helped us deliver projects faster and with more consistency. Great job!",
+      img: "/suraj.png",
+      name: "Suraj Jamani",
+      role: "Producer",
+      text: "Partnering with Virelity has been a game-changer! Their strategy and creativity helped me shape my brand in a way that feels authentic and powerful.",
       rating: 5,
     },
     {
-      img: "https://randomuser.me/api/portraits/men/44.jpg",
-      name: "Lauren M.",
-      role: "UI Designer @Boo",
-      text: "Anima's Landing Page UI Kit has become a staple in my design toolkit. Whether I'm working on a new project or need to make updates to an existing one, this kit has everything I need to get the job done quickly and efficiently.",
+      img: "/steve_logo.png",
+      name: "Steve Vora",
+      role: "Founder",
+      text: "I wanted to reimagine how people shop online, and CASA made that vision real. The swipe-to-shop experience feels fresh, fun, and effortless—turning fashion discovery into something truly exciting!",
+      rating: 5,
+    },
+    {
+      img: "/petrol.png",
+      name: "Suresh Nanda",
+      role: "Owner",
+      text: "Managing petrol pump data was always a hassle with endless paperwork and Excel sheets. PetroGo changed everything! Automation has made our operations smooth, accurate, and completely paperless. Highly recommend it!",
       rating: 5,
     },
 ];
 
 function Testimonials() {
-  // All state and handlers have been removed for a static display.
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {testimonialsData.map((t) => (
-        <div
+        <motion.div
           key={t.name}
-          className="bg-[#18181b] rounded-3xl shadow-lg p-8 flex flex-col items-center text-center border border-white/10"
+          className="bg-[#18181b] rounded-3xl shadow-lg p-8 flex flex-col items-center text-center border border-white/10 transition-all duration-300"
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 0 25px rgba(251, 191, 36, 0.6)", // Golden glow matching the brand color
+          }}
         >
           <img src={t.img} alt={t.name} className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-vision-gold" />
           <h3 className="text-xl font-bold mb-1 text-white">{t.name}</h3>
@@ -142,8 +145,6 @@ function Testimonials() {
           <p className="text-gray-200 mb-6">"{t.text}"</p>
           <div className="flex justify-center mb-2">
             {[...Array(5)].map((_, starIdx) => (
-              // The <button> is replaced with a non-interactive <span>.
-              // The className logic is simplified to check if the star's index is less than the rating.
               <span key={starIdx}>
                 <svg
                   className={`w-7 h-7 ${
@@ -159,7 +160,7 @@ function Testimonials() {
               </span>
             ))}
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
@@ -452,7 +453,6 @@ const Index = () => {
           >
             <div className="container">
               <div className="text-center max-w-2xl mx-auto mb-16">
-                 {/* ... section content ... */}
                 <motion.h2
                   {...sharedAnimationProps}
                   transition={{ duration: 0.5, delay: 0.1 }}
