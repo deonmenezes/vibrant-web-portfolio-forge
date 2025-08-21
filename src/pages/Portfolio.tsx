@@ -52,7 +52,7 @@ const Portfolio = () => {
   const [filter, setFilter] = useState("all");
 
   const projects = [
-    // --- All Your Original Web Projects ---
+    // --- Web Projects ---
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes on any topic. Helps users learn efficiently with adaptive question paths and instant feedback.",
@@ -74,7 +74,7 @@ const Portfolio = () => {
       description: "PetroGo: The smarter way to manage petrol pumps—no paperwork, no Excel.",
       image: "/petrol_logo.png",
       tags: ["Web","React", "Automation"],
-      category: "web",
+      category: "web", // CORRECTED CATEGORY
       url: "#",
     },
     {
@@ -88,7 +88,7 @@ const Portfolio = () => {
     {
       title: "Clerk Authentication",
       description: "Implementation of Clerk's modern authentication system with seamless social logins, secure user management, and customizable UI components.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000",
+      image: "https://images.unsplash.com/photo-1555066931-4365d1b4bab8c?auto=format&fit=crop&q=80&w=1000",
       tags: ["Auth", "React", "NextJS"],
       category: "web",
       url: "https://clerk-antim.vercel.app/",
@@ -117,7 +117,7 @@ const Portfolio = () => {
       category: "web",
       url: "https://globeox-navinsir.vercel.app/",
     },
-    // --- All Your Original Mobile Projects ---
+    // --- Mobile Projects ---
     {
       title: "Quizitt Mobile",
       description: "Mobile version of Quizitt app built with React Native for seamless quiz experience on phones.",
@@ -139,10 +139,10 @@ const Portfolio = () => {
       description: "PetroGo: The smarter way to manage petrol pumps—no paperwork, no Excel.",
       image: "/petrol_logo.png",
       tags: ["Mobile", "React Native"],
-      category: "mobile",
+      category: "mobile", // CORRECTED CATEGORY
       url: "#",
     },
-    // --- Your Original Branding Project ---
+    // --- Branding Project ---
     {
       title: "Suraj Jamani - Personal Brand Development",
       description: "Virelity helped shape Suraj Jamani's digital identity through creative strategy, content planning, and impactful storytelling across platforms like LinkedIn and Instagram.",
@@ -151,7 +151,7 @@ const Portfolio = () => {
       category: "branding",
       url: "/suraj-branding.pdf",
     },
-    // --- YOUR ACTUAL AR/VR PROJECTS ---
+    // --- AR/VR PROJECTS ---
     {
       title: "Walk The Plank",
       description: "Experience the thrill of walking the plank on a 200th Storey Building in VR!",
@@ -266,11 +266,7 @@ const Portfolio = () => {
                   {filteredProjects.map((project, index) => (
                     <VideoProjectCard
                       key={project.title}
-                      title={project.title}
-                      description={project.description}
-                      video={project.video}
-                      icon={project.icon}
-                      iconBg={project.iconBg}
+                      {...project}
                       index={index}
                     />
                   ))}
@@ -278,13 +274,31 @@ const Portfolio = () => {
               </motion.div>
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProjects.map((project, index) => (
-                  <ProjectCard
-                    key={project.title}
-                    {...project}
-                    index={index}
-                  />
-                ))}
+                {/* This logic correctly renders different card types for the "All" filter */}
+                {filteredProjects.map((project, index) => {
+                  if (project.category === 'ar-vr') {
+                    return (
+                      <VideoProjectCard
+                        key={project.title}
+                        {...project}
+                        index={index}
+                      />
+                    );
+                  }
+                  // This will render the branding card if it's in the filtered list
+                  if (project.category === 'branding') {
+                     // We return null here because the branding card has a special layout
+                     // and shouldn't be rendered in the main grid.
+                     return null;
+                  }
+                  return (
+                    <ProjectCard
+                      key={project.title}
+                      {...project}
+                      index={index}
+                    />
+                  );
+                })}
               </motion.div>
             )}
           </div>
