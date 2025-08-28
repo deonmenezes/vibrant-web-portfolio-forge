@@ -202,11 +202,11 @@ const VRARDevelopmentService = () => {
     return (
         <div className="min-h-screen bg-background">
             {/* Navbar */}
-            <Navbar 
+            <Navbar
                 title="VR/AR Development Services - Virelity.com"
                 description="Professional VR and AR development services. Create immersive virtual and augmented reality experiences that transform user engagement and business operations."
             />
-            
+
             {/* Hero Section */}
             <section className="h-screen min-h-[500px] bg-gradient-to-br from-purple-600/10 to-pink-600/10 relative overflow-hidden flex items-center justify-center">
                 {/* Background Video only in hero */}
@@ -289,12 +289,12 @@ const VRARDevelopmentService = () => {
                                 <div className="p-6 absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/30 to-transparent">
                                     <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">{project.title}</h3>
                                     <p className="text-white/90 mb-4 drop-shadow-lg">{project.description}</p>
-                                                                        <a href="#" className="learn-more-btn">
-                                                                            <span>Learn more</span>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                                            </svg>
-                                                                        </a>
+                                    <a href="#" className="learn-more-btn">
+                                        <span>Learn more</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    </a>
                                 </div>
                             </motion.div>
                         ))}
@@ -480,8 +480,8 @@ const VRARDevelopmentService = () => {
                                 </ul>
 
                                 <button className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
-                                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
-                                        : 'border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white'
+                                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
+                                    : 'border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white'
                                     }`}>
                                     Get Started
                                 </button>

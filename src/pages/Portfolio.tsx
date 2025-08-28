@@ -126,14 +126,14 @@ const Portfolio = () => {
       category: "mobile",
       url: "https://quizitt.com",
     },
-    {
-      title: "Zecurity",
-      description: "On-demand bodyguard booking for instant protection and peace of mind.",
-      image: "/bodyguard_logo.png",
-      tags: ["Mobile","Flutter","Security"],
-      category: "mobile",
-      url: "#",
-    },
+    // {
+    //   title: "Zecurity",
+    //   description: "On-demand bodyguard booking for instant protection and peace of mind.",
+    //   image: "/bodyguard_logo.png",
+    //   tags: ["Mobile","Flutter","Security"],
+    //   category: "mobile",
+    //   url: "#",
+    // },
     {
       title: "PetroGo",
       description: "PetroGo: The smarter way to manage petrol pumps—no paperwork, no Excel.",
@@ -265,7 +265,7 @@ const Portfolio = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredProjects.map((project, index) => (
                     <VideoProjectCard
-                      key={project.title}
+                      key={`${project.title}-${project.category}`}
                       {...project}
                       index={index}
                     />
@@ -279,7 +279,7 @@ const Portfolio = () => {
                   if (project.category === 'ar-vr') {
                     return (
                       <VideoProjectCard
-                        key={project.title}
+                        key={`${project.title}-${project.category}`}
                         {...project}
                         index={index}
                       />
@@ -293,7 +293,7 @@ const Portfolio = () => {
                   }
                   return (
                     <ProjectCard
-                      key={project.title}
+                      key={`${project.title}-${project.category}`}
                       {...project}
                       index={index}
                     />
