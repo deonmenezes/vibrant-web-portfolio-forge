@@ -21,7 +21,7 @@ const Contact = () => {
     },
     {
       icon: <MapPin className="h-6 w-6 text-primary" />,
-      title: "Visit Us Now",
+      title: "Visit Us ",
       details: "Mumbai, India",
       description: "Get in touch for our exact location",
     },
