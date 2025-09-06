@@ -22,6 +22,7 @@ import UIUXDesign from "./pages/services/ui-ux-design";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
+import { Analytics } from "@vercel/analytics/next"
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,9 @@ const App = () => (
   <LenisSmoothScroll />
       <BrowserRouter>
         <AnimatePresence mode="wait">
+          <Analytics />
           <Routes>
+
             <Route path="/" element={<Index />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/about" element={<About />} />
