@@ -22,7 +22,7 @@ import UIUXDesign from "./pages/services/ui-ux-design";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 const queryClient = new QueryClient();
 
