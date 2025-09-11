@@ -7,6 +7,7 @@ import { Calendar, Code, Palette, Zap, BarChart3, ArrowDown } from "lucide-react
 import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
 import { ProjectCard } from "@/components/ProjectCard";
 import { SEOBreadcrumbs } from "@/components/SEOBreadcrumbs";
+import { useAnalyticsEvents } from "@/hooks/use-analytics";
 import React, { useRef, useEffect, useState } from "react";
 
 // --- HELPER COMPONENTS (Defined ONCE, outside Index) ---
@@ -71,7 +72,7 @@ function ServiceCard({ title, description, icon, index, bgImage, link }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-background/80 to-background z-10 group-hover:opacity-60 transition-opacity duration-500" />
         <img
           src={bgImage}
-          alt={title}
+          alt={`${title} service background - Professional ${title.toLowerCase()} solutions by Virelity`}
           className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
         />
       </div>
@@ -82,7 +83,7 @@ function ServiceCard({ title, description, icon, index, bgImage, link }) {
         </div>
         <h3 className="text-xl font-semibold mb-2">{title}</h3>
         <p className="text-muted-foreground flex-grow mb-4">{description}</p>
-        <Link to={link} className="learn-more-btn">
+        <Link to={link} className="learn-more-btn" title={`Learn more about ${title} services - Virelity AI solutions`}>
           <span>Learn more</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +140,7 @@ function Testimonials() {
             boxShadow: "0 0 25px rgba(251, 191, 36, 0.6)", // Golden glow matching the brand color
           }}
         >
-          <img src={t.img} alt={t.name} className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-vision-gold" />
+          <img src={t.img} alt={`${t.name} - ${t.role} testimonial photo for Virelity AI services`} className="w-24 h-24 rounded-full mb-4 object-cover border-4 border-vision-gold" />
           <h3 className="text-xl font-bold mb-1 text-white">{t.name}</h3>
           <p className="text-gray-400 mb-4">{t.role}</p>
           <p className="text-gray-200 mb-6">"{t.text}"</p>
@@ -170,6 +171,7 @@ function Testimonials() {
 // --- MAIN PAGE COMPONENT ---
 
 const Index = () => {
+  const { trackButtonClick } = useAnalyticsEvents();
   // Section refs for scroll animations
   const heroRef = useRef(null);
   const servicesRef = useRef(null);
@@ -381,12 +383,13 @@ const Index = () => {
                     className="flex flex-wrap gap-4"
                   >
                     <Button asChild className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
-                      <Link to="/portfolio">View Our Work</Link>
+                      <Link to="/portfolio" title="View Virelity's AI and digital marketing portfolio">View Our Work</Link>
                     </Button>
                     <HoverImageEffect>
                       <Button
                         onClick={openWhatsAppBooking}
                         className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg flex items-center gap-2"
+                        title="Book a free 15-minute consultation call with Virelity AI experts"
                       >
                         <Calendar className="h-5 w-5" />
                         Book a Free 15-min Call
@@ -410,6 +413,8 @@ const Index = () => {
                       playsInline
                       className="w-full h-full min-h-[320px] md:min-h-[420px] lg:min-h-[480px] xl:min-h-[520px] object-cover aspect-video"
                       poster="/virelity_navbar.png"
+                      aria-label="Virelity AI agents and digital transformation showcase video"
+                      title="Watch how Virelity AI agents transform businesses and increase productivity"
                     >
                       Sorry, your browser does not support embedded videos.
                     </video>
@@ -458,7 +463,7 @@ const Index = () => {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="text-3xl md:text-4xl font-bold mb-4"
                 >
-                  Solutions We Provide
+                  AI-Powered Solutions We Provide
                 </motion.h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -476,7 +481,7 @@ const Index = () => {
           {/* Testimonials Section - NOW USING THE STATIC COMPONENT */}
           <section className="py-20 bg-vision-dark">
             <div className="container">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">What Our Clients Say</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Client Success Stories - AI Transformation Results</h2>
               <Testimonials />
             </div>
           </section>
@@ -526,7 +531,12 @@ const Index = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         <Button asChild className="bg-white text-primary hover:bg-white/90 px-8 py-6 text-lg">
-                            <Link to="/contact">Get Started</Link>
+                            <Link 
+                              to="/contact" 
+                              onClick={() => trackButtonClick('Get Started CTA', 'Homepage Footer')}
+                            >
+                              Get Started
+                            </Link>
                         </Button>
                     </motion.div>
                 </div>

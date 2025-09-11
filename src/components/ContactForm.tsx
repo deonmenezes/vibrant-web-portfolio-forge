@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalyticsEvents } from "@/hooks/use-analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 export const ContactForm = () => {
   const { toast } = useToast();
+  const { trackFormSubmission } = useAnalyticsEvents();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,6 +28,9 @@ export const ContactForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Track form submission
+    trackFormSubmission('Contact Form');
 
     // In a real implementation, you would use a service like EmailJS, FormSubmit, or a backend API
     // Here's a mockup of how you'd send emails to the specified address
