@@ -116,7 +116,7 @@ const testimonialsData = [
       name: "Steve Vora",
       role: "Founder",
       text: "I wanted to reimagine how people shop online, and CASA made that vision real. The swipe-to-shop experience feels fresh, fun, and effortless—turning fashion discovery into something truly exciting!",
-      rating: 5,
+      rating: 4,
     },
     {
       img: "/petrol.png",
