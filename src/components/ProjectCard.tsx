@@ -38,7 +38,7 @@ export const ProjectCard = ({
       <div className="aspect-video w-full overflow-hidden rounded-xl">
         <img
           src={image}
-          alt={title}
+          alt={`${title} project screenshot - ${description.substring(0, 100)}...`}
           className={cn(
             "h-full w-full object-cover transition-transform duration-700",
             isHovered ? "scale-110" : "scale-100"
@@ -79,7 +79,7 @@ export const ProjectCard = ({
             )}
           >
             <Button asChild className="gold-gradient hover:gold-glow text-vision-black">
-              <Link to={url}>View Project</Link>
+              <Link to={url} title={`View ${title} project details and case study`}>View Project</Link>
             </Button>
           </div>
         </div>

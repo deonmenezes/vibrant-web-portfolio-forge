@@ -22,39 +22,51 @@ import UIUXDesign from "./pages/services/ui-ux-design";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
+import { Analytics } from "@vercel/analytics/react";
+import { useGoogleAnalytics } from "./hooks/use-analytics";
 
 const queryClient = new QueryClient();
+
+// Component to handle Google Analytics initialization
+const AppWithAnalytics = () => {
+  useGoogleAnalytics();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Analytics />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
+        
+        {/* Service Routes */}
+        <Route path="/services/web-development" element={<WebDevelopment />} />
+        <Route path="/services/vr-ar-development" element={<VRARDevelopment />} />
+        <Route path="/services/3d-development" element={<ThreeDDevelopment />} />
+        <Route path="/services/video-editing" element={<VideoEditing />} />
+        <Route path="/services/design-services" element={<DesignServices />} />
+        <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+        <Route path="/services/mobile-apps" element={<MobileApps />} />
+        <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
+        
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-  {/* Global Lenis smooth scroll */}
-  <LenisSmoothScroll />
+      {/* Global Lenis smooth scroll */}
+      <LenisSmoothScroll />
       <BrowserRouter>
-        <AnimatePresence mode="wait">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/contact" element={<Contact />} />
-            
-            {/* Service Routes */}
-            <Route path="/services/web-development" element={<WebDevelopment />} />
-            <Route path="/services/vr-ar-development" element={<VRARDevelopment />} />
-            <Route path="/services/3d-development" element={<ThreeDDevelopment />} />
-            <Route path="/services/video-editing" element={<VideoEditing />} />
-            <Route path="/services/design-services" element={<DesignServices />} />
-            <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
-            <Route path="/services/mobile-apps" element={<MobileApps />} />
-            <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AnimatePresence>
+        <AppWithAnalytics />
         
         {/* Global components available on all pages */}
         <AIChatbot />

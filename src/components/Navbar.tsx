@@ -12,12 +12,12 @@ import {
 import { Helmet } from "react-helmet-async";
 
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
-  { name: "Portfolio", path: "/portfolio" },
-  { name: "About", path: "/about" },
-  // { name: "Team", path: "/team" },
-  { name: "Contact", path: "/contact" },
+  { name: "Home", path: "/", title: "Virelity.com Homepage - AI Agents & Digital Solutions" },
+  { name: "Services", path: "/services", title: "Our AI & Digital Services - Web Development, Mobile Apps, AI Solutions" },
+  { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
+  { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
+  // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
+  { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
 ];
 
 type NavbarProps = {
@@ -163,12 +163,13 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
             to="/"
             className="flex items-center gap-2 font-bold gold-shine"
             aria-label="Virelity.com Homepage"
+            title="Virelity.com - AI Agents that Transform Businesses"
           >
             {/* Mobile view: Show favicon only */}
-            <img src="/virelity_favicon.png" alt="Virelity.com Logo" className="h-12 md:hidden" width="48" height="48" />
+            <img src="/virelity_favicon.png" alt="Virelity.com - AI Agents & Digital Solutions Logo" className="h-12 md:hidden" width="48" height="48" />
             
             {/* Desktop view: Show full navbar logo */}
-            <img src="/vireality_navbar.png" alt="Virelity.com Logo" className="hidden md:block h-10" width="auto" height="40" />
+            <img src="/vireality_navbar.png" alt="Virelity.com - AI Agents & Digital Solutions Company Logo" className="hidden md:block h-10" width="auto" height="40" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -184,6 +185,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                       : "text-muted-foreground"
                   )}
                   role="menuitem"
+                  title={item.title}
                   aria-current={location.pathname === item.path ? "page" : undefined}
                 >
                   {item.name}
@@ -220,8 +222,8 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col h-full" aria-label="Mobile Navigation">
-                <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b" aria-label="Virelity.com Homepage">
-                  <img src="/virelity_logo_transparent.png" alt="Virelity.com Logo" className="h-6" width="24" height="24" />
+                <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b" aria-label="Virelity.com Homepage" title="Virelity.com - AI Agents that Transform Businesses">
+                  <img src="/virelity_logo_transparent.png" alt="Virelity.com - AI Agents & Digital Solutions Mobile Logo" className="h-6" width="24" height="24" />
                 </Link>
                 <div className="flex flex-col gap-3 py-4" role="menu">
                   {navItems.map((item) => (
@@ -235,6 +237,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                           : "text-muted-foreground hover:bg-muted"
                       )}
                       role="menuitem"
+                      title={item.title}
                       aria-current={location.pathname === item.path ? "page" : undefined}
                     >
                       {item.name}

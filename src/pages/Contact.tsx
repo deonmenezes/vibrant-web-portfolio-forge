@@ -21,7 +21,7 @@ const Contact = () => {
     },
     {
       icon: <MapPin className="h-6 w-6 text-primary" />,
-      title: "Visit Us",
+      title: "Visit Us ",
       details: "Mumbai, India",
       description: "Get in touch for our exact location",
     },
@@ -29,7 +29,7 @@ const Contact = () => {
       icon: <MessageSquare className="h-6 w-6 text-primary" />,
       title: "WhatsApp",
       details: "+918104796542",
-      description: "Chat with us anytime",
+      description: "Chat anytime",
     },
   ];
 
