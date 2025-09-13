@@ -124,7 +124,7 @@ const testimonialsData = [
       name: "Suresh Nanda",
       role: "Owner",
       text: "Managing petrol pump data was always a hassle with endless paperwork and Excel sheets. PetroGo changed everything! Automation has made our operations smooth, accurate, and completely paperless. Highly recommend it!",
-      rating: 5,
+      rating: 4,
     },
 ];
 
