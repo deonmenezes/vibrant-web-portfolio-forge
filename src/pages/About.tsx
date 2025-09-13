@@ -57,7 +57,7 @@ const About = () => {
     {
       title: "Collaboration",
       description:
-        "We believe in working closely with our clients as true partners, fostering open communication and mutual respect.",
+        "We believe in working closely with our clients as true partners fostering open communication and mutual respect.",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
