@@ -119,13 +119,13 @@ const testimonialsData = [
       text: "I wanted to reimagine how people shop online, and CASA made that vision real. The swipe-to-shop experience feels fresh, fun, and effortless—turning fashion discovery into something truly exciting!",
       rating: 5,
     },
-    {
-      img: "/petrol.png",
-      name: "Suresh Nanda",
-      role: "Owner",
-      text: "Managing petrol pump data was always a hassle with endless paperwork and Excel sheets. PetroGo changed everything! Automation has made our operations smooth, accurate, and completely paperless. Highly recommend it!",
-      rating: 4,
-    },
+    // {
+    //   img: "/petrol.png",
+    //   name: "Suresh Nanda",
+    //   role: "Owner",
+    //   text: "Managing petrol pump data was always a hassle with endless paperwork and Excel sheets. PetroGo changed everything! Automation has made our operations smooth, accurate, and completely paperless. Highly recommend it!",
+    //   rating: 4,
+    // },
 ];
 
 function Testimonials() {
