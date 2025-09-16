@@ -288,7 +288,7 @@ const Index = () => {
                 animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className="text-sm font-medium mb-1">Scroll Down</span>
+                <span className="text-sm font-medium mb-1">Scroll Down.</span>
                 <ArrowDown className="h-5 w-5" />
               </motion.div>
             )}
