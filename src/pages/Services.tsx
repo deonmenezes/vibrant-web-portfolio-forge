@@ -3,6 +3,7 @@ import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import {
   Code,
   PenTool,
@@ -26,6 +27,8 @@ const Services = () => {
       link: "/services/web-development",
       bgImage:
         "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1000",
+      bgVideo: "/videos/homepage.mp4",
+      bgGifEmbed: null
     },
     {
       title: "VR/AR Development",
@@ -34,7 +37,9 @@ const Services = () => {
       icon: <Boxes className="h-8 w-8 text-vision-gold" />,
       link: "/services/vr-ar-development",
       bgImage:
-        "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&q=80&w=1000",
+        "/videos/ar-smart-home-demo.gif",
+      bgVideo: undefined,
+      bgGifEmbed: null
     },
     {
       title: "3D Development",
@@ -44,6 +49,8 @@ const Services = () => {
       link: "/services/3d-development",
       bgImage:
         "https://images.unsplash.com/photo-1635322966219-b75ed372eb01?auto=format&fit=crop&q=80&w=1000",
+      bgVideo: "/videos/3dservice.mp4",
+      bgGifEmbed: null
     },
     {
       title: "Video Editing",
@@ -53,6 +60,8 @@ const Services = () => {
       link: "/services/video-editing",
       bgImage:
         "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=1000",
+      bgVideo: "/videos/videoservice.mp4",
+      bgGifEmbed: null
     },
     {
       title: "Design Services",
@@ -62,6 +71,8 @@ const Services = () => {
       link: "/services/design-services",
       bgImage:
         "https://images.unsplash.com/photo-1609921212029-bb5a28e60960?auto=format&fit=crop&q=80&w=1000",
+      bgVideo: "/videos/design.mp4",
+      bgGifEmbed: null
     },
     {
       title: "Digital Marketing",
@@ -71,6 +82,8 @@ const Services = () => {
       link: "/services/digital-marketing",
       bgImage:
         "https://images.unsplash.com/photo-1572025442646-866d16c84a54?auto=format&fit=crop&q=80&w=1000",
+      bgVideo: "/videos/digital-market.mp4",
+      bgGifEmbed: null
     },
     {
       title: "Mobile Apps",
@@ -79,7 +92,9 @@ const Services = () => {
       icon: <Smartphone className="h-8 w-8 text-vision-gold" />,
       link: "/services/mobile-apps",
       bgImage:
-        "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=1000",
+        "/videos/mobile.gif",
+      bgVideo: undefined,
+      bgGifEmbed: null
     },
     {
       title: "UI/UX Design",
@@ -88,11 +103,43 @@ const Services = () => {
       icon: <PenTool className="h-8 w-8 text-vision-gold" />,
       link: "/services/ui-ux-design",
       bgImage:
-        "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=1000",
+        "/videos/UI.gif",
+      bgVideo: undefined,
+      bgGifEmbed: null
+    },
+    {
+      title: "AR/VR Marketing",
+      description:
+        "Innovative marketing campaigns using augmented and virtual reality to create immersive brand experiences.",
+      icon: <Boxes className="h-8 w-8 text-vision-gold" />,
+      link: "/services/ar-vr-marketing",
+      bgImage:
+        "/videos/ar-smart-home-demo.gif",
+      bgVideo: undefined,
+      bgGifEmbed: null
     },
   ];
 
-  const ServiceCard = ({ title, description, icon, index, bgImage, link }) => {
+  // Accept optional bgVideo for MP4/WebM loop (stored in public/videos or remote)
+  const ServiceCard = ({ title, description, icon, index, bgImage, bgVideo, bgGifEmbed, link }) => {
+    const gifRef = useRef(null);
+    useEffect(() => {
+      if (bgGifEmbed && gifRef.current) {
+        gifRef.current.innerHTML = '';
+        const div = document.createElement('div');
+        div.className = 'tenor-gif-embed';
+        div.setAttribute('data-postid', '7217055708119021597');
+        div.setAttribute('data-share-method', 'host');
+        div.setAttribute('data-aspect-ratio', '1.76596');
+        div.setAttribute('data-width', '100%');
+        gifRef.current.appendChild(div);
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = 'https://tenor.com/embed.js';
+        gifRef.current.appendChild(script);
+      }
+    }, [bgGifEmbed]);
     return (
       <Link
         to={link}
@@ -105,43 +152,46 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
           viewport={{ once: true }}
-          className="bg-card border border-border rounded-xl p-6 hover:border-vision-gold/30 hover:shadow-lg transition-all duration-300 flex flex-col h-full overflow-hidden group relative cursor-pointer focus:ring-2 focus:ring-vision-gold"
+          className="bg-card border border-border rounded-xl p-6 border-vision-gold/30 shadow-lg transition-all duration-300 flex flex-col h-full overflow-hidden group relative cursor-pointer focus:ring-2 focus:ring-vision-gold"
           style={{ minHeight: "320px" }}
         >
           {/* Background image with overlay */}
-          <div className="absolute inset-0 w-full h-full">
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-background/80 to-background z-10 group-hover:opacity-60 transition-opacity duration-500" />
-            <img
-              src={bgImage}
-              alt={title}
-              className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
-            />
+           <div className="absolute inset-0 w-full h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-background/80 to-background z-10 opacity-60 transition-opacity duration-500" />
+            {bgGifEmbed ? (
+              <div ref={gifRef} className="absolute inset-0 w-full h-full z-0 flex items-stretch justify-stretch" style={{height: '100%', width: '100%'}} />
+            ) : bgVideo ? (
+              <video
+                className="absolute inset-0 w-full h-full object-cover opacity-60 z-0 group-hover:opacity-80 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
+                src={bgVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <img
+                src={bgImage}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
+              />
+            )}
           </div>
 
           {/* Content */}
-          <div className="relative z-20">
-            <div className="bg-vision-gold/10 backdrop-blur-sm p-3 rounded-lg w-fit mb-4 group-hover:bg-vision-gold/20 transition-all duration-300">
-              {icon}
+          <div className="relative z-20 h-full flex flex-col">
+            {/* Icon at top */}
+            <div className="flex justify-start p-6">
+              <div className="bg-vision-gold/20 backdrop-blur-sm p-3 rounded-lg w-fit group-hover:bg-vision-gold/30 transition-all duration-300">
+                {icon}
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">{title}</h3>
-            <p className="text-muted-foreground flex-grow mb-4">{description}</p>
-            <span className="text-vision-gold font-medium hover:text-vision-gold-light transition-colors inline-flex items-center">
-              <span className="learn-more-btn">
-                Learn more
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-            </span>
+            
+            {/* Title at bottom spanning full width */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+              <h3 className="text-xl font-semibold text-white">{title}</h3>
+            </div>
           </div>
         </motion.div>
       </Link>
@@ -202,7 +252,9 @@ const Services = () => {
                   icon={service.icon}
                   index={index}
                   bgImage={service.bgImage}
-                  link={service.link} // ✅ Added here
+                  bgVideo={service.bgVideo}
+                  bgGifEmbed={service.bgGifEmbed}
+                  link={service.link}
                 />
               ))}
             </div>
