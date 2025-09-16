@@ -19,6 +19,8 @@ import { PageTransition } from "../components/PageTransition";
 
 const Services = () => {
   const services = [
+  // ...existing code for services array...
+  // Place this after the closing bracket of the services array
     {
       title: "Web Development",
       description:
@@ -120,6 +122,30 @@ const Services = () => {
     },
   ];
 
+  const xrServices = [
+    { title: "AR Home Automation", img: "https://github.com/kgediya/spectacles-smart-home-ar/raw/main/assets/demo-preview.gif" },
+    { title: "Phygital ARcade", img: "https://github.com/kgediya/ARcade-Racer/raw/main/Preview%20Files/preview1.gif" },
+    { title: "3D Product Showcase", img: "https://www.krazyykrunal.com/assets/workgifs/image26.gif" },
+    { title: "Festive Games", img: "https://www.krazyykrunal.com/assets/workgifs/image29.gif" },
+    { title: "Branded Games", img: "https://www.krazyykrunal.com/assets/workgifs/image30.gif" },
+    { title: "Rewards Reveal", img: "https://www.krazyykrunal.com/assets/workgifs/image32.gif" },
+    { title: "Location Based", img: "https://www.krazyykrunal.com/assets/workgifs/image50.gif" },
+    { title: "Product Features Games", img: "https://www.krazyykrunal.com/assets/workgifs/image41.gif" },
+    { title: "Themed Product Showcases", img: "https://www.krazyykrunal.com/assets/workgifs/image43.gif" },
+    { title: "Gamified Promotions", img: "https://www.krazyykrunal.com/assets/workgifs/image44.gif" },
+    { title: "2 Player Games", img: "https://www.krazyykrunal.com/assets/workgifs/image45.gif" },
+    { title: "Fiction To Reality", img: "https://www.krazyykrunal.com/assets/workgifs/image47.gif" },
+    { title: "Launch 360 Zones", img: "https://www.krazyykrunal.com/assets/workgifs/image48.gif" },
+    { title: "Educational", img: "https://www.krazyykrunal.com/assets/workgifs/image49.gif" },
+    { title: "Try On Engagement", img: "https://www.krazyykrunal.com/assets/workgifs/image51.gif" },
+    { title: "Sky Segmentation", img: "https://www.krazyykrunal.com/assets/workgifs/image10.gif" },
+    { title: "Novelty Fashion", img: "https://www.krazyykrunal.com/assets/workgifs/image20.gif" },
+    { title: "Custom Try On", img: "https://www.krazyykrunal.com/assets/workgifs/image46.gif" },
+    { title: "Brand Engagement", img: "https://www.krazyykrunal.com/assets/workgifs/image40.gif" },
+    { title: "Themed Games", img: "https://www.krazyykrunal.com/assets/workgifs/image37.gif" },
+    { title: "Product Showcase", img: "https://www.krazyykrunal.com/assets/workgifs/image36.gif" },
+  ];
+
   // Accept optional bgVideo for MP4/WebM loop (stored in public/videos or remote)
   const ServiceCard = ({ title, description, icon, index, bgImage, bgVideo, bgGifEmbed, link }) => {
     const gifRef = useRef(null);
@@ -179,6 +205,7 @@ const Services = () => {
             )}
           </div>
 
+ 
           {/* Content */}
           <div className="relative z-20 h-full flex flex-col">
             {/* Icon at top */}
@@ -187,7 +214,6 @@ const Services = () => {
                 {icon}
               </div>
             </div>
-            
             {/* Title at bottom spanning full width */}
             <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
               <h3 className="text-xl font-semibold text-white">{title}</h3>
@@ -244,7 +270,18 @@ const Services = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {services.map((service, index) => (
+              {[...services,
+                ...xrServices.map((item) => ({
+                  title: item.title,
+                  description: undefined, // Remove description for XR/AR/VR cards
+                  icon: <Boxes className="h-8 w-8 text-vision-gold" />,
+                  index: 0,
+                  bgImage: item.img,
+                  bgVideo: undefined,
+                  bgGifEmbed: null,
+                  link: "#"
+                }))
+              ].map((service, index) => (
                 <ServiceCard
                   key={service.title}
                   title={service.title}
