@@ -1,6 +1,5 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { ServiceCard } from "@/components/ServiceCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PageTransition } from "@/components/PageTransition";
@@ -111,7 +110,7 @@ const About = () => {
                   className="relative z-10 rounded-2xl overflow-hidden shadow-xl"
                 >
                   <img
-                    src="/office.png"
+                    src="/about.JPG"
                     alt="Virelity.com Office"
                     className="w-full max-h-[420px] object-cover rounded-lg shadow-lg"
                   />
@@ -182,17 +181,37 @@ const About = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, staggerChildren: 0.2 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
               {values.map((value, index) => (
-                <ServiceCard
+                <motion.div
                   key={value.title}
-                  title={value.title}
-                  description={value.description}
-                  icon={value.icon}
-                  delay={index * 150}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  className="group relative p-8 rounded-3xl bg-card hover:bg-card/80 transition-all duration-300 border border-border/40 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/10"
+                >
+                  <div className="flex flex-col items-start space-y-4">
+                    <div className="p-3 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                      {value.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                      {value.title}
+                    </h3>
+                    <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
+                      {value.description}
+                    </p>
+                  </div>
+                  
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 

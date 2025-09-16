@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import WebDevelopment from "./pages/services/web-development";
 import VRARDevelopment from "./pages/services/vr-ar-development";
+import ARVRMarketing from "./pages/services/ar-vr-marketing";
 import ThreeDDevelopment from "./pages/services/3d-development";
 import VideoEditing from "./pages/services/video-editing";
 import DesignServices from "./pages/services/design-services";
@@ -22,7 +23,6 @@ import UIUXDesign from "./pages/services/ui-ux-design";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
-import { Analytics } from "@vercel/analytics/react";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
 
 const queryClient = new QueryClient();
@@ -33,7 +33,6 @@ const AppWithAnalytics = () => {
   
   return (
     <AnimatePresence mode="wait">
-      <Analytics />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/portfolio" element={<Portfolio />} />
@@ -45,6 +44,7 @@ const AppWithAnalytics = () => {
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />
         <Route path="/services/vr-ar-development" element={<VRARDevelopment />} />
+        <Route path="/services/ar-vr-marketing" element={<ARVRMarketing />} />
         <Route path="/services/3d-development" element={<ThreeDDevelopment />} />
         <Route path="/services/video-editing" element={<VideoEditing />} />
         <Route path="/services/design-services" element={<DesignServices />} />
