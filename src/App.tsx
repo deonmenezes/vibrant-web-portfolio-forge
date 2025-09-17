@@ -21,6 +21,7 @@ import DigitalMarketing from "./pages/services/digital-marketing";
 import MobileApps from "./pages/services/mobile-apps";
 import UIUXDesign from "./pages/services/ui-ux-design";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
+import ScrollToTop from "./components/ScrollToTop";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
@@ -66,8 +67,8 @@ const App = () => (
       {/* Global Lenis smooth scroll */}
       <LenisSmoothScroll />
       <BrowserRouter>
+        <ScrollToTop />
         <AppWithAnalytics />
-        
         {/* Global components available on all pages */}
         <AIChatbot />
         <WhatsAppBooking />

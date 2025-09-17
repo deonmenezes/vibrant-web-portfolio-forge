@@ -25,33 +25,27 @@ export const ProjectCard = ({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-xl transition-all duration-500 animate-fade-in",
-        "opacity-0 translate-y-10"
+        "group bg-neutral-900 rounded-xl overflow-hidden shadow-lg aspect-[16/9] flex flex-col justify-end relative transition-all duration-500"
       )}
-      style={{
-        animationDelay: `${index * 150}ms`,
-        animationFillMode: "forwards",
-      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="aspect-video w-full overflow-hidden rounded-xl">
-        <img
-          src={image}
-          alt={`${title} project screenshot - ${description.substring(0, 100)}...`}
-          className={cn(
-            "h-full w-full object-cover transition-transform duration-700",
-            isHovered ? "scale-110" : "scale-100"
-          )}
-        />
-      </div>
-      <div
+      <img
+        src={image}
+        alt={`${title} project screenshot - ${description.substring(0, 100)}...`}
         className={cn(
-          "absolute inset-0 bg-gradient-to-t from-vision-dark/90 to-transparent p-6 flex flex-col justify-end",
-          "transition-opacity duration-500",
-          isHovered ? "opacity-100" : "opacity-90"
+          "absolute inset-0 w-full h-full object-cover transition-transform duration-700",
+          isHovered ? "scale-105" : "scale-100"
         )}
-      >
+      />
+      <div className="relative z-10 p-6 h-full flex flex-col justify-end text-white">
+        <div
+          className={cn(
+            "absolute inset-0 bg-gradient-to-t from-vision-dark/90 to-transparent p-6 flex flex-col justify-end",
+            "transition-opacity duration-500",
+            isHovered ? "opacity-100" : "opacity-90"
+          )}
+        ></div>
         <div>
           <div className="flex flex-wrap gap-2 mb-2">
             {tags.map((tag) => (

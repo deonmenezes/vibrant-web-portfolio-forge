@@ -1,3 +1,38 @@
+// ZoomSection: scroll-driven zoom-in effect for full-page sections
+import { useWindowScroll } from "react-use";
+
+const ZoomSection = ({ children, index }) => {
+  const sectionRef = useRef(null);
+  const { y: scrollY } = useWindowScroll();
+  const [sectionTop, setSectionTop] = useState(0);
+  const [sectionHeight, setSectionHeight] = useState(0);
+
+  useEffect(() => {
+    if (sectionRef.current) {
+      setSectionTop(sectionRef.current.offsetTop);
+      setSectionHeight(sectionRef.current.offsetHeight);
+    }
+  }, [sectionRef, children]);
+
+  // Calculate progress for zoom effect
+  const progress = Math.min(
+    Math.max((scrollY - sectionTop + window.innerHeight) / (sectionHeight + window.innerHeight), 0),
+    1
+  );
+  const scale = 1 + progress * 0.2;
+  const opacity = 0.7 + progress * 0.3;
+
+  return (
+    <motion.section
+      ref={sectionRef}
+      style={{ scale, opacity }}
+      className="relative z-10"
+      transition={{ type: "spring", bounce: 0.2 }}
+    >
+      {children}
+    </motion.section>
+  );
+};
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -11,6 +46,7 @@ import { useAnalyticsEvents } from "@/hooks/use-analytics";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { HeroSlider } from "@/components/HeroSlider";
 import React, { useRef, useEffect, useState } from "react";
+import { SplineScene } from "@/components/ui/splite";
 
 // --- HELPER COMPONENTS (Defined ONCE, outside Index) ---
 
@@ -277,31 +313,34 @@ const Index = () => {
         <div className="min-h-screen flex flex-col overflow-hidden">
           <Navbar />
 
-          {/* Hero Section */}
-          <section ref={heroRef} className="relative overflow-hidden bg-background">
-            <HeroSlider />
-            
-            {!isScrolled && (
-              <motion.div
-                onClick={() => scrollToSection(servicesRef)}
-                className="absolute bottom-24 left-1/2 transform -translate-x-1/2 cursor-pointer hidden md:flex flex-col items-center bg-background/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-md z-30"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <span className="text-sm font-medium mb-1">Scroll Down</span>
-                <ArrowDown className="h-5 w-5" />
-              </motion.div>
-            )}
-
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-muted/30 to-transparent pointer-events-none" />
-
-            <motion.div
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0.5 h-24 bg-gradient-to-b from-transparent via-vision-gold/30 to-vision-gold/50"
-              initial={{ height: 0 }}
-              animate={{ height: 70 }}
-              transition={{ duration: 1, delay: 1 }}
-            />
+          {/* Hero Banner: Interactive 3D Spline Demo */}
+          <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
+            <div className="w-full max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8 h-full py-0">
+              {/* Left: Hero Text Content */}
+              <div className="flex-1 text-left z-10 max-w-xl">
+                <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                  We build <span className="text-yellow-400">AI Agents</span><br />
+                  and <span className="text-yellow-400">Digital Marketing</span><br />
+                  that transform<br />
+                  businesses
+                </h1>
+                <p className="text-lg text-white/80 mb-2 font-semibold">Increase productivity by <span className="text-yellow-400 font-bold">100%</span> through AI integration</p>
+                <p className="text-lg text-white/80 mb-2 font-semibold">Boost sales by <span className="text-yellow-400 font-bold">200%</span> with our digital solutions</p>
+                <p className="text-base text-white/70 mb-8">Virelity.com delivers cutting-edge AI agents, web solutions, mobile apps, and digital strategies that drive growth and innovation for modern businesses.</p>
+              </div>
+              {/* Right: 3D Spline Demo (absolutely positioned, always interactive) */}
+              <div className="flex-1 min-w-[320px] max-w-xl w-full h-[500px] relative flex items-center justify-center">
+                <div className="absolute inset-0 w-full h-full pointer-events-auto z-0">
+                  <SplineScene 
+                    className="w-full h-full" 
+                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
+                  />
+                </div>
+              </div>
+            </div>
           </section>
+
+          {/* Only one set of scroll-driven Zoom Sections should be rendered here. */}
 
           {/* Services Section */}
           <motion.section

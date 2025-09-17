@@ -151,10 +151,10 @@ const Services = () => {
         style={{ textDecoration: 'none' }}
       >
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 80, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: index * 0.12, type: "spring", bounce: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           className="bg-card border border-border rounded-xl p-6 border-vision-gold/30 shadow-lg transition-all duration-300 flex flex-col h-full overflow-hidden group relative cursor-pointer focus:ring-2 focus:ring-vision-gold"
           style={{ minHeight: "320px" }}
         >
