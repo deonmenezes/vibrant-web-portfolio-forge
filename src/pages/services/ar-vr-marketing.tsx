@@ -40,26 +40,6 @@ const ARVRMarketingService = () => {
             title: "Interactive Product Demos",
             description: "Let customers explore and interact with products in virtual environments before making purchase decisions."
         },
-        {
-            icon: Eye,
-            title: "Virtual Showrooms",
-            description: "Showcase your entire product catalog in immersive 3D environments accessible from anywhere."
-        },
-        {
-            icon: Share2,
-            title: "Social AR Campaigns",
-            description: "Viral AR filters and experiences that encourage user-generated content and social sharing."
-        },
-        {
-            icon: BarChart3,
-            title: "Data-Driven Insights",
-            description: "Track engagement metrics and user behavior to optimize your AR/VR marketing campaigns."
-        },
-        {
-            icon: Smartphone,
-            title: "Cross-Platform Reach",
-            description: "Deploy campaigns across mobile AR, web-based experiences, and VR headsets for maximum reach."
-        }
     ];
 
     const applications = [
@@ -183,23 +163,45 @@ const ARVRMarketingService = () => {
             description: "Interactive AR experience allowing customers to visualize products in their space",
             video: "/videos/ar-smart-home-demo.gif",
             iconBg: "bg-green-500",
-            icon: <span className="inline-block text-white text-xl">📱</span>,
         },
         {
             title: "Virtual Showroom",
             description: "Immersive VR showroom for luxury brands to showcase their collections",
             video: "/videos/arservice.mp4",
             iconBg: "bg-purple-500",
-            icon: <span className="inline-block text-white text-xl">🏪</span>,
         },
         {
             title: "Interactive Brand Experience",
             description: "Gamified AR experience that tells brand story through interactive elements",
             video: "/videos/AR.gif",
             iconBg: "bg-blue-500",
-            icon: <span className="inline-block text-white text-xl">🎯</span>,
         },
+        // XR/AR/VR Experience items merged from xrServices
+        
+    { title: "Phygital ARcade", description: "XR/AR/VR Experience", video: "https://github.com/kgediya/ARcade-Racer/raw/main/Preview%20Files/preview1.gif", iconBg: "bg-orange-500" },
+    { title: "3D Product Showcase", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image26.gif", iconBg: "bg-orange-500" },
+    { title: "Festive Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image29.gif", iconBg: "bg-orange-500" },
+    { title: "Branded Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image30.gif", iconBg: "bg-orange-500" },
+    { title: "Rewards Reveal", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image32.gif", iconBg: "bg-orange-500" },
+    { title: "Location Based", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image50.gif", iconBg: "bg-orange-500" },
+    { title: "Product Features Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image41.gif", iconBg: "bg-orange-500" },
+    { title: "Themed Product Showcases", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image43.gif", iconBg: "bg-orange-500" },
+    { title: "Gamified Promotions", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image44.gif", iconBg: "bg-orange-500" },
+    { title: "2 Player Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image45.gif", iconBg: "bg-orange-500" },
+    { title: "Fiction To Reality", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image47.gif", iconBg: "bg-orange-500" },
+    { title: "Launch 360 Zones", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image48.gif", iconBg: "bg-orange-500" },
+    { title: "Educational", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image49.gif", iconBg: "bg-orange-500" },
+    { title: "Try On Engagement", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image51.gif", iconBg: "bg-orange-500" },
+    { title: "Sky Segmentation", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image10.gif", iconBg: "bg-orange-500" },
+    { title: "Novelty Fashion", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image20.gif", iconBg: "bg-orange-500" },
+    { title: "Custom Try On", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image46.gif", iconBg: "bg-orange-500" },
+    { title: "Brand Engagement", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image40.gif", iconBg: "bg-orange-500" },
+    { title: "Themed Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image37.gif", iconBg: "bg-orange-500" },
+    { title: "Product Showcase", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image36.gif", iconBg: "bg-orange-500" },
+        
     ];
+
+    // XR/AR/VR Experience Categories (moved from Services page)
 
     return (
         <div className="min-h-screen bg-background">
@@ -295,21 +297,15 @@ const ARVRMarketingService = () => {
                                         <span className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-lg font-bold shadow ${project.iconBg}`}>{project.icon}</span>
                                     </div>
                                 </div>
-                                <div className="p-6 absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/30 to-transparent">
-                                    <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">{project.title}</h3>
-                                    <p className="text-white/90 mb-4 drop-shadow-lg">{project.description}</p>
-                                    <a href="#" className="learn-more-btn">
-                                        <span>Learn more</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                        </svg>
-                                    </a>
+                                <div className="p-6 absolute inset-0 flex flex-col justify-end items-center bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+                                    <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg text-center">{project.title}</h3>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
+
 
             {/* Features Section */}
             <section className="py-20">
