@@ -1,3 +1,38 @@
+// ZoomSection: scroll-driven zoom-in effect for full-page sections
+import { useWindowScroll } from "react-use";
+
+const ZoomSection = ({ children, index }) => {
+  const sectionRef = useRef(null);
+  const { y: scrollY } = useWindowScroll();
+  const [sectionTop, setSectionTop] = useState(0);
+  const [sectionHeight, setSectionHeight] = useState(0);
+
+  useEffect(() => {
+    if (sectionRef.current) {
+      setSectionTop(sectionRef.current.offsetTop);
+      setSectionHeight(sectionRef.current.offsetHeight);
+    }
+  }, [sectionRef, children]);
+
+  // Calculate progress for zoom effect
+  const progress = Math.min(
+    Math.max((scrollY - sectionTop + window.innerHeight) / (sectionHeight + window.innerHeight), 0),
+    1
+  );
+  const scale = 1 + progress * 0.2;
+  const opacity = 0.7 + progress * 0.3;
+
+  return (
+    <motion.section
+      ref={sectionRef}
+      style={{ scale, opacity }}
+      className="relative z-10"
+      transition={{ type: "spring", bounce: 0.2 }}
+    >
+      {children}
+    </motion.section>
+  );
+};
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -11,6 +46,7 @@ import { useAnalyticsEvents } from "@/hooks/use-analytics";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { HeroSlider } from "@/components/HeroSlider";
 import React, { useRef, useEffect, useState } from "react";
+import { SplineScene } from "@/components/ui/splite";
 
 // --- HELPER COMPONENTS (Defined ONCE, outside Index) ---
 
@@ -277,31 +313,14 @@ const Index = () => {
         <div className="min-h-screen flex flex-col overflow-hidden">
           <Navbar />
 
-          {/* Hero Section */}
-          <section ref={heroRef} className="relative overflow-hidden bg-background">
+          {/* Hero Banner with Slider and Animated Robot */}
+          <section className="relative min-h-screen bg-black overflow-hidden">
+
+            {/* Hero Slider */}
             <HeroSlider />
-            
-            {!isScrolled && (
-              <motion.div
-                onClick={() => scrollToSection(servicesRef)}
-                className="absolute bottom-24 left-1/2 transform -translate-x-1/2 cursor-pointer hidden md:flex flex-col items-center bg-background/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-md z-30"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <span className="text-sm font-medium mb-1">Scroll Down.</span>
-                <ArrowDown className="h-5 w-5" />
-              </motion.div>
-            )}
-
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-muted/30 to-transparent pointer-events-none" />
-
-            <motion.div
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0.5 h-24 bg-gradient-to-b from-transparent via-vision-gold/30 to-vision-gold/50"
-              initial={{ height: 0 }}
-              animate={{ height: 70 }}
-              transition={{ duration: 1, delay: 1 }}
-            />
           </section>
+
+          {/* Only one set of scroll-driven Zoom Sections should be rendered here. */}
 
           {/* Services Section */}
           <motion.section
@@ -310,10 +329,58 @@ const Index = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="py-24 bg-muted/30 relative overflow-hidden"
+            className="py-12 bg-black relative overflow-hidden"
           >
+            {/* 3D Robot centered with better design */}
+            <motion.div
+              initial={{ y: -100, opacity: 0, scale: 0.8 }}
+              whileInView={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 2, 
+                ease: "easeOut",
+                delay: 0.3 
+              }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center mb-8"
+            >
+              {/* Robot container with background */}
+              <div className="relative mb-6">
+                <div className="w-80 h-80 lg:w-96 lg:h-96 relative rounded-2xl overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10">
+                  <SplineScene 
+                    className="w-full h-full" 
+                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
+                  />
+                </div>
+                {/* Glow effect around robot */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 via-transparent to-yellow-400/20 blur-xl -z-10"></div>
+              </div>
+
+              {/* Text content below robot */}
+              <div className="text-center max-w-2xl px-4">
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  viewport={{ once: true }}
+                  className="text-2xl lg:text-3xl font-bold text-white mb-4"
+                >
+                  Meet Our <span className="text-yellow-400">AI Assistant</span>
+                </motion.h3>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                  viewport={{ once: true }}
+                  className="text-lg text-white/80"
+                >
+                  Our advanced AI robot represents the cutting-edge technology that powers all our solutions. 
+                  It's designed to understand, learn, and adapt to your business needs.
+                </motion.p>
+              </div>
+            </motion.div>
+
             <div className="container">
-              <div className="text-center max-w-2xl mx-auto mb-16">
+              <div className="text-center max-w-2xl mx-auto mb-16 mt-8">
                 <motion.h2
                   {...sharedAnimationProps}
                   transition={{ duration: 0.5, delay: 0.1 }}

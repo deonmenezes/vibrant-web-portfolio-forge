@@ -3,6 +3,7 @@ import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PageTransition } from "@/components/PageTransition";
+import Example from "../components/image-gallery";
 import { motion } from "framer-motion";
 
 const About = () => {
@@ -96,47 +97,32 @@ const About = () => {
             </div>
           </div>
         </section>
-
         {/* About Us Content */}
         <section className="py-16">
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div className="relative">
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="relative z-10 rounded-2xl overflow-hidden shadow-xl"
-                >
-                  <img
-                    src="/about.JPG"
-                    alt="Virelity.com Office"
-                    className="w-full max-h-[420px] object-cover rounded-lg shadow-lg"
-                  />
-                </motion.div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[80%] max-h-[80%] rounded-full bg-primary/20 blur-3xl -z-10" />
+                {/* Gallery replaces the photo section */}
+                <Example />
               </div>
-
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="space-y-6"
+                className="space-y-6 max-w-xl mx-auto lg:mx-0 lg:ml-16"
               >
-                <h2 className="text-3xl font-bold">Who We Are</h2>
-                <p className="text-muted-foreground">
+                <h2 className="text-2xl font-bold">Who We Are</h2>
+                <p className="text-base text-muted-foreground">
                   Founded in 2018, Virelity.com has been at the forefront of digital innovation, helping businesses transform their online presence and leverage technology to achieve their goals.
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   Our team of expert designers, developers, and strategists combines creativity with technical expertise to deliver solutions that not only look great but perform exceptionally well.
                 </p>
-                <h2 className="text-3xl font-bold pt-4">Our Mission</h2>
-                <p className="text-muted-foreground">
+                <h2 className="text-2xl font-bold pt-4">Our Mission</h2>
+                <p className="text-base text-muted-foreground">
                   To empower businesses through innovative digital solutions that drive growth, enhance user experiences, and create lasting value in an ever-evolving digital landscape.
                 </p>
-
                 <div className="pt-4">
                   <Button className="bg-primary hover:bg-primary/90 text-white">Learn About Our Team</Button>
                 </div>
@@ -144,6 +130,8 @@ const About = () => {
             </div>
           </div>
         </section>
+
+        {/* Remove duplicate About Us section. Only keep the previous one with gallery. */}
 
         {/* Stats Section */}
         <section className="py-16 bg-gradient-bg text-white">
