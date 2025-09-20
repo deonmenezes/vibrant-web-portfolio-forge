@@ -103,16 +103,16 @@ function ServiceCard({ title, description, icon, index, bgImage, bgVideo, link }
       tabIndex={0}
       style={{ textDecoration: 'none' }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        viewport={{ once: true }}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
         className="bg-card border border-border rounded-lg p-6 border-vision-gold/30 shadow-lg transition-all duration-300 flex flex-col h-full overflow-hidden group relative cursor-pointer focus:ring-2 focus:ring-vision-gold"
-        style={{ minHeight: "320px" }}
-      >
+      style={{ minHeight: "320px" }}
+    >
         {/* Background image/video with overlay */}
-        <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full">
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-background/80 to-background z-10 opacity-60 transition-opacity duration-500" />
           {bgVideo ? (
             bgVideo.endsWith('.gif') ? (
@@ -133,15 +133,15 @@ function ServiceCard({ title, description, icon, index, bgImage, bgVideo, link }
               />
             )
           ) : (
-            <img
-              src={bgImage}
-              alt={title}
-              className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
-            />
+        <img
+          src={bgImage}
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-70 group-hover:scale-110 group-hover:brightness-125 transition-all duration-500"
+        />
           )}
-        </div>
+      </div>
 
-        {/* Content */}
+      {/* Content */}
         <div className="relative z-20 h-full flex flex-col justify-between">
           {/* Icon at top-left */}
           <div className="flex justify-start p-6">
@@ -155,9 +155,9 @@ function ServiceCard({ title, description, icon, index, bgImage, bgVideo, link }
           {/* Title at bottom center */}
           <div className="p-6 pt-0 flex justify-center">
             <h3 className="text-xl font-semibold text-white text-center">{title}</h3>
-          </div>
         </div>
-      </motion.div>
+      </div>
+    </motion.div>
     </Link>
   );
 }
@@ -341,41 +341,40 @@ const Index = () => {
                 delay: 0.3 
               }}
               viewport={{ once: true }}
-              className="flex flex-col items-center mb-8"
+              className="flex flex-col items-center mb-8 -mt-8"
             >
-              {/* Robot container with background */}
-              <div className="relative mb-6">
-                <div className="w-80 h-80 lg:w-96 lg:h-96 relative rounded-2xl overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10">
+              {/* Robot and Text side by side */}
+              <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 mb-6">
+                {/* Text content on the left */}
+                <div className="text-center lg:text-left max-w-2xl px-4 order-2 lg:order-1">
+                  <motion.h3
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    viewport={{ once: true }}
+                    className="text-4xl lg:text-5xl font-bold text-white mb-6"
+                  >
+                    Meet Our <span className="text-yellow-400">AI Assistant</span>
+                  </motion.h3>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.7 }}
+                    viewport={{ once: true }}
+                    className="text-xl lg:text-2xl text-white/80"
+                  >
+                    Our advanced AI robot represents the cutting-edge technology that powers all our solutions. 
+                    It's designed to understand, learn, and adapt to your business needs.
+                  </motion.p>
+                </div>
+
+                {/* 3D Robot on the right */}
+                <div className="order-1 lg:order-2">
                   <SplineScene 
-                    className="w-full h-full" 
+                    className="w-[32rem] h-[32rem] lg:w-[40rem] lg:h-[40rem]" 
                     scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                   />
                 </div>
-                {/* Glow effect around robot */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 via-transparent to-yellow-400/20 blur-xl -z-10"></div>
-              </div>
-
-              {/* Text content below robot */}
-              <div className="text-center max-w-2xl px-4">
-                <motion.h3
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                  viewport={{ once: true }}
-                  className="text-2xl lg:text-3xl font-bold text-white mb-4"
-                >
-                  Meet Our <span className="text-yellow-400">AI Assistant</span>
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                  viewport={{ once: true }}
-                  className="text-lg text-white/80"
-                >
-                  Our advanced AI robot represents the cutting-edge technology that powers all our solutions. 
-                  It's designed to understand, learn, and adapt to your business needs.
-                </motion.p>
               </div>
             </motion.div>
 
