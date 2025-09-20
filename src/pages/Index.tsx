@@ -313,31 +313,11 @@ const Index = () => {
         <div className="min-h-screen flex flex-col overflow-hidden">
           <Navbar />
 
-          {/* Hero Banner: Interactive 3D Spline Demo */}
-          <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
-            <div className="w-full max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8 h-full py-0">
-              {/* Left: Hero Text Content */}
-              <div className="flex-1 text-left z-10 max-w-xl">
-                <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
-                  We build <span className="text-yellow-400">AI Agents</span><br />
-                  and <span className="text-yellow-400">Digital Marketing</span><br />
-                  that transform<br />
-                  businesses
-                </h1>
-                <p className="text-lg text-white/80 mb-2 font-semibold">Increase productivity by <span className="text-yellow-400 font-bold">100%</span> through AI integration</p>
-                <p className="text-lg text-white/80 mb-2 font-semibold">Boost sales by <span className="text-yellow-400 font-bold">200%</span> with our digital solutions</p>
-                <p className="text-base text-white/70 mb-8">Virelity.com delivers cutting-edge AI agents, web solutions, mobile apps, and digital strategies that drive growth and innovation for modern businesses.</p>
-              </div>
-              {/* Right: 3D Spline Demo (absolutely positioned, always interactive) */}
-              <div className="flex-1 min-w-[320px] max-w-xl w-full h-[500px] relative flex items-center justify-center">
-                <div className="absolute inset-0 w-full h-full pointer-events-auto z-0">
-                  <SplineScene 
-                    className="w-full h-full" 
-                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
-                  />
-                </div>
-              </div>
-            </div>
+          {/* Hero Banner with Slider and Animated Robot */}
+          <section className="relative min-h-screen bg-black overflow-hidden">
+
+            {/* Hero Slider */}
+            <HeroSlider />
           </section>
 
           {/* Only one set of scroll-driven Zoom Sections should be rendered here. */}
@@ -349,10 +329,58 @@ const Index = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="py-24 bg-muted/30 relative overflow-hidden"
+            className="py-12 bg-black relative overflow-hidden"
           >
+            {/* 3D Robot centered with better design */}
+            <motion.div
+              initial={{ y: -100, opacity: 0, scale: 0.8 }}
+              whileInView={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 2, 
+                ease: "easeOut",
+                delay: 0.3 
+              }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center mb-8"
+            >
+              {/* Robot container with background */}
+              <div className="relative mb-6">
+                <div className="w-80 h-80 lg:w-96 lg:h-96 relative rounded-2xl overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10">
+                  <SplineScene 
+                    className="w-full h-full" 
+                    scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
+                  />
+                </div>
+                {/* Glow effect around robot */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 via-transparent to-yellow-400/20 blur-xl -z-10"></div>
+              </div>
+
+              {/* Text content below robot */}
+              <div className="text-center max-w-2xl px-4">
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  viewport={{ once: true }}
+                  className="text-2xl lg:text-3xl font-bold text-white mb-4"
+                >
+                  Meet Our <span className="text-yellow-400">AI Assistant</span>
+                </motion.h3>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                  viewport={{ once: true }}
+                  className="text-lg text-white/80"
+                >
+                  Our advanced AI robot represents the cutting-edge technology that powers all our solutions. 
+                  It's designed to understand, learn, and adapt to your business needs.
+                </motion.p>
+              </div>
+            </motion.div>
+
             <div className="container">
-              <div className="text-center max-w-2xl mx-auto mb-16">
+              <div className="text-center max-w-2xl mx-auto mb-16 mt-8">
                 <motion.h2
                   {...sharedAnimationProps}
                   transition={{ duration: 0.5, delay: 0.1 }}
