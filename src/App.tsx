@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
+import Utility from "./pages/Utility";
 import About from "./pages/About";
 import Team from "./pages/Team";
 import Services from "./pages/Services";
@@ -37,6 +38,7 @@ const AppWithAnalytics = () => {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/utility" element={<Utility />} />
         <Route path="/about" element={<About />} />
         <Route path="/team" element={<Team />} />
         <Route path="/services" element={<Services />} />

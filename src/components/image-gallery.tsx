@@ -14,10 +14,9 @@ export default function Example() {
 
       <section className="w-full flex flex-col items-center justify-start py-12">
         <div className="max-w-3xl text-center px-4">
-          <h1 className="text-3xl font-semibold">Our Latest Creations</h1>
+          <h1 className="text-3xl font-semibold">Meet Our Amazing Team</h1>
           <p className="text-sm text-slate-500 mt-2">
-            A visual collection of our most recent works – each piece crafted
-            with intention, emotion, and style.
+            The talented individuals who bring creativity, expertise, and passion to every project we deliver.
           </p>
         </div>
 
@@ -26,7 +25,7 @@ export default function Example() {
           {[
             "/about.JPG",
             "/office.png",
-            "https://images.unsplash.com/photo-1555212697-194d092e3b8f?q=80&h=800&w=800&auto=format&fit=crop",
+            "/deon.png",
             "https://images.unsplash.com/photo-1729086046027-09979ade13fd?q=80&h=800&w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1601568494843-772eb04aca5d?q=80&h=800&w=800&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1585687501004-615dfdfde7f1?q=80&h=800&w=800&auto=format&fit=crop",
