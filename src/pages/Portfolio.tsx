@@ -138,6 +138,22 @@ const Portfolio = () => {
       category: "web",
       url: "https://globeox-navinsir.vercel.app/",
     },
+    {
+      title: "AI Watermark Remover",
+      description: "Advanced web application using computer vision and AI to intelligently remove watermarks from images while preserving quality and protecting faces.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000",
+      tags: ["AI", "Computer Vision", "Web"],
+      category: "web",
+      url: "https://the-auto-watermark.netlify.app/",
+    },
+    {
+      title: "BackDrop",
+      description: "Web-based tool for creating visually appealing text effects by placing text behind images, enhancing website aesthetics with seamless HTML, CSS, and JavaScript integration.",
+      image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=1000",
+      tags: ["Web Design", "CSS", "JavaScript"],
+      category: "web",
+      url: "http://text-behind-image.ap-south-1.elasticbeanstalk.com/",
+    },
     // --- Mobile Projects ---
     {
       title: "Quizitt Mobile",
