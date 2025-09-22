@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, User, Home, Info, Briefcase, MessageSquare, Calendar, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
+import { SocialConnect } from "@/components/SocialConnect";
 
 export const Footer = () => {
   const openWhatsAppBooking = () => {
@@ -21,25 +22,8 @@ export const Footer = () => {
             <p className="text-gray-300 mb-6">
               Creating innovative digital experiences that transform businesses and delight users.
             </p>
-            <div className="flex space-x-4">
-              <a
-                href="https://www.instagram.com/virelity_?igsh=MWo0dDR5aXhjajY1dA=="
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r from-purple-500 to-pink-500 transition-colors duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/quizitt/posts/?feedView=all"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition-colors duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+            <div className="mb-6">
+              <SocialConnect />
             </div>
           </div>
 

@@ -15,6 +15,7 @@ const navItems = [
   { name: "Home", path: "/", title: "Virelity.com Homepage - AI Agents & Digital Solutions" },
   { name: "Services", path: "/services", title: "Our AI & Digital Services - Web Development, Mobile Apps, AI Solutions" },
   { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
+  { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
   // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
@@ -61,6 +62,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageTitle = "Portfolio - Virelity.com | Our Projects & Case Studies";
         pageDescription = "View our portfolio of successful projects including AI applications, websites, mobile apps and digital solutions delivered to clients";
         pageKeywords = "portfolio, projects, case studies, web development projects, AI projects, digital solutions";
+        break;
+      case "/utility":
+        pageTitle = "Utility Tools - Virelity.com | AI Watermark Remover, BackDrop & More";
+        pageDescription = "Explore our collection of utility tools including AI Watermark Remover, BackDrop text effects, and other helpful web applications";
+        pageKeywords = "utility tools, AI watermark remover, backdrop, text effects, web tools, free tools";
         break;
       case "/about":
         pageTitle = "About Us - Virelity.com | Our Story & Values";

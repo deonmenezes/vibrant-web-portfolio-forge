@@ -432,3 +432,94 @@
 .vision-black {
   color: #0F172A;
 }
+
+/* Social Connect Styles */
+.social-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.icon-container {
+  display: inline-flex;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icon:hover .icon-container {
+  transform: translateY(-8px) scale(1.1);
+}
+
+.social-icon:hover .icon-label {
+  opacity: 1;
+  transform: translateY(5px);
+}
+
+.icon-label {
+  margin-top: 8px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.social-icon.instagram:hover .icon-container {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  box-shadow: 0 0 20px rgba(225, 48, 108, 0.6);
+}
+
+
+.social-icon.linkedin:hover .icon-container {
+  background: #0077b5;
+  box-shadow: 0 0 20px rgba(0, 119, 181, 0.6);
+}
+
+.social-icon.whatsapp:hover .icon-container {
+  background: #25D366;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
+}
+
+.social-icon:hover svg {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-3px) rotate(-3deg); }
+  40% { transform: translateX(3px) rotate(3deg); }
+  60% { transform: translateX(-3px) rotate(-3deg); }
+  80% { transform: translateX(3px) rotate(3deg); }
+}
+
+.icon-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.social-icon:hover .icon-container::before {
+  opacity: 1;
+}
