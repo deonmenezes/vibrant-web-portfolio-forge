@@ -14,10 +14,9 @@ export default function Example() {
 
       <section className="w-full flex flex-col items-center justify-start py-12">
         <div className="max-w-3xl text-center px-4">
-          <h1 className="text-3xl font-semibold">Our Latest Creations</h1>
+          <h1 className="text-3xl font-semibold">Meet Our Amazing Team</h1>
           <p className="text-sm text-slate-500 mt-2">
-            A visual collection of our most recent works – each piece crafted
-            with intention, emotion, and style.
+            The talented individuals who bring creativity, expertise, and passion to every project we deliver.
           </p>
         </div>
 
