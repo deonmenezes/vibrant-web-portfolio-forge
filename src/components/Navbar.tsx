@@ -17,6 +17,7 @@ const navItems = [
   { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
   { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
+  { name: "Career", path: "/career", title: "Join Our Team - Career Opportunities at Virelity.com" },
   // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
 ];
@@ -77,6 +78,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageTitle = "Contact Us - Virelity.com | Get in Touch";
         pageDescription = "Contact our team for inquiries, quotes or to discuss your project. Book a free 15-minute consultation call.";
         pageKeywords = "contact, support, inquiry, consultation, free call, project discussion";
+        break;
+      case "/career":
+        pageTitle = "Career Opportunities - Virelity.com | Join Our Team";
+        pageDescription = "Join our innovative team of AI and digital experts. Explore career opportunities in web development, design, and technology at Virelity.com";
+        pageKeywords = "career, jobs, employment, web development jobs, AI jobs, tech careers, join our team";
         break;
       default:
         // Home page or fallback
