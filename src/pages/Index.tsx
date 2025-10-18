@@ -272,7 +272,7 @@ const Index = () => {
       description: "AI-powered quiz platform generating personalized quizzes on any topic. Helps users learn efficiently with adaptive question paths.",
       image: "/quizitt.png",
       tags: ["AI", "EdTech", "React"],
-      url: "https://quizitt.com",
+      url: "https://quizitt.com/",
     },
     {
       title: "CatchPhish",
