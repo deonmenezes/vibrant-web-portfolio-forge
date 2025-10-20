@@ -162,6 +162,15 @@ const Portfolio = () => {
       category: "web",
       url: "",
     },
+     {
+      title: "6am Mart",
+      description: "Multi-Vendor Delivery Platform(Admin, Store, and User App)it is a complete multi-vendor delivery solution that lets you manage food, grocery, pharmacy, parcel on one responsive website.",
+      image: "/6am.png",
+      tags: ["Data Viz", "Analytics", "React"],
+      category: "web",
+      url: "",
+    },
+    
     // --- Mobile Projects ---
     {
       title: "Quizitt Mobile",
