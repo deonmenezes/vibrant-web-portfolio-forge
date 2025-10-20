@@ -171,14 +171,6 @@ const Portfolio = () => {
       category: "mobile",
       url: "https://quizitt.com",
     },
-    // {
-    //   title: "Zecurity",
-    //   description: "On-demand bodyguard booking for instant protection and peace of mind.",
-    //   image: "/bodyguard_logo.png",
-    //   tags: ["Mobile","Flutter","Security"],
-    //   category: "mobile",
-    //   url: "#",
-    // },
     {
       title: "PetroGo",
       description: "PetroGo: The smarter way to manage petrol pumps—no paperwork, no Excel.",
