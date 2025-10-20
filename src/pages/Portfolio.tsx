@@ -112,7 +112,7 @@ const Portfolio = () => {
       image: "https://www.smoothtradings.com/_next/image?url=%2FclientAntim_logo.png&w=1920&q=75",
       tags: ["Auth", "React", "NextJS"],
       category: "web",
-      url: "https://clerk-antim.vercel.app/",
+      url: "https://www.smoothtradings.com/",
     },
     {
       title: "InnerMech",
@@ -150,6 +150,14 @@ const Portfolio = () => {
       title: "Zecurity",
       description: "Welcome to Zecurity, the revolutionary app that puts your personal safety in your hands. We are the 'Uber for Bodyguards,' providing seamlessly on-demand.",
       image: "/zec.png",
+      tags: ["Data Viz", "Analytics", "React"],
+      category: "web",
+      url: "",
+    },
+    {
+      title: "Shopify Projects",
+      description: "The Shopify App Store offers thousands of apps (both free and paid) that can add virtually any feature you might need, from advanced SEO and marketing tools to customer service and dropshipping integrations.",
+      image: "https://www.trooinbound.com/wp-content/uploads/2023/02/shopify_hero_img-1.png",
       tags: ["Data Viz", "Analytics", "React"],
       category: "web",
       url: "",

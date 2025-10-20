@@ -21,6 +21,12 @@ export const ProjectCard = ({
   index,
 }: ProjectCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  
+  // Check if URL is external (starts with http/https) or internal
+  const isExternalUrl = url.startsWith('http://') || url.startsWith('https://');
+  
+  // Don't render button if URL is empty or just "#"
+  const hasValidUrl = url && url !== '#';
 
   return (
     <div
@@ -35,7 +41,7 @@ export const ProjectCard = ({
         )}
       >
         {/* Front of Card */}
-        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-neutral-900 rounded-xl overflow-hidden shadow-lg">
+        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-neutral-900 rounded-xl overflow-hidden shadow-lg pointer-events-none">
           <img
             src={image}
             alt={`${title} project screenshot`}
@@ -59,7 +65,7 @@ export const ProjectCard = ({
 
         {/* Back of Card */}
         <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-vision-dark via-vision-black to-neutral-900 rounded-xl overflow-hidden shadow-lg">
-          <div className="relative z-10 p-6 h-full flex flex-col justify-between text-white">
+          <div className="relative z-10 p-6 h-full flex flex-col justify-between text-white pointer-events-auto">
             <div>
               <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
               <p className="text-white text-sm leading-relaxed mb-4">
@@ -76,10 +82,35 @@ export const ProjectCard = ({
                 ))}
               </div>
             </div>
-            <div className="flex justify-center">
-              <Button asChild className="gold-gradient hover:gold-glow text-vision-black w-full">
-                <Link to={url} title={`View ${title} project details and case study`}>View Project</Link>
-              </Button>
+            <div className="flex justify-center relative z-50">
+              {hasValidUrl && (
+                isExternalUrl ? (
+                  <a 
+                    href={url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="gold-gradient hover:gold-glow text-vision-black w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 cursor-pointer"
+                    title={`View ${title} project details and case study`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View Project
+                  </a>
+                ) : (
+                  <Link 
+                    to={url} 
+                    className="gold-gradient hover:gold-glow text-vision-black w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 cursor-pointer"
+                    title={`View ${title} project details and case study`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View Project
+                  </Link>
+                )
+              )}
+              {!hasValidUrl && (
+                <button disabled className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 opacity-50 cursor-not-allowed bg-muted text-muted-foreground">
+                  Coming Soon
+                </button>
+              )}
             </div>
           </div>
         </div>
