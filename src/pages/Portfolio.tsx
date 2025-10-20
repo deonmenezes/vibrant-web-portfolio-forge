@@ -109,7 +109,7 @@ const Portfolio = () => {
     {
       title: "Clerk Authentication",
       description: "Implementation of Clerk's modern authentication system with seamless social logins, secure user management, and customizable UI components.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d1b4bab8c?auto=format&fit=crop&q=80&w=1000",
+      image: "https://www.smoothtradings.com/_next/image?url=%2FclientAntim_logo.png&w=1920&q=75",
       tags: ["Auth", "React", "NextJS"],
       category: "web",
       url: "https://clerk-antim.vercel.app/",
@@ -137,6 +137,22 @@ const Portfolio = () => {
       tags: ["Data Viz", "Analytics", "React"],
       category: "web",
       url: "https://globeox-navinsir.vercel.app/",
+    },
+    {
+      title: "Sharepoint Migration",
+      description: "Migrating your organization's data from on-premises servers SharePoint2013/2016,Dropbox to the modern SharePoint Online environment.",
+      image: "https://binhminhitc.com/images/File-Server-to-SharePoint-Migration-Using-Kernel-Migrator-for-SharePoint.png",
+      tags: ["Data Viz", "Analytics", "React"],
+      category: "web",
+      url: "",
+    },
+    {
+      title: "Zecurity",
+      description: "Welcome to Zecurity, the revolutionary app that puts your personal safety in your hands. We are the 'Uber for Bodyguards,' providing seamlessly on-demand.",
+      image: "/zec.png",
+      tags: ["Data Viz", "Analytics", "React"],
+      category: "web",
+      url: "",
     },
     // --- Mobile Projects ---
     {
