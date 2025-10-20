@@ -144,7 +144,7 @@ const Portfolio = () => {
       image: "https://binhminhitc.com/images/File-Server-to-SharePoint-Migration-Using-Kernel-Migrator-for-SharePoint.png",
       tags: ["Data Viz", "Analytics", "React"],
       category: "web",
-      url: "",
+      url: "none",
     },
     {
       title: "Zecurity",

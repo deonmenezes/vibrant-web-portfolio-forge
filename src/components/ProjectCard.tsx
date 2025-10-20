@@ -25,8 +25,11 @@ export const ProjectCard = ({
   // Check if URL is external (starts with http/https) or internal
   const isExternalUrl = url.startsWith('http://') || url.startsWith('https://');
   
-  // Don't render button if URL is empty or just "#"
-  const hasValidUrl = url && url !== '#';
+  // Don't render button if URL is "none", empty or just "#"
+  const hasValidUrl = url && url !== '#' && url !== 'none';
+  
+  // Show "Coming Soon" only if URL is empty but not "none"
+  const showComingSoon = (!url || url === '#') && url !== 'none';
 
   return (
     <div
@@ -106,7 +109,7 @@ export const ProjectCard = ({
                   </Link>
                 )
               )}
-              {!hasValidUrl && (
+              {showComingSoon && (
                 <button disabled className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 opacity-50 cursor-not-allowed bg-muted text-muted-foreground">
                   Coming Soon
                 </button>
