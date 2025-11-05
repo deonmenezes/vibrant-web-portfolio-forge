@@ -47,6 +47,7 @@ import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { HeroSlider } from "@/components/HeroSlider";
 import React, { useRef, useEffect, useState } from "react";
 import { SplineScene } from "@/components/ui/splite";
+import { OfferPopup } from "@/components/OfferPopup";
 
 // --- HELPER COMPONENTS (Defined ONCE, outside Index) ---
 
@@ -188,6 +189,7 @@ const Index = () => {
   const projectsRef = useRef(null);
   const ctaRef = useRef(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showOfferPopup, setShowOfferPopup] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.2]);
@@ -205,6 +207,43 @@ const Index = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Show offer popup for new sessions and re-show after 2 minutes
+  useEffect(() => {
+    const checkAndShowPopup = () => {
+      const lastShown = sessionStorage.getItem('offerPopupLastShown');
+      const now = Date.now();
+      
+      // Show if never shown, or if 2 minutes (120000ms) have passed
+      if (!lastShown || (now - parseInt(lastShown)) >= 120000) {
+        setShowOfferPopup(true);
+        sessionStorage.setItem('offerPopupLastShown', now.toString());
+        
+        // Track popup view in Meta Pixel
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'ViewContent', {
+            content_name: 'Website Development Offer Popup',
+            content_category: 'Offer Popup'
+          });
+        }
+      }
+    };
+
+    // Initial check after 2 seconds
+    const initialTimer = setTimeout(() => {
+      checkAndShowPopup();
+    }, 2000);
+
+    // Set up interval to check every minute (so it shows again after 2 minutes)
+    const interval = setInterval(() => {
+      checkAndShowPopup();
+    }, 60000); // Check every minute
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
   }, []);
 
   // Animated shared elements
@@ -468,6 +507,13 @@ const Index = () => {
           <Footer />
         </div>
       </motion.div>
+
+      {/* Offer Popup - Shows on new sessions and every 2 minutes */}
+      <OfferPopup 
+        open={showOfferPopup} 
+        onOpenChange={setShowOfferPopup}
+        videoSrc="/videos/offer-demo.mp4" // Update this path to your vertical video file
+      />
     </motion.div>
   );
 };
