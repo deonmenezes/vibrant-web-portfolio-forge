@@ -27,6 +27,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
+import { BookingProvider, useBooking } from "./contexts/BookingContext";
+import { BookingFormDialog } from "./components/BookingFormDialog";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +65,21 @@ const AppWithAnalytics = () => {
   );
 };
 
+const AppContent = () => {
+  const { isOpen, openBookingDialog, closeBookingDialog } = useBooking();
+
+  return (
+    <>
+      <ScrollToTop />
+      <AppWithAnalytics />
+      {/* Global components available on all pages */}
+      <AIChatbot />
+      <WhatsAppBooking />
+      <BookingFormDialog open={isOpen} onOpenChange={closeBookingDialog} />
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -70,13 +87,11 @@ const App = () => (
       <Sonner />
       {/* Global Lenis smooth scroll */}
       <LenisSmoothScroll />
-      <BrowserRouter>
-        <ScrollToTop />
-        <AppWithAnalytics />
-        {/* Global components available on all pages */}
-        <AIChatbot />
-        <WhatsAppBooking />
-      </BrowserRouter>
+      <BookingProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </BookingProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
