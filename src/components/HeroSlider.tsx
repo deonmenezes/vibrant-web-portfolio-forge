@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { HoverImageEffect } from '@/components/custom/HoverImageEffect';
+import { useBooking } from '@/contexts/BookingContext';
 
 // Animated Counter Component
 const AnimatedCounter = ({ end, duration = 2, suffix = "", className = "" }) => {
@@ -38,6 +39,7 @@ const AnimatedCounter = ({ end, duration = 2, suffix = "", className = "" }) => 
 export const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const { openBookingDialog } = useBooking();
 
   const slides = [
     {
@@ -126,19 +128,13 @@ export const HeroSlider = () => {
     }
   ];
 
-  const openWhatsAppBooking = () => {
-    const message = "Hello! I'd like to book a 15-minute free consultation call. Please let me know your available time slots. Thank you!";
-    const phoneNumber = "918104796542";
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-  };
-
   // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 2000); // Change slide every 3 seconds
+    }, 6000); // Change slide every 6 seconds
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, slides.length]);
@@ -253,7 +249,7 @@ export const HeroSlider = () => {
                 </Button>
                 <HoverImageEffect>
                   <Button
-                    onClick={openWhatsAppBooking}
+                    onClick={openBookingDialog}
                     className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg flex items-center gap-2"
                     title="Book a free 15-minute consultation call"
                   >

@@ -10,6 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Helmet } from "react-helmet-async";
+import { useBooking } from "@/contexts/BookingContext";
 
 const navItems = [
   { name: "Home", path: "/", title: "Virelity.com Homepage - AI Agents & Digital Solutions" },
@@ -30,6 +31,7 @@ type NavbarProps = {
 export const Navbar = ({ title = "Virelity.com - AI Agents that transform businesses", description = "We build AI Agents that transform businesses. Increase productivity by 100% through AI integration and boost sales by 100% with our solutions." }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { openBookingDialog } = useBooking();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,12 +41,6 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const openWhatsAppBooking = () => {
-    const message = "Hello! I'd like to book a 15-minute free consultation call. Please let me know your available time slots. Thank you!";
-    const phoneNumber = "918104796542";
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-  };
 
   // Create page-specific metadata based on current path
   const getPageMetadata = () => {
@@ -209,7 +205,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
           <div className="hidden md:flex items-center gap-4">
             <HoverImageEffect isNavbar={true}>
               <Button 
-                onClick={openWhatsAppBooking}
+                onClick={openBookingDialog}
                 className="gold-gradient hover:gold-glow text-vision-black transition-all duration-300 shadow-lg flex items-center gap-2"
                 aria-label="Book a free consultation call"
               >
@@ -259,7 +255,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                 <div className="mt-auto">
                   <HoverImageEffect>
                     <Button
-                      onClick={openWhatsAppBooking}
+                      onClick={openBookingDialog}
                       className="gold-gradient hover:gold-glow text-vision-black flex items-center gap-2 justify-center"
                       aria-label="Book a free consultation call"
                     >
