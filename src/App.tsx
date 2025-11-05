@@ -12,6 +12,7 @@ import Team from "./pages/Team";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Career from "./pages/Career";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import WebDevelopment from "./pages/services/web-development";
 import VRARDevelopment from "./pages/services/vr-ar-development";
@@ -45,6 +46,7 @@ const AppWithAnalytics = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/career" element={<Career />} />
+        <Route path="/privacy" element={<Privacy />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />

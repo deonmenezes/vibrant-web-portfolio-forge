@@ -131,7 +131,15 @@ export const Footer = () => {
         <div className="border-t border-white/10 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">&copy; 2025 Virelity.com. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#privacy" className="text-gray-400 hover:text-primary text-sm transition-colors duration-300">Privacy Policy</a>
+            <Link 
+              to="/privacy" 
+              className="text-gray-400 hover:text-primary text-sm transition-colors duration-300"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              Privacy Policy
+            </Link>
             <a href="#terms" className="text-gray-400 hover:text-primary text-sm transition-colors duration-300">Terms & Conditions</a>
           </div>
         </div>
