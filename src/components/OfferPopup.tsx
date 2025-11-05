@@ -69,8 +69,11 @@ export const OfferPopup = ({ open, onOpenChange, videoSrc = "/videos/offer-demo.
     };
 
     const handleEnded = () => {
+      // Video finished playing once - stop and show play button
       setIsPlaying(false);
       setShowPlayButton(true);
+      video.pause();
+      video.currentTime = 0; // Reset to beginning
     };
 
     video.addEventListener('play', handlePlay);
@@ -181,7 +184,6 @@ export const OfferPopup = ({ open, onOpenChange, videoSrc = "/videos/offer-demo.
                     className="w-full h-full object-cover"
                     src={videoSrc}
                     autoPlay
-                    loop
                     playsInline
                     onError={(e) => {
                       console.warn('Video not found, using placeholder');
@@ -264,7 +266,6 @@ export const OfferPopup = ({ open, onOpenChange, videoSrc = "/videos/offer-demo.
                   className="w-full h-full object-cover"
                   src={videoSrc}
                   autoPlay
-                  loop
                   playsInline
                   onError={(e) => {
                     console.warn('Video not found, using placeholder');

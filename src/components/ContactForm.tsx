@@ -73,7 +73,7 @@ export const ContactForm = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="John Doe"
+            placeholder="Enter your full name"
             required
             className="border-muted bg-background/50 focus:border-primary"
           />
@@ -88,7 +88,7 @@ export const ContactForm = () => {
             type="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="john@example.com"
+            placeholder="Enter your email address"
             required
             className="border-muted bg-background/50 focus:border-primary"
           />
@@ -105,7 +105,7 @@ export const ContactForm = () => {
             type="tel"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+1 (123) 456-7890"
+            placeholder="Enter your phone number"
             className="border-muted bg-background/50 focus:border-primary"
           />
         </div>
