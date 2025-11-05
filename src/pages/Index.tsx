@@ -176,6 +176,30 @@ const testimonialsData = [
       designation: "Founder",
       src: "/steve_logo.png",
     },
+    {
+      quote: "Their team delivered beyond expectations. From concept to launch, the communication and execution were flawless—our KPIs lifted within weeks.",
+      name: "Viren Ahuja",
+      designation: "Founder",
+      src: "/casa_logo.png",
+    },
+    {
+      quote: "We needed a reliable partner to scale quickly. The solution shipped on time, looked amazing, and performed even better—highly recommended.",
+      name: "Francis",
+      designation: "Operations Lead",
+      src: "/bodyguard_logo.png",
+    },
+    {
+      quote: "The attention to detail and user experience thinking really stood out. Our customers love the new interface and conversion is up.",
+      name: "Amar Patni",
+      designation: "Entrepreneur",
+      src: "/inermech.png",
+    },
+    {
+      quote: "From day one the process was smooth and collaborative. The final delivery exceeded expectations and helped us move faster.",
+      name: "Divya",
+      designation: "Marketing Head",
+      src: "/office.png",
+    },
 ];
 
 // --- MAIN PAGE COMPONENT ---
