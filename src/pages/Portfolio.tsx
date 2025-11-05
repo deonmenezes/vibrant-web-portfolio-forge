@@ -5,21 +5,26 @@ import { Button } from "@/components/ui/button";
 import { PageTransition } from "@/components/PageTransition";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useRef } from "react";
+import { useInView } from "framer-motion";
 
 // --- REDESIGNED VideoProjectCard to match your image ---
 const VideoProjectCard = ({ title, description, video, icon, iconBg, index }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
   return (
     <motion.div
-      className="group relative rounded-2xl overflow-hidden shadow-lg h-80 transition-all duration-300"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      ref={ref}
+  className="group bg-neutral-900 rounded-xl overflow-hidden shadow-lg aspect-[16/9] flex flex-col justify-end relative transition-all duration-300"
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.15, duration: 0.7, ease: "easeOut" }}
     >
       {/* Video Background */}
       <video
         src={video}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         autoPlay
         loop
         muted
@@ -50,6 +55,22 @@ const VideoProjectCard = ({ title, description, video, icon, iconBg, index }) =>
 
 const Portfolio = () => {
   const [filter, setFilter] = useState("all");
+
+  // Animated ProjectCard with scroll-triggered effect
+  const AnimatedProjectCard = (props) => {
+    const ref = useRef(null);
+    const inView = useInView(ref, { once: true, margin: "-100px" });
+      return (
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 80, scale: 0.98 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ delay: props.index * 0.2, duration: 0.5, type: "spring", bounce: 0.2 }}
+        >
+          <ProjectCard {...props} />
+        </motion.div>
+      );
+  };
 
   const projects = [
     // --- Web Projects ---
@@ -229,7 +250,7 @@ const Portfolio = () => {
 
             {/* Conditional Rendering Logic */}
             {filter === "branding" ? (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-6 md:p-10">
                 <div className="group border border-muted-foreground/10 rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
                   <div className="h-48 overflow-hidden">
                     <img
@@ -253,7 +274,7 @@ const Portfolio = () => {
                     </a>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ) : filter === "ar-vr" ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <div className="text-center max-w-3xl mx-auto mb-12">
@@ -263,36 +284,56 @@ const Portfolio = () => {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredProjects.map((project, index) => (
-                    <VideoProjectCard
-                      key={`${project.title}-${project.category}`}
-                      {...project}
-                      index={index}
-                    />
-                  ))}
+                  {filteredProjects.map((project, index) => {
+                    if (
+                      project.category === 'ar-vr' &&
+                      project.video &&
+                      project.icon &&
+                      project.iconBg
+                    ) {
+                      return (
+                        <VideoProjectCard
+                          key={`${project.title}-${project.category}`}
+                          title={project.title}
+                          description={project.description}
+                          video={project.video}
+                          icon={project.icon}
+                          iconBg={project.iconBg}
+                          index={index}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
                 </div>
               </motion.div>
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* This logic correctly renders different card types for the "All" filter */}
                 {filteredProjects.map((project, index) => {
-                  if (project.category === 'ar-vr') {
+                  if (
+                    project.category === 'ar-vr' &&
+                    project.video &&
+                    project.icon &&
+                    project.iconBg
+                  ) {
                     return (
                       <VideoProjectCard
                         key={`${project.title}-${project.category}`}
-                        {...project}
+                        title={project.title}
+                        description={project.description}
+                        video={project.video}
+                        icon={project.icon}
+                        iconBg={project.iconBg}
                         index={index}
                       />
                     );
                   }
-                  // This will render the branding card if it's in the filtered list
                   if (project.category === 'branding') {
-                     // We return null here because the branding card has a special layout
-                     // and shouldn't be rendered in the main grid.
-                     return null;
+                    return null;
                   }
                   return (
-                    <ProjectCard
+                    <AnimatedProjectCard
                       key={`${project.title}-${project.category}`}
                       {...project}
                       index={index}

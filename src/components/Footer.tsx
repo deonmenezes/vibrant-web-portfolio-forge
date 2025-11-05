@@ -2,13 +2,11 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, User, Home, Info, Briefcase, MessageSquare, Calendar, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
+import { SocialConnect } from "@/components/SocialConnect";
+import { useBooking } from "@/contexts/BookingContext";
 
 export const Footer = () => {
-  const openWhatsAppBooking = () => {
-    const message = "Hello! I'd like to book a 15-minute free consultation call. Please let me know your available time slots. Thank you!";
-    const phoneNumber = "918104796542";
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-  };
+  const { openBookingDialog } = useBooking();
 
   return (
     <footer className="bg-vision-dark text-white pt-16 pb-8">
@@ -21,25 +19,8 @@ export const Footer = () => {
             <p className="text-gray-300 mb-6">
               Creating innovative digital experiences that transform businesses and delight users.
             </p>
-            <div className="flex space-x-4">
-              <a
-                href="https://www.instagram.com/virelity_?igsh=MWo0dDR5aXhjajY1dA=="
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r from-purple-500 to-pink-500 transition-colors duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/quizitt/posts/?feedView=all"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition-colors duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+            <div className="mb-6">
+              <SocialConnect />
             </div>
           </div>
 
@@ -134,7 +115,7 @@ export const Footer = () => {
             </p>
             <HoverImageEffect>
               <Button 
-                onClick={openWhatsAppBooking}
+                onClick={openBookingDialog}
                 className="bg-green-600 hover:bg-green-700 w-full transition-colors duration-300 flex items-center justify-center gap-2"
               >
                 <Calendar className="h-4 w-4" />

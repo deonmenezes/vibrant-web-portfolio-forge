@@ -10,14 +10,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Helmet } from "react-helmet-async";
+import { useBooking } from "@/contexts/BookingContext";
 
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
-  { name: "Portfolio", path: "/portfolio" },
-  { name: "About", path: "/about" },
-  // { name: "Team", path: "/team" },
-  { name: "Contact", path: "/contact" },
+  { name: "Home", path: "/", title: "Virelity.com Homepage - AI Agents & Digital Solutions" },
+  { name: "Services", path: "/services", title: "Our AI & Digital Services - Web Development, Mobile Apps, AI Solutions" },
+  { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
+  { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
+  { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
+  { name: "Career", path: "/career", title: "Join Our Team - Career Opportunities at Virelity.com" },
+  // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
+  { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
 ];
 
 type NavbarProps = {
@@ -28,6 +31,7 @@ type NavbarProps = {
 export const Navbar = ({ title = "Virelity.com - AI Agents that transform businesses", description = "We build AI Agents that transform businesses. Increase productivity by 100% through AI integration and boost sales by 100% with our solutions." }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { openBookingDialog } = useBooking();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,12 +41,6 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const openWhatsAppBooking = () => {
-    const message = "Hello! I'd like to book a 15-minute free consultation call. Please let me know your available time slots. Thank you!";
-    const phoneNumber = "918104796542";
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-  };
 
   // Create page-specific metadata based on current path
   const getPageMetadata = () => {
@@ -62,6 +60,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageDescription = "View our portfolio of successful projects including AI applications, websites, mobile apps and digital solutions delivered to clients";
         pageKeywords = "portfolio, projects, case studies, web development projects, AI projects, digital solutions";
         break;
+      case "/utility":
+        pageTitle = "Utility Tools - Virelity.com | AI Watermark Remover, BackDrop & More";
+        pageDescription = "Explore our collection of utility tools including AI Watermark Remover, BackDrop text effects, and other helpful web applications";
+        pageKeywords = "utility tools, AI watermark remover, backdrop, text effects, web tools, free tools";
+        break;
       case "/about":
         pageTitle = "About Us - Virelity.com | Our Story & Values";
         pageDescription = "Learn about our team of experts, mission, values and our journey to becoming a leading AI and digital solutions provider";
@@ -71,6 +74,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageTitle = "Contact Us - Virelity.com | Get in Touch";
         pageDescription = "Contact our team for inquiries, quotes or to discuss your project. Book a free 15-minute consultation call.";
         pageKeywords = "contact, support, inquiry, consultation, free call, project discussion";
+        break;
+      case "/career":
+        pageTitle = "Career Opportunities - Virelity.com | Join Our Team";
+        pageDescription = "Join our innovative team of AI and digital experts. Explore career opportunities in web development, design, and technology at Virelity.com";
+        pageKeywords = "career, jobs, employment, web development jobs, AI jobs, tech careers, join our team";
         break;
       default:
         // Home page or fallback
@@ -163,12 +171,13 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
             to="/"
             className="flex items-center gap-2 font-bold gold-shine"
             aria-label="Virelity.com Homepage"
+            title="Virelity.com - AI Agents that Transform Businesses"
           >
             {/* Mobile view: Show favicon only */}
-            <img src="/virelity_favicon.png" alt="Virelity.com Logo" className="h-12 md:hidden" width="48" height="48" />
+            <img src="/virelity_favicon.png" alt="Virelity.com - AI Agents & Digital Solutions Logo" className="h-12 md:hidden" width="48" height="48" />
             
             {/* Desktop view: Show full navbar logo */}
-            <img src="/vireality_navbar.png" alt="Virelity.com Logo" className="hidden md:block h-10" width="auto" height="40" />
+            <img src="/vireality_navbar.png" alt="Virelity.com - AI Agents & Digital Solutions Company Logo" className="hidden md:block h-10" width="auto" height="40" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -184,6 +193,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                       : "text-muted-foreground"
                   )}
                   role="menuitem"
+                  title={item.title}
                   aria-current={location.pathname === item.path ? "page" : undefined}
                 >
                   {item.name}
@@ -195,7 +205,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
           <div className="hidden md:flex items-center gap-4">
             <HoverImageEffect isNavbar={true}>
               <Button 
-                onClick={openWhatsAppBooking}
+                onClick={openBookingDialog}
                 className="gold-gradient hover:gold-glow text-vision-black transition-all duration-300 shadow-lg flex items-center gap-2"
                 aria-label="Book a free consultation call"
               >
@@ -220,8 +230,8 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col h-full" aria-label="Mobile Navigation">
-                <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b" aria-label="Virelity.com Homepage">
-                  <img src="/virelity_logo_transparent.png" alt="Virelity.com Logo" className="h-6" width="24" height="24" />
+                <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b" aria-label="Virelity.com Homepage" title="Virelity.com - AI Agents that Transform Businesses">
+                  <img src="/virelity_logo_transparent.png" alt="Virelity.com - AI Agents & Digital Solutions Mobile Logo" className="h-6" width="24" height="24" />
                 </Link>
                 <div className="flex flex-col gap-3 py-4" role="menu">
                   {navItems.map((item) => (
@@ -235,6 +245,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                           : "text-muted-foreground hover:bg-muted"
                       )}
                       role="menuitem"
+                      title={item.title}
                       aria-current={location.pathname === item.path ? "page" : undefined}
                     >
                       {item.name}
@@ -244,7 +255,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                 <div className="mt-auto">
                   <HoverImageEffect>
                     <Button
-                      onClick={openWhatsAppBooking}
+                      onClick={openBookingDialog}
                       className="gold-gradient hover:gold-glow text-vision-black flex items-center gap-2 justify-center"
                       aria-label="Book a free consultation call"
                     >
