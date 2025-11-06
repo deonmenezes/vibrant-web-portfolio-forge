@@ -187,7 +187,7 @@ const testimonialsData = [
       quote: "We needed a reliable partner to scale quickly. The solution shipped on time, looked amazing, and performed even better—highly recommended.",
       name: "Francis",
       designation: "Operations Lead",
-      src: "/bodyguard_logo.png",
+      src: "/francis.jpg",
     },
     {
       quote: "The attention to detail and user experience thinking really stood out. Our customers love the new interface and conversion is up.",

@@ -494,6 +494,11 @@
   box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
 }
 
+.social-icon.facebook:hover .icon-container {
+  background: #1877F2;
+  box-shadow: 0 0 20px rgba(24, 119, 242, 0.6);
+}
+
 .social-icon:hover svg {
   animation: shake 0.5s;
 }
