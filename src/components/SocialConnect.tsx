@@ -2,7 +2,7 @@ import React from 'react';
 
 const SocialConnect = () => {
   return (
-    <div className="flex flex-wrap justify-center gap-6">
+    <div className="flex justify-center gap-6 items-center">
       <a 
         href="https://www.instagram.com/virelity_?igsh=MWo0dDR5aXhjajY1dA=="
         target="_blank"
@@ -67,6 +67,26 @@ const SocialConnect = () => {
           </svg>
         </div>
         <span className="icon-label">WhatsApp</span>
+      </a>
+      
+      <a 
+        href="https://www.facebook.com/share/14P6LegDhEd/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="social-icon facebook group"
+        aria-label="Facebook"
+      >
+        <div className="icon-container">
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-6 w-6 text-white transition-transform duration-300 group-hover:scale-110"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M22.675 0h-21.35C.595 0 0 .594 0 1.326v21.348C0 23.406.595 24 1.325 24H12.82V14.706H9.692v-3.62h3.128V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.764v2.314h3.587l-.467 3.62h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .594 23.406 0 22.675 0z"/>
+          </svg>
+        </div>
+        <span className="icon-label">Facebook</span>
       </a>
       
     </div>
