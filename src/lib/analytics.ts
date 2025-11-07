@@ -10,7 +10,9 @@ declare global {
   }
 }
 
-export const GA_MEASUREMENT_ID = 'G-VHQLHQ64P8';
+// Prefer env var if provided, fall back to default
+export const GA_MEASUREMENT_ID =
+  (import.meta as any).env?.VITE_GA_MEASUREMENT_ID || 'G-VHQLHQ64P8';
 
 // Initialize Google Analytics
 export const initGA = () => {
