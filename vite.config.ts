@@ -17,6 +17,12 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Provide a local mock for Next's `next/navigation` so packages that
+      // import it (like @vercel/speed-insights) don't break in a non-Next
+      // Vite environment. We alias both with and without the `.js` extension
+      // because some packages import `next/navigation.js` explicitly.
+      "next/navigation": path.resolve(__dirname, "./src/vite-mocks/next-navigation.ts"),
+      "next/navigation.js": path.resolve(__dirname, "./src/vite-mocks/next-navigation.ts"),
     },
   },
 }));
