@@ -30,7 +30,7 @@ import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
 import { BookingProvider, useBooking } from "./contexts/BookingContext";
 import { BookingFormDialog } from "./components/BookingFormDialog";
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const queryClient = new QueryClient();
 
 // Component to handle Google Analytics initialization
@@ -74,6 +74,7 @@ const AppContent = () => {
     <>
       <ScrollToTop />
       <AppWithAnalytics />
+      <SpeedInsights></SpeedInsights>
       {/* Global components available on all pages */}
       <AIChatbot />
       <WhatsAppBooking />
