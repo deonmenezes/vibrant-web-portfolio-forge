@@ -5,7 +5,7 @@ import { MessageSquare, Send, X, Loader2 } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Initialize the Gemini API
-const genAI = new GoogleGenerativeAI('AIzaSyCcQKQMSx-J7W-sAWoGwYa1obKA1SNycb0');
+const genAI = new GoogleGenerativeAI('AIzaSyBbmUWD2DhWfprlc8qlzzi-22LZU2LQ90U');
 
 interface Message {
   role: 'user' | 'assistant';
@@ -34,7 +34,7 @@ export const AIChatbot = () => {
       setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
       
       // Generate content with Gemini
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
       
       // Add context about the website/company to guide responses
       const promptContext = `

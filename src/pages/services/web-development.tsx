@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { useBooking } from '@/contexts/BookingContext';
 import {
     Code,
     CheckCircle2,
@@ -18,6 +20,9 @@ import {
 } from 'lucide-react';
 
 const WebDevelopmentService = () => {
+    const { openBookingDialog } = useBooking();
+    const navigate = useNavigate();
+    
     // Scroll to top on mount
     useEffect(() => {
         // Use Lenis if available, else fallback
@@ -239,10 +244,14 @@ const WebDevelopmentService = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                                <button 
+                                    onClick={() => openBookingDialog()}
+                                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                     Start Your Web Project
                                 </button>
-                                <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                                <button 
+                                    onClick={() => navigate('/portfolio')}
+                                    className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                     View Our Portfolio
                                 </button>
                             </div>
@@ -428,7 +437,9 @@ const WebDevelopmentService = () => {
                                     ))}
                                 </ul>
 
-                                <button className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <button 
+                                    onClick={openBookingDialog}
+                                    className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white'
                                         : 'border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white'
                                     }`}>
@@ -495,10 +506,14 @@ const WebDevelopmentService = () => {
                             Let's discuss how we can create a powerful web presence that drives your business forward and engages your audience effectively.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <button 
+                                onClick={() => openBookingDialog()}
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                 Schedule Web Development Consultation
                             </button>
-                            <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                            <button 
+                                onClick={() => navigate('/portfolio')}
+                                className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                 View More Projects
                             </button>
                         </div>

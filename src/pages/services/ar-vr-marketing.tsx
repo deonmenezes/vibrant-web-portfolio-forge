@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { useBooking } from '@/contexts/BookingContext';
 import {
     Megaphone,
     CheckCircle2,
@@ -19,6 +21,9 @@ import {
 } from 'lucide-react';
 
 const ARVRMarketingService = () => {
+    const { openBookingDialog } = useBooking();
+    const navigate = useNavigate();
+    
     // Scroll to top on mount
     useEffect(() => {
         const lenis = (window as any).lenis;
@@ -484,7 +489,7 @@ const ARVRMarketingService = () => {
                                     ))}
                                 </ul>
 
-                                <button className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                     ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white'
                                     : 'border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white'
                                     }`}>
