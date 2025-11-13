@@ -24,7 +24,7 @@ const About = () => {
   const stats = [
     { value: "50+", label: "Projects Completed" },
     { value: "15+", label: "Expert Team Members" },
-    { value: "1+", label: "Years Experience" },
+    { value: "10+", label: "Years Experience" },
     { value: "30+", label: "Happy Clients" },
   ];
 
@@ -179,7 +179,7 @@ const About = () => {
                 {[
                   { icon: Users, label: "Expert Team", value: "15+" },
                   { icon: Award, label: "Projects", value: "50+" },
-                  { icon: TrendingUp, label: "Years", value: "1+" },
+                  { icon: TrendingUp, label: "Years", value: "10+" },
                   { icon: Heart, label: "Happy Clients", value: "30+" }
                 ].map((stat, index) => (
                   <motion.div

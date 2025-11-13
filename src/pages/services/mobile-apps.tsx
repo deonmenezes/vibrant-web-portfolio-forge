@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { useBooking } from '@/contexts/BookingContext';
 import {
     Smartphone,
     CheckCircle2,
@@ -18,6 +20,9 @@ import {
 } from 'lucide-react';
 
 const MobileAppsService = () => {
+    const { openBookingDialog } = useBooking();
+    const navigate = useNavigate();
+    
     // Scroll to top on mount
     useEffect(() => {
         const lenis = (window as any).lenis;
@@ -238,10 +243,14 @@ const MobileAppsService = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                                <button 
+                                    onClick={() => openBookingDialog()}
+                                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                     Start Your Mobile App
                                 </button>
-                                <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                                <button 
+                                    onClick={() => navigate('/portfolio')}
+                                    className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                     View App Portfolio
                                 </button>
                             </div>
@@ -427,7 +436,7 @@ const MobileAppsService = () => {
                                     ))}
                                 </ul>
 
-                                <button className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                         ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'
                                         : 'border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white'
                                     }`}>
@@ -494,10 +503,14 @@ const MobileAppsService = () => {
                             Let's discuss how our mobile app development expertise can transform your business and create engaging experiences for your users.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <button 
+                                onClick={() => openBookingDialog()}
+                                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                 Schedule App Consultation
                             </button>
-                            <button className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                            <button 
+                                onClick={() => navigate('/portfolio')}
+                                className="border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                 View More Apps
                             </button>
                         </div>

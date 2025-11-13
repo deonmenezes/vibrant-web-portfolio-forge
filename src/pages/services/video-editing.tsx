@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { useBooking } from '@/contexts/BookingContext';
 import {
     Video,
     CheckCircle2,
@@ -18,6 +20,9 @@ import {
 } from 'lucide-react';
 
 const VideoEditingService = () => {
+    const { openBookingDialog } = useBooking();
+    const navigate = useNavigate();
+    
     // Scroll to top on mount
     useEffect(() => {
         const lenis = (window as any).lenis;
@@ -238,10 +243,14 @@ const VideoEditingService = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                                <button 
+                                    onClick={() => openBookingDialog()}
+                                    className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                     Start Your Video Project
                                 </button>
-                                <button className="border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                                <button 
+                                    onClick={() => navigate('/portfolio')}
+                                    className="border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                     View Video Portfolio
                                 </button>
                             </div>
@@ -427,7 +436,7 @@ const VideoEditingService = () => {
                                     ))}
                                 </ul>
 
-                                <button className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                         ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white'
                                         : 'border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white'
                                     }`}>
@@ -494,10 +503,14 @@ const VideoEditingService = () => {
                             Let's discuss how professional video editing can bring your vision to life and create compelling content that engages your audience.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <button 
+                                onClick={() => openBookingDialog()}
+                                className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                 Schedule Video Editing Consultation
                             </button>
-                            <button className="border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                            <button 
+                                onClick={() => navigate('/portfolio')}
+                                className="border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                 View More Projects
                             </button>
                         </div>

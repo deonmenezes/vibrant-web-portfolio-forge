@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { useBooking } from '@/contexts/BookingContext';
 import {
     Palette,
     CheckCircle2,
@@ -18,6 +20,9 @@ import {
 } from 'lucide-react';
 
 const UIUXDesignService = () => {
+    const { openBookingDialog } = useBooking();
+    const navigate = useNavigate();
+    
     // Scroll to top on mount
     useEffect(() => {
         const lenis = (window as any).lenis;
@@ -237,10 +242,14 @@ const UIUXDesignService = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                                <button 
+                                    onClick={() => openBookingDialog()}
+                                    className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                     Start Your Design Project
                                 </button>
-                                <button className="border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                                <button 
+                                    onClick={() => navigate('/portfolio')}
+                                    className="border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                     View Design Portfolio
                                 </button>
                             </div>
@@ -426,7 +435,7 @@ const UIUXDesignService = () => {
                                     ))}
                                 </ul>
 
-                                <button className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                         ? 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white'
                                         : 'border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white'
                                     }`}>
@@ -493,10 +502,14 @@ const UIUXDesignService = () => {
                             Let's discuss how our UI/UX design expertise can transform your digital products and create meaningful connections with your users.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <button 
+                                onClick={() => openBookingDialog()}
+                                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                                 Schedule Design Consultation
                             </button>
-                            <button className="border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                            <button 
+                                onClick={() => navigate('/portfolio')}
+                                className="border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
                                 View More Projects
                             </button>
                         </div>
