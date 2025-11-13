@@ -263,7 +263,7 @@ ${formData.fullName}`;
       department: "Engineering",
       location: "Mumbai, India",
       type: "Full-time",
-      experience: "1+ years",
+      experience: "10+ years",
       description: "Develop and implement AI/ML solutions to enhance our products and services with cutting-edge artificial intelligence.",
       requirements: [
         "1+ years experience in AI/ML development",

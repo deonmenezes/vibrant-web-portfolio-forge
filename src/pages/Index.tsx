@@ -181,7 +181,7 @@ const testimonialsData = [
       quote: "Their team delivered beyond expectations. From concept to launch, the communication and execution were flawless—our KPIs lifted within weeks.",
       name: "Viren Ahuja",
       designation: "Founder",
-      src: "/casa_logo.png",
+      src: "https://media.licdn.com/dms/image/v2/C5103AQHeV2RrANrIOg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1571848243919?e=2147483647&v=beta&t=HUQFymA0JAghCn24ja3cb2l1LXuQVUuZsgRJz-vb3lM",
     },
     {
       quote: "We needed a reliable partner to scale quickly. The solution shipped on time, looked amazing, and performed even better—highly recommended.",
@@ -193,13 +193,13 @@ const testimonialsData = [
       quote: "The attention to detail and user experience thinking really stood out. Our customers love the new interface and conversion is up.",
       name: "Amar Patni",
       designation: "Entrepreneur",
-      src: "/inermech.png",
+      src: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
     },
     {
       quote: "From day one the process was smooth and collaborative. The final delivery exceeded expectations and helped us move faster.",
       name: "Divya",
       designation: "Marketing Head",
-      src: "/office.png",
+      src: "https://static.vecteezy.com/system/resources/previews/042/332/098/non_2x/default-avatar-profile-icon-grey-photo-placeholder-female-no-photo-images-for-unfilled-user-profile-greyscale-illustration-for-socail-media-web-vector.jpg",
     },
 ];
 
