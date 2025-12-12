@@ -376,6 +376,36 @@ const Index = () => {
         <div className="min-h-screen flex flex-col overflow-hidden">
           <Navbar />
 
+          {/* Mobile-only 3D Robot Section - Above Hero */}
+          <section className="block md:hidden bg-black pt-20 pb-8">
+            <motion.div
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="flex flex-col items-center"
+            >
+              <motion.h1
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-3xl sm:text-4xl font-bold text-white text-center mb-4 px-4"
+              >
+                Welcome to <span className="text-yellow-400">Virelity</span>
+              </motion.h1>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1.15 }}
+                transition={{ duration: 1, delay: 0.4 }}
+                className="overflow-hidden"
+              >
+                <SplineScene 
+                  className="w-[26rem] h-[26rem] sm:w-[30rem] sm:h-[30rem] scale-125" 
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
+                />
+              </motion.div>
+            </motion.div>
+          </section>
+
           {/* Hero Banner with Slider and Animated Robot */}
           <section className="relative min-h-screen bg-black overflow-hidden">
 

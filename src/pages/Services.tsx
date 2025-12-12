@@ -33,7 +33,7 @@ const Services = () => {
       bgGifEmbed: null
     },
     {
-      title: "VR/AR Development.",
+      title: "VR/AR Development",
       description:
         "Immerse your audience in a whole new reality with cutting-edge virtual and augmented reality experiences.",
       icon: <Boxes className="h-8 w-8 text-vision-gold" />,
