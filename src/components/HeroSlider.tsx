@@ -200,7 +200,7 @@ export const HeroSlider = () => {
         />
       </div>
 
-      <div className="container relative z-10 pt-32 pb-24 md:pt-40 md:pb-36">
+      <div className="container relative z-10 pt-4 pb-24 md:pt-40 md:pb-36">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[600px]">
           {/* Content Side */}
           <AnimatePresence mode="wait">
