@@ -377,7 +377,7 @@ const Index = () => {
           <Navbar />
 
           {/* Mobile-only 3D Robot Section - Above Hero */}
-          <section className="block md:hidden bg-black pt-20 pb-8">
+          <section className="block md:hidden bg-black pt-8 pb-4 min-h-[420px] flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -394,12 +394,12 @@ const Index = () => {
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1.15 }}
+                animate={{ opacity: 1, scale: 1.18 }}
                 transition={{ duration: 1, delay: 0.4 }}
                 className="overflow-hidden"
               >
                 <SplineScene 
-                  className="w-[26rem] h-[26rem] sm:w-[30rem] sm:h-[30rem] scale-125" 
+                  className="w-[22rem] h-[22rem] sm:w-[30rem] sm:h-[30rem] scale-[1.35]" 
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 />
               </motion.div>
