@@ -209,12 +209,12 @@ const MobileServicesSlideshow = () => {
 
   const services = [
     { title: "Web Development", image: "webdev.png" },
-    { title: "Mobile App Development", image: "UI UX Dev.png" },
-    { title: "3D Development", image: "VR dev.png" },
-    { title: "VR/AR Development", image: "mobileappdev.png" },
+    { title: "Mobile App Development", image: "VR dev.png" },
+    { title: "3D Development", image: "3D DEV.png" },
+    { title: "VR/AR Development", image: "VR dev.png" },
     { title: "Digital Marketing", image: "digitalmarketing.png" },
     { title: "AI Agent Solutions", image: "Ai agent solutions.png" },
-    { title: "UI/UX Design", image: "3D DEV.png" },
+    { title: "UI/UX Design", image: "UI UX Dev.png" },
   ];
 
   useEffect(() => {
