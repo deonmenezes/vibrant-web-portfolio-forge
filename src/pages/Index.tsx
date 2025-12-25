@@ -34,7 +34,7 @@ const ZoomSection = ({ children, index }) => {
   );
 };
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
@@ -202,6 +202,117 @@ const testimonialsData = [
       src: "https://static.vecteezy.com/system/resources/previews/042/332/098/non_2x/default-avatar-profile-icon-grey-photo-placeholder-female-no-photo-images-for-unfilled-user-profile-greyscale-illustration-for-socail-media-web-vector.jpg",
     },
 ];
+
+// 4. Mobile Services Slideshow Component
+const MobileServicesSlideshow = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const services = [
+    { title: "Web Development", image: "webdev.png" },
+    { title: "Mobile App Development", image: "VR dev.png" },
+    { title: "3D Development", image: "3D DEV.png" },
+    { title: "VR/AR Development", image: "VR dev.png" },
+    { title: "Digital Marketing", image: "digitalmarketing.png" },
+    { title: "AI Agent Solutions", image: "Ai agent solutions.png" },
+    { title: "UI/UX Design", image: "UI UX Dev.png" },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % services.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [services.length]);
+
+  return (
+    <section className="block md:hidden bg-black pt-24 pb-4">
+      <div className="container px-4">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-2xl sm:text-3xl font-bold text-white text-center mb-10"
+        >
+          What <span className="text-yellow-400">Virelity</span> Provides
+        </motion.h2>
+
+        <div className="relative overflow-hidden rounded-2xl" style={{ perspective: '1000px' }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+                rotateY: 45,
+                filter: 'blur(10px)'
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                rotateY: 0,
+                filter: 'blur(0px)'
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.8,
+                rotateY: -45,
+                filter: 'blur(10px)'
+              }}
+              transition={{
+                duration: 0.6,
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              className="relative aspect-[4/3]"
+            >
+              <motion.img
+                src={services[currentIndex].image}
+                alt={services[currentIndex].title}
+                className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              />
+              {/* Glowing border effect */}
+              <div className="absolute inset-0 rounded-2xl border border-yellow-400/30 shadow-[0_0_30px_rgba(250,204,21,0.2)]" />
+              {/* Overlay with gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent rounded-2xl" />
+              {/* Caption with enhanced animation */}
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
+                className="absolute bottom-6 left-0 right-0 text-center"
+              >
+                <span className="text-xl sm:text-2xl font-bold text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                  {services[currentIndex].title}
+                </span>
+                <motion.div
+                  className="w-16 h-1 bg-gradient-to-r from-yellow-400 to-amber-500 mx-auto mt-2 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: 64 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
+                />
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Dots indicator */}
+        <div className="flex justify-center gap-3 mt-3">
+          {services.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-yellow-400 w-8' : 'bg-white/40'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // --- MAIN PAGE COMPONENT ---
 
@@ -375,6 +486,9 @@ const Index = () => {
       >
         <div className="min-h-screen flex flex-col overflow-hidden">
           <Navbar />
+
+          {/* Mobile-only Services Slideshow - Above Hero */}
+          <MobileServicesSlideshow />
 
           {/* Hero Banner with Slider and Animated Robot */}
           <section className="relative min-h-screen bg-black overflow-hidden">
