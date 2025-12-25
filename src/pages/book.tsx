@@ -4,16 +4,50 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Sparkles, Zap, Target, TrendingUp, BookOpen, Award, ArrowRight, Check } from "lucide-react";
+import { Sparkles, Zap, Target, TrendingUp, BookOpen, Award, ArrowRight, Check, Lock, Clock } from "lucide-react";
 
 const BookPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+  const [isLocked, setIsLocked] = useState(true);
+  
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   
   const backgroundY = useTransform(smoothProgress, [0, 1], ['0%', '50%']);
   const heroY = useTransform(smoothProgress, [0, 0.3], ['0%', '20%']);
   const heroOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0]);
+
+  // Countdown timer to New Year 2026
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const newYear2026 = new Date('2026-01-01T00:00:00').getTime();
+      const now = new Date().getTime();
+      const difference = newYear2026 - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+        setIsLocked(true);
+      } else {
+        setIsLocked(false);
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -62,48 +96,61 @@ const BookPage = () => {
     "AI integration for competitive advantage"
   ];
 
+  // Countdown Timer Component
+  const CountdownTimer = () => (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 mb-8"
+    >
+      <div className="flex items-center justify-center gap-3 mb-6">
+        <Clock className="w-5 h-5 text-gray-400" />
+        <h3 className="text-lg font-semibold text-gray-300 tracking-tight">Available January 1, 2026</h3>
+      </div>
+      <div className="grid grid-cols-4 gap-3">
+        {[
+          { label: 'Days', value: timeLeft.days },
+          { label: 'Hours', value: timeLeft.hours },
+          { label: 'Min', value: timeLeft.minutes },
+          { label: 'Sec', value: timeLeft.seconds }
+        ].map((item, i) => (
+          <div
+            key={i}
+            className="text-center"
+          >
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 mb-2">
+              <div className="text-4xl font-semibold text-white tabular-nums tracking-tight">
+                {String(item.value).padStart(2, '0')}
+              </div>
+            </div>
+            <div className="text-xs text-gray-500 font-medium tracking-wide">
+              {item.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] text-white overflow-hidden">
-      {/* Animated Background */}
+    <div className="relative min-h-screen bg-black text-white overflow-hidden font-sans antialiased">
+      {/* Subtle Background Gradient */}
       <motion.div 
         className="fixed inset-0 pointer-events-none"
         style={{ y: backgroundY }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-orange-600/5" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-black to-black" />
+        <div className="absolute top-0 left-1/3 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/3 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[150px]" />
       </motion.div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-20">
+      {/* Minimal Grid Pattern */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(251, 191, 36, 0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(251, 191, 36, 0.1) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)`,
+          backgroundSize: '80px 80px'
         }} />
-      </div>
-
-      {/* Floating Particles */}
-      <div className="fixed inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-amber-400/30 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            animate={{
-              y: [null, Math.random() * -500],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
       </div>
 
       <Navbar />
@@ -205,16 +252,31 @@ const BookPage = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-4">
-                  <motion.a
-                    href="#buy"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-6 text-lg font-bold rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 border border-amber-400/30">
-                      Get the Book
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                  </motion.a>
+                  {isLocked ? (
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="relative"
+                    >
+                      <Button 
+                        disabled
+                        className="bg-gray-800 text-gray-500 px-8 py-6 text-lg font-bold rounded-xl shadow-lg border border-gray-700 cursor-not-allowed relative overflow-hidden"
+                      >
+                        <Lock className="mr-2 w-5 h-5" />
+                        Locked Until 2026
+                      </Button>
+                    </motion.div>
+                  ) : (
+                    <motion.a
+                      href="#buy"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-6 text-lg font-bold rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 border border-amber-400/30">
+                        Get the Book
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                      </Button>
+                    </motion.a>
+                  )}
                   <motion.a
                     href="#preview"
                     whileHover={{ scale: 1.05 }}
@@ -226,6 +288,9 @@ const BookPage = () => {
                     </Button>
                   </motion.a>
                 </div>
+
+                {/* Countdown Timer */}
+                {isLocked && <CountdownTimer />}
 
                 {/* Stats */}
                 <motion.div 
@@ -474,19 +539,57 @@ const BookPage = () => {
               Stop guessing. Start building with systems that scale. Get the book that changes how you approach business forever.
             </p>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block"
-            >
-              <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-12 py-8 text-2xl font-black rounded-2xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 border-2 border-amber-400/30">
-                Get Your Copy Now
-                <ArrowRight className="ml-3 w-6 h-6" />
-              </Button>
-            </motion.div>
+            {isLocked ? (
+              <div className="space-y-6">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="inline-block"
+                >
+                  <Button 
+                    disabled
+                    className="bg-gray-800 text-gray-500 px-12 py-8 text-2xl font-black rounded-2xl shadow-2xl border-2 border-gray-700 cursor-not-allowed relative overflow-hidden"
+                  >
+                    <Lock className="mr-3 w-6 h-6" />
+                    Locked Until New Year 2026
+                  </Button>
+                </motion.div>
+                
+                {/* Countdown Display */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="inline-block bg-gradient-to-r from-red-500/10 to-orange-500/10 backdrop-blur-sm border border-red-500/30 rounded-xl px-8 py-4"
+                >
+                  <div className="flex items-center gap-4 text-red-400">
+                    <Clock className="w-5 h-5 animate-pulse" />
+                    <div className="flex gap-3 font-mono text-lg font-bold">
+                      <span>{String(timeLeft.days).padStart(2, '0')}d</span>
+                      <span>:</span>
+                      <span>{String(timeLeft.hours).padStart(2, '0')}h</span>
+                      <span>:</span>
+                      <span>{String(timeLeft.minutes).padStart(2, '0')}m</span>
+                      <span>:</span>
+                      <span>{String(timeLeft.seconds).padStart(2, '0')}s</span>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            ) : (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block"
+              >
+                <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-12 py-8 text-2xl font-black rounded-2xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 border-2 border-amber-400/30">
+                  Get Your Copy Now
+                  <ArrowRight className="ml-3 w-6 h-6" />
+                </Button>
+              </motion.div>
+            )}
 
             <p className="mt-6 text-gray-500 text-sm">
-              Digital & print editions coming soon
+              {isLocked ? 'Pre-orders open January 1st, 2026' : 'Digital & print editions available now'}
             </p>
 
             {/* Decorative Elements */}
