@@ -1,29 +1,139 @@
+import React, { useState, useEffect, useRef } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Sparkles, Zap, Target, TrendingUp, BookOpen, Award, ArrowRight, Check, Lock, Clock } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { 
+  TrendingUp, ArrowRight, Lock, Clock, Activity, Cpu, Brain, Layers 
+} from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+
+// --- Sub-components ---
+
+// 1. Text Reveal Component
+const TextReveal = ({ children }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { margin: "-30% 0px -30% 0px" });
+
+  return (
+    <p 
+      ref={ref}
+      className={`text-4xl md:text-6xl font-bold transition-colors duration-1000 leading-tight tracking-tight ${
+        isInView ? "text-white" : "text-white/20"
+      }`}
+    >
+      {children}
+    </p>
+  );
+};
+
+// 2. Advanced Tech Card Component
+const BlueprintCard = ({ title, desc, icon: Icon, id, className, delay, accent = "amber" }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay, duration: 0.6 }}
+            className={`group relative overflow-hidden bg-black/40 backdrop-blur-sm border border-white/10 p-8 flex flex-col justify-between ${className}`}
+        >
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/30 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/30 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
+
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br ${
+                accent === "blue" ? "from-blue-500/10 via-transparent to-transparent" : "from-amber-500/10 via-transparent to-transparent"
+            }`} />
+
+            <div className="relative z-10">
+                <div className="flex justify-between items-start mb-6">
+                    <div className={`p-3 rounded-lg border border-white/5 bg-zinc-900/50 ${
+                        accent === "blue" ? "text-blue-400 group-hover:text-blue-300 group-hover:border-blue-500/30" : "text-amber-500 group-hover:text-amber-300 group-hover:border-amber-500/30"
+                    } transition-colors duration-300`}>
+                        <Icon className="w-8 h-8" strokeWidth={1.5} />
+                    </div>
+                    <span className="font-mono text-xs text-zinc-600 tracking-widest uppercase">
+                        {id}
+                    </span>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:translate-x-1 transition-transform duration-300">
+                    {title}
+                </h3>
+                <p className="text-zinc-400 leading-relaxed text-sm border-l-2 border-transparent pl-0 group-hover:pl-4 group-hover:border-white/10 transition-all duration-300">
+                    {desc}
+                </p>
+            </div>
+
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:via-white/20" />
+        </motion.div>
+    );
+};
+
+// 3. Reusable 3D Book Component
+const ThreeDBook = ({ image, spineColor, glowColor, delay }) => {
+    const { scrollYProgress } = useScroll();
+    const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+    const y = useTransform(smoothProgress, [0, 1], [0, -30]);
+
+    return (
+        <div className="relative w-[200px] md:w-[260px] aspect-[2/3] mx-auto perspective-1000 group cursor-pointer">
+            <motion.div
+                initial={{ opacity: 0, y: 50, rotateY: 0 }}
+                animate={{ opacity: 1, y: 0, rotateY: -10 }}
+                transition={{ duration: 1, delay: delay, ease: "easeOut" }}
+                whileHover={{ rotateY: -25, scale: 1.05, y: -20 }}
+                style={{ y }}
+                className="relative w-full h-full transition-all duration-500 preserve-3d"
+            >
+                {/* Book Spine */}
+                <div className={`absolute left-0 top-1 h-[98%] w-[20px] -translate-x-[10px] translate-z-[-10px] rotate-y-[-90deg] ${spineColor}`} />
+                
+                {/* Back Cover */}
+                <div className="absolute right-1 top-1 h-[98%] w-[20px] bg-zinc-800 -translate-x-[-10px] translate-z-[-10px] rotate-y-[90deg] opacity-50" />
+
+                {/* FRONT COVER */}
+                <div className="absolute inset-0 rounded-r-md rounded-l-sm shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] border-l-2 border-white/10 overflow-hidden bg-zinc-900">
+                    <img 
+                        src={image} 
+                        alt="Book Cover" 
+                        className="w-full h-full object-cover"
+                    />
+                    {/* Glossy Sheen */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                </div>
+            </motion.div>
+
+            {/* Floor Shadow */}
+            <div className={`absolute -bottom-12 left-1/2 -translate-x-1/2 w-[80%] h-8 blur-2xl rounded-full opacity-60 transition-all duration-500 group-hover:scale-110 group-hover:opacity-80 ${glowColor}`} />
+        </div>
+    );
+};
 
 const BookPage = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
+  // Timer State
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isLocked, setIsLocked] = useState(true);
   
-  const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-  
-  const backgroundY = useTransform(smoothProgress, [0, 1], ['0%', '50%']);
-  const heroY = useTransform(smoothProgress, [0, 0.3], ['0%', '20%']);
-  const heroOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0]);
+  // Waitlist State
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    note: ''
+  });
 
-  // Countdown timer to New Year 2026
   useEffect(() => {
     const calculateTimeLeft = () => {
       const newYear2026 = new Date('2026-01-01T00:00:00').getTime();
@@ -42,587 +152,381 @@ const BookPage = () => {
         setIsLocked(false);
       }
     };
-
-    calculateTimeLeft();
     const timer = setInterval(calculateTimeLeft, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      }
-    }
+  // --- Handlers for Waitlist ---
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-    }
+  const handleWaitlistSubmit = (e) => {
+    e.preventDefault();
+    
+    // Construct Email
+    const subject = "Waitlist Join Request: Business in the Age of AI";
+    const body = `Dear Team,
+
+I would like to join the priority waitlist for Deon Menezes' new book.
+
+Details:
+- Name: ${formData.fullName}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+
+Note:
+${formData.note}
+
+Please notify me when the book launches.`;
+    
+    // Trigger Mailto
+    window.open(`mailto:deon.menezes@virelity.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+    
+    // Reset and Close
+    setIsWaitlistOpen(false);
+    setFormData({ fullName: '', email: '', phone: '', note: '' });
   };
-
-  const features = [
-    { icon: Sparkles, title: "AI-First Approach", desc: "Learn to leverage AI as your operating layer" },
-    { icon: Target, title: "System Mastery", desc: "Build businesses that work without you" },
-    { icon: TrendingUp, title: "Scale Intelligently", desc: "From chaos to clarity to growth" },
-    { icon: Zap, title: "Practical Frameworks", desc: "No theory—only battle-tested systems" }
-  ];
-
-  const benefits = [
-    "Why NOW is the best time in history to build",
-    "Transform from chaos to systematic growth",
-    "Master the 7 foundational business functions",
-    "Build systems that scale without burnout",
-    "Leadership frameworks for modern founders",
-    "AI integration for competitive advantage"
-  ];
-
-  // Countdown Timer Component
-  const CountdownTimer = () => (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 mb-8"
-    >
-      <div className="flex items-center justify-center gap-3 mb-6">
-        <Clock className="w-5 h-5 text-gray-400" />
-        <h3 className="text-lg font-semibold text-gray-300 tracking-tight">Available January 1, 2026</h3>
-      </div>
-      <div className="grid grid-cols-4 gap-3">
-        {[
-          { label: 'Days', value: timeLeft.days },
-          { label: 'Hours', value: timeLeft.hours },
-          { label: 'Min', value: timeLeft.minutes },
-          { label: 'Sec', value: timeLeft.seconds }
-        ].map((item, i) => (
-          <div
-            key={i}
-            className="text-center"
-          >
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 mb-2">
-              <div className="text-4xl font-semibold text-white tabular-nums tracking-tight">
-                {String(item.value).padStart(2, '0')}
-              </div>
-            </div>
-            <div className="text-xs text-gray-500 font-medium tracking-wide">
-              {item.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden font-sans antialiased">
-      {/* Subtle Background Gradient */}
-      <motion.div 
-        className="fixed inset-0 pointer-events-none"
-        style={{ y: backgroundY }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-black to-black" />
-        <div className="absolute top-0 left-1/3 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/3 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[150px]" />
-      </motion.div>
-
-      {/* Minimal Grid Pattern */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)`,
-          backgroundSize: '80px 80px'
-        }} />
-      </div>
-
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-amber-500/30">
       <Navbar />
 
       <main className="relative z-10">
-        {/* Hero Section */}
-        <motion.section 
-          className="min-h-screen flex items-center justify-center px-4 pt-20"
-          style={{ y: heroY, opacity: heroOpacity }}
-        >
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="max-w-7xl w-full"
-          >
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Left: Book Cover */}
-              <motion.div 
-                variants={itemVariants}
-                className="flex justify-center md:justify-end"
-              >
-                <motion.div
-                  className="relative group cursor-pointer"
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  style={{
-                    transform: `perspective(1000px) rotateY(${mousePosition.x * 0.5}deg) rotateX(${-mousePosition.y * 0.5}deg)`
-                  }}
-                >
-                  {/* Glow Effect */}
-                  <div className="absolute -inset-4 bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500" />
-                  
-                  {/* Book Cover */}
-                  <div className="relative w-80 h-[480px] bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 rounded-2xl shadow-2xl overflow-hidden border border-amber-400/30">
-                    {/* Shine Effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
-                      animate={{
-                        x: ['-100%', '200%'],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        repeatDelay: 5,
-                        ease: "easeInOut"
-                      }}
-                    />
-                    
-                    {/* Book Content */}
-                    <div className="relative h-full p-8 flex flex-col justify-between">
-                      <div>
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.5, duration: 0.6 }}
-                          className="inline-block px-3 py-1 bg-black/30 backdrop-blur-sm rounded-full text-xs font-bold mb-4"
-                        >
-                          FOUNDER'S GUIDE
-                        </motion.div>
-                        <h3 className="text-4xl font-black leading-tight mb-3 drop-shadow-lg">
-                          How to Build<br />a Business<br />in the Age<br />of AI
-                        </h3>
-                        <div className="h-1 w-20 bg-white/50 rounded-full" />
-                      </div>
-                      <div>
-                        <p className="text-sm opacity-90 mb-2">Systems, Clarity & Leverage</p>
-                        <p className="text-lg font-bold">Deon Menezes</p>
-                      </div>
-                    </div>
-                    
-                    {/* Corner Accent */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 transform rotate-45 translate-x-16 -translate-y-16" />
-                  </div>
-                </motion.div>
-              </motion.div>
-
-              {/* Right: Hero Content */}
-              <motion.div variants={itemVariants} className="space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-full text-amber-400 text-sm font-semibold"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span>The Definitive Guide for Modern Founders</span>
-                </motion.div>
-
-                <h1 className="text-5xl md:text-7xl font-black leading-tight">
-                  Build a Business<br />
-                  <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
-                    That Actually Works
-                  </span>
-                </h1>
-
-                <p className="text-xl text-gray-400 leading-relaxed max-w-xl">
-                  No shortcuts. No fantasies. Just proven frameworks for founders who are done with chaos and ready to build with clarity, systems, and AI leverage.
-                </p>
-
-                <div className="flex flex-wrap gap-4 pt-4">
-                  {isLocked ? (
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      className="relative"
-                    >
-                      <Button 
-                        disabled
-                        className="bg-gray-800 text-gray-500 px-8 py-6 text-lg font-bold rounded-xl shadow-lg border border-gray-700 cursor-not-allowed relative overflow-hidden"
-                      >
-                        <Lock className="mr-2 w-5 h-5" />
-                        Locked Until 2026
-                      </Button>
-                    </motion.div>
-                  ) : (
-                    <motion.a
-                      href="#buy"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-6 text-lg font-bold rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 border border-amber-400/30">
-                        Get the Book
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </Button>
-                    </motion.a>
-                  )}
-                  <motion.a
-                    href="#preview"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button variant="outline" className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10 px-8 py-6 text-lg font-bold rounded-xl">
-                      Preview Chapters
-                      <BookOpen className="ml-2 w-5 h-5" />
-                    </Button>
-                  </motion.a>
-                </div>
-
-                {/* Countdown Timer */}
-                {isLocked && <CountdownTimer />}
-
-                {/* Stats */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="flex gap-8 pt-8 border-t border-gray-800"
-                >
-                  {[
-                    { label: "Chapters", value: "12" },
-                    { label: "Frameworks", value: "50+" },
-                    { label: "Pages", value: "250+" }
-                  ].map((stat, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 + i * 0.1 }}
-                    >
-                      <div className="text-3xl font-black text-amber-400">{stat.value}</div>
-                      <div className="text-sm text-gray-500">{stat.label}</div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        {/* Features Section */}
-        <motion.section 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="py-24 px-4 relative"
-        >
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-black mb-4">
-                Why This Book Is <span className="text-amber-400">Different</span>
-              </h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                This isn't theory. It's a battle-tested playbook for building real businesses in the AI era.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {features.map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="group relative bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm p-8 rounded-2xl border border-gray-800 hover:border-amber-500/50 transition-all duration-300 overflow-hidden"
-                >
-                  {/* Hover Glow */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-orange-600/0 group-hover:from-amber-500/10 group-hover:to-orange-600/10 transition-all duration-500" />
-                  
-                  <div className="relative">
-                    <div className="w-14 h-14 bg-amber-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-amber-500/20 transition-colors duration-300 border border-amber-500/30">
-                      <feature.icon className="w-7 h-7 text-amber-400" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-white">{feature.title}</h3>
-                    <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* What You'll Learn Section */}
-        <motion.section 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="py-24 px-4 relative"
-        >
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              {/* Left: Content */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-              >
-                <h2 className="text-4xl md:text-5xl font-black mb-6">
-                  What You'll <span className="text-amber-400">Master</span>
-                </h2>
-                <p className="text-xl text-gray-400 mb-8 leading-relaxed">
-                  A comprehensive framework covering everything from clarity to capability to courage—the three transformations every founder must make.
-                </p>
-                
-                <div className="space-y-4">
-                  {benefits.map((benefit, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1, duration: 0.5 }}
-                      className="flex items-start gap-4 group"
-                    >
-                      <div className="flex-shrink-0 w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center border border-amber-500/30 group-hover:bg-amber-500/20 transition-colors duration-300">
-                        <Check className="w-5 h-5 text-amber-400" />
-                      </div>
-                      <p className="text-gray-300 pt-1">{benefit}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Right: Decorative Element */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="relative"
-              >
-                <div className="relative aspect-square">
-                  {/* Rotating Ring */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 border-2 border-dashed border-amber-500/30 rounded-full"
-                  />
-                  <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-8 border-2 border-dashed border-orange-500/20 rounded-full"
-                  />
-                  
-                  {/* Center Content */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                        className="w-32 h-32 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl shadow-2xl flex items-center justify-center mb-4 mx-auto"
-                      >
-                        <Award className="w-16 h-16 text-white" />
-                      </motion.div>
-                      <h3 className="text-2xl font-black text-amber-400">Proven</h3>
-                      <p className="text-gray-400">Systems</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Author Section */}
-        <motion.section 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="py-24 px-4"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto bg-gradient-to-br from-gray-900/80 to-gray-800/50 backdrop-blur-sm rounded-3xl p-12 border border-gray-800 relative overflow-hidden"
-          >
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(circle at 20px 20px, rgba(251, 191, 36, 0.3) 1px, transparent 0)`,
-                backgroundSize: '40px 40px'
-              }} />
-            </div>
-
-            <div className="relative">
-              <h2 className="text-3xl md:text-4xl font-black mb-6">
-                About <span className="text-amber-400">Deon Menezes</span>
-              </h2>
-              <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                A founder and operator with hands-on experience building and scaling businesses using modern systems and AI. This book reflects his journey from chaos to clarity, combining real execution experience with practical frameworks for today's fast-moving business environment.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                Not a theorist. Not a consultant. A founder who's been in the trenches and built the systems that work.
-              </p>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        {/* CTA Section */}
-        <motion.section 
-          id="buy"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="py-32 px-4 relative"
-        >
-          {/* Spotlight Effect */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[600px] h-[600px] bg-amber-500/20 rounded-full blur-[150px]" />
+        
+        {/* --- MEGA HERO SECTION --- */}
+        <section className="relative min-h-screen flex flex-col items-center justify-between pt-32 pb-12 overflow-hidden px-4">
+          
+          {/* Background Ambience */}
+          <div className="absolute inset-0 pointer-events-none">
+             <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-amber-900/10 rounded-full blur-[120px] opacity-40" />
+             <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[120px] opacity-40" />
+             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center relative z-10"
-          >
-            <motion.div
-              animate={{ 
-                scale: [1, 1.05, 1],
-                rotate: [0, 2, -2, 0]
-              }}
-              transition={{ 
-                duration: 5,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-              className="inline-block mb-8"
-            >
-              <div className="relative">
-                <div className="absolute -inset-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full blur-xl opacity-50" />
-                <Sparkles className="relative w-16 h-16 text-amber-400" />
-              </div>
-            </motion.div>
-
-            <h2 className="text-5xl md:text-6xl font-black mb-6">
-              Ready to Build<br />
-              <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
-                Something Real?
-              </span>
-            </h2>
+          <div className="max-w-7xl mx-auto w-full relative z-20 flex flex-col items-center flex-grow justify-center gap-12">
             
-            <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-              Stop guessing. Start building with systems that scale. Get the book that changes how you approach business forever.
-            </p>
-
-            {isLocked ? (
-              <div className="space-y-6">
+            {/* 1. HERO TEXT */}
+            <div className="text-center space-y-6 max-w-4xl mx-auto">
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="inline-block"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
                 >
-                  <Button 
-                    disabled
-                    className="bg-gray-800 text-gray-500 px-12 py-8 text-2xl font-black rounded-2xl shadow-2xl border-2 border-gray-700 cursor-not-allowed relative overflow-hidden"
-                  >
-                    <Lock className="mr-3 w-6 h-6" />
-                    Locked Until New Year 2026
-                  </Button>
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500">
+                        The Only Book <br className="hidden md:block" />
+                        You Need to Start <br className="hidden md:block" />
+                        a Business in 2026
+                    </h1>
                 </motion.div>
                 
-                {/* Countdown Display */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="inline-block bg-gradient-to-r from-red-500/10 to-orange-500/10 backdrop-blur-sm border border-red-500/30 rounded-xl px-8 py-4"
+                <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="text-lg md:text-2xl text-zinc-400 font-light tracking-wide max-w-2xl mx-auto"
                 >
-                  <div className="flex items-center gap-4 text-red-400">
-                    <Clock className="w-5 h-5 animate-pulse" />
-                    <div className="flex gap-3 font-mono text-lg font-bold">
-                      <span>{String(timeLeft.days).padStart(2, '0')}d</span>
-                      <span>:</span>
-                      <span>{String(timeLeft.hours).padStart(2, '0')}h</span>
-                      <span>:</span>
-                      <span>{String(timeLeft.minutes).padStart(2, '0')}m</span>
-                      <span>:</span>
-                      <span>{String(timeLeft.seconds).padStart(2, '0')}s</span>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            ) : (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block"
-              >
-                <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-12 py-8 text-2xl font-black rounded-2xl shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300 border-2 border-amber-400/30">
-                  Get Your Copy Now
-                  <ArrowRight className="ml-3 w-6 h-6" />
-                </Button>
-              </motion.div>
-            )}
-
-            <p className="mt-6 text-gray-500 text-sm">
-              {isLocked ? 'Pre-orders open January 1st, 2026' : 'Digital & print editions available now'}
-            </p>
-
-            {/* Decorative Elements */}
-            <div className="flex justify-center gap-8 mt-16">
-              {[
-                { icon: BookOpen, text: "250+ Pages" },
-                { icon: Target, text: "50+ Frameworks" },
-                { icon: Zap, text: "Instant Access" }
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-3 text-gray-400"
-                >
-                  <item.icon className="w-5 h-5 text-amber-400" />
-                  <span className="text-sm font-semibold">{item.text}</span>
-                </motion.div>
-              ))}
+                    The Founder's Guide to <span className="text-white font-medium">System Clarity</span> & <span className="text-white font-medium">Strategies</span>
+                </motion.p>
             </div>
-          </motion.div>
-        </motion.section>
+
+            {/* 2. DUAL BOOK VISUALS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 w-full max-w-5xl items-center justify-center my-4">
+                
+                {/* Left: Raw */}
+                <div className="flex flex-col items-center">
+                    <ThreeDBook 
+                        image="/whitebook.png" 
+                        spineColor="bg-zinc-900" 
+                        glowColor="bg-amber-600/40"
+                        delay={0.2} 
+                    />
+                    <p className="mt-8 text-sm font-mono text-amber-500 uppercase tracking-widest opacity-60">The Raw Draft</p>
+                </div>
+
+                {/* Right: Polished */}
+                <div className="flex flex-col items-center">
+                    <ThreeDBook 
+                        image="/blackbook.png" 
+                        spineColor="bg-zinc-200" 
+                        glowColor="bg-blue-600/40"
+                        delay={0.4} 
+                    />
+                    <p className="mt-8 text-sm font-mono text-blue-400 uppercase tracking-widest opacity-60">The AI Masterpiece</p>
+                </div>
+
+            </div>
+
+            {/* 3. TIMELINE & LOCKED/WAITLIST BUTTON */}
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="w-full max-w-3xl mx-auto"
+            >
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-2 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl">
+                    
+                    {/* Timeline / Countdown */}
+                    <motion.div 
+                        whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.05)" }}
+                        className="flex-1 flex items-center justify-center gap-6 px-8 py-4 rounded-2xl border border-transparent hover:border-white/10 transition-all cursor-default"
+                    >
+                        <div className="flex items-center gap-3 text-zinc-400 mb-1">
+                            <Clock className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-widest">Launch Timeline</span>
+                        </div>
+                        <div className="h-8 w-px bg-white/10 mx-2" />
+                        <div className="flex gap-4 font-mono text-xl md:text-2xl font-bold text-white tabular-nums">
+                            <span>{String(timeLeft.days).padStart(2,'0')}d</span>
+                            <span>:</span>
+                            <span>{String(timeLeft.hours).padStart(2,'0')}h</span>
+                            <span>:</span>
+                            <span>{String(timeLeft.minutes).padStart(2,'0')}m</span>
+                        </div>
+                    </motion.div>
+
+                    {/* Waitlist / Buy Button */}
+                    <motion.button
+                        onClick={() => isLocked && setIsWaitlistOpen(true)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        className={`
+                            relative px-8 py-5 rounded-2xl font-bold text-lg flex items-center gap-3 transition-all
+                            ${isLocked 
+                                ? "bg-amber-500 text-black hover:bg-amber-400 shadow-[0_0_30px_-5px_rgba(245,158,11,0.4)] cursor-pointer" 
+                                : "bg-white text-black hover:bg-zinc-200 shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]"
+                            }
+                        `}
+                    >
+                        {isLocked ? (
+                            <>
+                                <Lock className="w-5 h-5" />
+                                <span>Join Waitlist</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>Buy Now</span>
+                                <ArrowRight className="w-5 h-5" />
+                            </>
+                        )}
+                    </motion.button>
+                </div>
+                <p className="text-center text-zinc-600 text-xs mt-4">
+                    {isLocked ? "Limited spots available. Join the waitlist for early access." : "The store is open."}
+                </p>
+            </motion.div>
+
+          </div>
+        </section>
+
+        {/* --- SCROLL REVEAL SECTION --- */}
+        <section className="min-h-screen py-48 md:py-64 px-4 relative z-20 bg-black flex flex-col items-center justify-center border-t border-white/5">
+          <div className="max-w-4xl mx-auto space-y-40 text-center">
+            <TextReveal>The old playbooks are dead.</TextReveal>
+            <TextReveal>Hustle culture is burning you out.</TextReveal>
+            <TextReveal>
+              You need a <span className="text-amber-500">System</span>.
+            </TextReveal>
+          </div>
+        </section>
+
+        {/* --- ADVANCED BLUEPRINT SECTION (HUD Style) --- */}
+        <section className="py-32 px-4 bg-zinc-950 relative overflow-hidden">
+          {/* Tech Background Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black via-transparent to-black pointer-events-none" />
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="mb-20 text-center">
+                <motion.div 
+                    initial={{ opacity: 0 }} 
+                    whileInView={{ opacity: 1 }} 
+                    className="inline-block mb-4"
+                >
+                    <span className="font-mono text-xs text-amber-500 uppercase tracking-[0.3em] border border-amber-500/20 px-4 py-2 rounded">System Architecture</span>
+                </motion.div>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">Inside the Blueprint</h2>
+                <p className="text-zinc-400 max-w-xl mx-auto">Decode the operational framework used to scale high-leverage businesses.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+              
+              <BlueprintCard 
+                id="MOD-01"
+                title="AI-First Core" 
+                desc="Restructure your entire operation with AI as the central nervous system, not just a plugin."
+                icon={Cpu}
+                className="md:col-span-2 bg-zinc-900/20"
+                accent="blue"
+                delay={0.1}
+              />
+              
+              <BlueprintCard 
+                id="SYS-07"
+                title="The 7 Engines" 
+                desc="Sales, Fulfillment, Retention, Finance. The exact code to run your business machine."
+                icon={Layers}
+                className="md:row-span-2"
+                accent="amber"
+                delay={0.2}
+              />
+
+              <BlueprintCard 
+                id="LOOP-X"
+                title="Growth Loops" 
+                desc="Construct self-reinforcing viral loops that compound without manual input."
+                icon={TrendingUp}
+                className=""
+                accent="blue"
+                delay={0.3}
+              />
+
+              <BlueprintCard 
+                id="MIND-OS"
+                title="Founder OS" 
+                desc="Upgrade your mental firmware to handle high-stakes decision making."
+                icon={Brain}
+                className=""
+                accent="amber"
+                delay={0.4}
+              />
+
+              <BlueprintCard 
+                id="DATA-LIB"
+                title="Battle Frameworks" 
+                desc="Access 50+ copy-paste SOPs, prompt libraries, and execution protocols."
+                icon={Activity}
+                className="md:col-span-2"
+                accent="blue"
+                delay={0.5}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* --- AUTHOR SECTION (UPDATED: Adapts to vertical image) --- */}
+        <section className="py-32 px-4 bg-black border-y border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-zinc-800/20 rounded-full blur-[100px]" />
+          
+          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="max-w-md mx-auto md:max-w-none"
+            >
+              {/* Removed aspect-square. Added h-auto so it adapts to the image height */}
+              <div className="w-full h-auto rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative group border border-white/10 shadow-2xl shadow-black/50">
+                {/* Image Component: changed h-full to h-auto, removed object-cover */}
+                <img 
+                    src="/deonmenezes.png" 
+                    alt="Deon Menezes" 
+                    className="w-full h-auto object-center scale-100 group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </motion.div>
+            
+            <div className="space-y-8">
+              <h2 className="text-4xl font-bold tracking-tight">Written by <span className="text-white">Deon Menezes</span></h2>
+              <p className="text-xl text-zinc-400 leading-relaxed">
+                "I committed a thousand mistakes, faced hard failures, and learned from rare wins. I wrote everything down, built systems that created stability and consistent growth, and shaped them for the new generation navigating the AI revolution written in one book."
+              </p>
+              
+              <div className="grid grid-cols-2 gap-6 pt-4">
+                <div>
+                  <h4 className="text-3xl font-bold text-white">7+</h4>
+                  <p className="text-zinc-500 text-sm">Years Experience in Business</p>
+                </div>
+                <div>
+                  <h4 className="text-3xl font-bold text-white">Founder</h4>
+                  <p className="text-zinc-500 text-sm">AI Virelity Solutions</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
 
-      <Footer />
+      {/* --- WAITLIST MODAL (Professional Apple-Style Typography) --- */}
+      <Dialog open={isWaitlistOpen} onOpenChange={setIsWaitlistOpen}>
+        <DialogContent className="sm:max-w-md bg-zinc-950 border border-zinc-800 text-white p-8">
+            <DialogHeader className="space-y-4">
+                <DialogTitle className="text-4xl font-black tracking-tighter text-white leading-none">
+                    Join the <br />
+                    Waitlist.
+                </DialogTitle>
+                <DialogDescription className="text-lg text-zinc-400 font-medium tracking-wide">
+                    Secure your priority access for the 2026 launch.
+                </DialogDescription>
+            </DialogHeader>
 
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-600 transform origin-left z-50"
-        style={{ scaleX: smoothProgress }}
-      />
+            <form onSubmit={handleWaitlistSubmit} className="space-y-5 mt-6">
+                <div className="space-y-2">
+                    <Label htmlFor="fullName" className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Full Name</Label>
+                    <Input
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Deon Menezes"
+                        required
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        className="bg-zinc-900/50 border-zinc-800 focus:border-white/20 text-white placeholder:text-zinc-700 h-12 text-lg"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="email" className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Email Address</Label>
+                    <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="deon@virelity.com"
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="bg-zinc-900/50 border-zinc-800 focus:border-white/20 text-white placeholder:text-zinc-700 h-12 text-lg"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Phone (Optional)</Label>
+                    <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+91..."
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="bg-zinc-900/50 border-zinc-800 focus:border-white/20 text-white placeholder:text-zinc-700 h-12 text-lg"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="note" className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Intent</Label>
+                    <Textarea
+                        id="note"
+                        name="note"
+                        placeholder="I'm building a business and..."
+                        value={formData.note}
+                        onChange={handleInputChange}
+                        className="bg-zinc-900/50 border-zinc-800 focus:border-white/20 text-white placeholder:text-zinc-700 min-h-[80px] text-base resize-none"
+                    />
+                </div>
+
+                <Button 
+                    type="submit" 
+                    className="w-full bg-white text-black hover:bg-zinc-200 h-14 rounded-xl text-lg font-bold tracking-tight transition-all mt-4"
+                >
+                    Confirm Registration
+                </Button>
+            </form>
+        </DialogContent>
+      </Dialog>
+
+      <Footer />
     </div>
   );
 };
