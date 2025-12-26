@@ -124,7 +124,7 @@ const BookPage = () => {
   // Timer State
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isLocked, setIsLocked] = useState(true);
-  
+   
   // Waitlist State
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -190,7 +190,8 @@ Please notify me when the book launches.`;
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-amber-500/30">
+    // Added overflow-x-hidden and w-full here as well to prevent scrollbars
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-amber-500/30 overflow-x-hidden w-full">
       <Navbar />
 
       <main className="relative z-10">
@@ -249,7 +250,8 @@ Please notify me when the book launches.`;
                 <div className="flex flex-col items-center">
                     <ThreeDBook 
                         image="/blackbook.png" 
-                        spineColor="bg-zinc-200" 
+                        // CHANGED: spineColor to bg-zinc-900 (Dark Grey) to remove the white bar
+                        spineColor="bg-zinc-900" 
                         glowColor="bg-blue-600/40"
                         delay={0.4} 
                     />
@@ -406,7 +408,7 @@ Please notify me when the book launches.`;
           </div>
         </section>
 
-        {/* --- AUTHOR SECTION (UPDATED: Adapts to vertical image) --- */}
+        {/* --- AUTHOR SECTION --- */}
         <section className="py-32 px-4 bg-black border-y border-white/5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-zinc-800/20 rounded-full blur-[100px]" />
           
@@ -417,9 +419,7 @@ Please notify me when the book launches.`;
               viewport={{ once: true }}
               className="max-w-md mx-auto md:max-w-none"
             >
-              {/* Removed aspect-square. Added h-auto so it adapts to the image height */}
               <div className="w-full h-auto rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative group border border-white/10 shadow-2xl shadow-black/50">
-                {/* Image Component: changed h-full to h-auto, removed object-cover */}
                 <img 
                     src="/deonmenezes.png" 
                     alt="Deon Menezes" 
@@ -450,7 +450,7 @@ Please notify me when the book launches.`;
 
       </main>
 
-      {/* --- WAITLIST MODAL (Professional Apple-Style Typography) --- */}
+      {/* --- WAITLIST MODAL --- */}
       <Dialog open={isWaitlistOpen} onOpenChange={setIsWaitlistOpen}>
         <DialogContent className="sm:max-w-md bg-zinc-950 border border-zinc-800 text-white p-8">
             <DialogHeader className="space-y-4">
