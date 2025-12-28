@@ -278,6 +278,100 @@ const Privacy = () => {
               </div>
             </motion.div>
 
+            {/* Terms & Conditions Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-12 relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-40"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 p-4 flex items-center justify-center">
+                    <FileText className="h-6 w-6 text-white" />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-yellow-500 bg-clip-text text-transparent">
+                    Terms & Conditions
+                  </h2>
+                </div>
+                <div className="space-y-4 text-gray-300">
+                  <h3 className="text-xl font-semibold mb-2 text-yellow-400">Effective Date: December 28, 2025</h3>
+                  <p>These Terms & Conditions govern your use of our website and services, including payments processed via Razorpay.</p>
+                  <h4 className="text-lg font-bold mt-4 text-yellow-300">Use of Services</h4>
+                  <ul className="list-disc ml-6">
+                    <li>You agree to provide accurate information when booking or making payments.</li>
+                    <li>You must not use our services for unlawful purposes.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-yellow-300">Payments</h4>
+                  <ul className="list-disc ml-6">
+                    <li>All payments are processed securely via Razorpay.</li>
+                    <li>By making a payment, you agree to Razorpay's <a href="https://razorpay.com/terms/" className="underline hover:text-yellow-400" target="_blank" rel="noopener noreferrer">Terms of Service</a>.</li>
+                    <li>We are not responsible for payment failures or issues arising from Razorpay's platform.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-yellow-300">Refunds & Cancellations</h4>
+                  <ul className="list-disc ml-6">
+                    <li>Refunds and cancellations are subject to our policies. Please contact us for assistance.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-yellow-300">Limitation of Liability</h4>
+                  <ul className="list-disc ml-6">
+                    <li>We are not liable for any indirect or consequential damages arising from your use of our services.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-yellow-300">Changes to Terms</h4>
+                  <ul className="list-disc ml-6">
+                    <li>We may update these Terms & Conditions at any time. Continued use of our services constitutes acceptance of the updated terms.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-yellow-300">Contact Us</h4>
+                  <p>For questions, contact <a href="mailto:deon.menezes@virelity.com" className="underline hover:text-yellow-400">deon.menezes@virelity.com</a>.</p>
+                  <p className="mt-4 italic text-yellow-400">By using our website and services, you agree to these Terms & Conditions.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Refund & Cancellation Policy Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-12 relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-red-500/10 opacity-40"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-pink-500 to-red-500 p-4 flex items-center justify-center">
+                    <Lock className="h-6 w-6 text-white" />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-pink-500 bg-clip-text text-transparent">
+                    Refund & Cancellation Policy
+                  </h2>
+                </div>
+                <div className="space-y-4 text-gray-300">
+                  <h3 className="text-xl font-semibold mb-2 text-pink-400">Effective Date: December 28, 2025</h3>
+                  <h4 className="text-lg font-bold mt-4 text-pink-300">Refunds</h4>
+                  <ul className="list-disc ml-6">
+                    <li>Refunds are processed in accordance with our service terms and at our sole discretion.</li>
+                    <li>To request a refund, contact us at <a href="mailto:deon.menezes@virelity.com" className="underline hover:text-pink-400">deon.menezes@virelity.com</a> with your order details.</li>
+                    <li>Approved refunds will be processed to the original payment method via Razorpay within 7-10 business days.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-pink-300">Cancellations</h4>
+                  <ul className="list-disc ml-6">
+                    <li>You may request to cancel your booking or order by contacting us before the service is rendered.</li>
+                    <li>Cancellations after service delivery are not eligible for a refund.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-pink-300">Payment Gateway</h4>
+                  <ul className="list-disc ml-6">
+                    <li>All payments and refunds are processed securely via Razorpay.</li>
+                    <li>Razorpay's <a href="https://razorpay.com/refund-policy/" className="underline hover:text-pink-400" target="_blank" rel="noopener noreferrer">Refund Policy</a> applies in addition to our own.</li>
+                  </ul>
+                  <h4 className="text-lg font-bold mt-4 text-pink-300">Contact Us</h4>
+                  <p>For any questions or concerns, email <a href="mailto:deon.menezes@virelity.com" className="underline hover:text-pink-400">deon.menezes@virelity.com</a>.</p>
+                  <p className="mt-4 italic text-pink-400">By making a payment, you agree to this Refund & Cancellation Policy.</p>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Contact Section */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
