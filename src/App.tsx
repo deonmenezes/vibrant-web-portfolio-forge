@@ -50,7 +50,7 @@ const AppWithAnalytics = () => {
         <Route path="/team" element={<Team />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/career" element={<Career />} />
+        {/* <Route path="/career" element={<Career />} /> */}
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/book" element={<BookPage />} />
         
