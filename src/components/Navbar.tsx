@@ -18,7 +18,7 @@ const navItems = [
   { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
   { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
-  { name: "Career", path: "/career", title: "Join Our Team - Career Opportunities at Virelity.com" },
+  // { name: "Career", path: "/career", title: "Join Our Team - Career Opportunities at Virelity.com" },
   // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
 ];
