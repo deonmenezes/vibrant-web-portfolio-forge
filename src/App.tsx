@@ -33,6 +33,7 @@ import { BookingFormDialog } from "./components/BookingFormDialog";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
 import BookPage from "./pages/book";
+import DeonMenezes from "./pages/deonmenezes";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,7 @@ const AppWithAnalytics = () => {
         {/* <Route path="/career" element={<Career />} /> */}
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/book" element={<BookPage />} />
+        <Route path="/deonmenezes" element={<DeonMenezes />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />

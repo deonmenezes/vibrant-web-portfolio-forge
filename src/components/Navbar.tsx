@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, Calendar } from "lucide-react";
+import { Menu, Calendar, BookOpen } from "lucide-react";
 import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
 import {
   Sheet,
@@ -21,6 +21,7 @@ const navItems = [
   // { name: "Career", path: "/career", title: "Join Our Team - Career Opportunities at Virelity.com" },
   // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
+  { name: "Book", path: "/book", title: "Business in the Age of AI - Book by Deon Menezes", isBook: true },
 ];
 
 type NavbarProps = {
@@ -184,20 +185,39 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
           <ul className="hidden md:flex items-center gap-8" role="menubar">
             {navItems.map((item) => (
               <li key={item.name} role="none">
-                <Link
-                  to={item.path}
-                  className={cn(
-                    "text-lg font-medium transition-colors hover:text-vision-gold-light relative animated-underline",
-                    location.pathname === item.path
-                      ? "text-vision-gold"
-                      : "text-muted-foreground"
-                  )}
-                  role="menuitem"
-                  title={item.title}
-                  aria-current={location.pathname === item.path ? "page" : undefined}
-                >
-                  {item.name}
-                </Link>
+                {item.isBook ? (
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-lg transition-all duration-200 border border-amber-400/30 bg-gradient-to-r from-amber-400/10 to-amber-200/5 hover:bg-amber-400/20 hover:text-amber-500 shadow-sm relative",
+                      location.pathname === item.path
+                        ? "text-amber-500 border-amber-400 bg-amber-400/10"
+                        : "text-amber-400"
+                    )}
+                    role="menuitem"
+                    title={item.title}
+                    aria-current={location.pathname === item.path ? "page" : undefined}
+                  >
+                    <BookOpen className="h-5 w-5" />
+                    <span>Book</span>
+                    <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-amber-500 text-black font-bold animate-pulse">NEW</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      "text-lg font-medium transition-colors hover:text-vision-gold-light relative animated-underline",
+                      location.pathname === item.path
+                        ? "text-vision-gold"
+                        : "text-muted-foreground"
+                    )}
+                    role="menuitem"
+                    title={item.title}
+                    aria-current={location.pathname === item.path ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -235,21 +255,41 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                 </Link>
                 <div className="flex flex-col gap-3 py-4" role="menu">
                   {navItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className={cn(
-                        "text-lg py-2 px-4 rounded-lg transition-colors",
-                        location.pathname === item.path
-                          ? "bg-vision-gold/20 text-vision-gold font-medium"
-                          : "text-muted-foreground hover:bg-muted"
-                      )}
-                      role="menuitem"
-                      title={item.title}
-                      aria-current={location.pathname === item.path ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Link>
+                    item.isBook ? (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-lg transition-all duration-200 border border-amber-400/30 bg-gradient-to-r from-amber-400/10 to-amber-200/5 hover:bg-amber-400/20 hover:text-amber-500 shadow-sm relative",
+                          location.pathname === item.path
+                            ? "text-amber-500 border-amber-400 bg-amber-400/10"
+                            : "text-amber-400"
+                        )}
+                        role="menuitem"
+                        title={item.title}
+                        aria-current={location.pathname === item.path ? "page" : undefined}
+                      >
+                        <BookOpen className="h-5 w-5" />
+                        <span>Book</span>
+                        <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-amber-500 text-black font-bold animate-pulse">NEW</span>
+                      </Link>
+                    ) : (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className={cn(
+                          "text-lg py-2 px-4 rounded-lg transition-colors",
+                          location.pathname === item.path
+                            ? "bg-vision-gold/20 text-vision-gold font-medium"
+                            : "text-muted-foreground hover:bg-muted"
+                        )}
+                        role="menuitem"
+                        title={item.title}
+                        aria-current={location.pathname === item.path ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                    )
                   ))}
                 </div>
                 <div className="mt-auto">

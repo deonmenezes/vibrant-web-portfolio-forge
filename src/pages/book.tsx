@@ -3,8 +3,8 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
-import { 
-  TrendingUp, ArrowRight, Lock, Clock, Activity, Cpu, Brain, Layers 
+import {
+  TrendingUp, Clock, Activity, Cpu, Brain, Layers, ShoppingCart
 } from "lucide-react";
 import {
   Dialog,
@@ -121,10 +121,6 @@ const ThreeDBook = ({ image, spineColor, glowColor, delay }) => {
 };
 
 const BookPage = () => {
-  // Timer State
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [isLocked, setIsLocked] = useState(true);
-   
   // Waitlist State
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -133,28 +129,6 @@ const BookPage = () => {
     phone: '',
     note: ''
   });
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const newYear2026 = new Date('2026-01-01T00:00:00').getTime();
-      const now = new Date().getTime();
-      const difference = newYear2026 - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
-        });
-        setIsLocked(true);
-      } else {
-        setIsLocked(false);
-      }
-    };
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   // --- Handlers for Waitlist ---
   const handleInputChange = (e) => {
@@ -260,64 +234,114 @@ Please notify me when the book launches.`;
 
             </div>
 
-            {/* 3. TIMELINE & LOCKED/WAITLIST BUTTON */}
-            <motion.div 
+            {/* 3. BUY NOW SECTION */}
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="w-full max-w-3xl mx-auto"
+                className="w-full max-w-4xl mx-auto"
             >
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-2 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl">
-                    
-                    {/* Timeline / Countdown */}
-                    <motion.div 
-                        whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.05)" }}
-                        className="flex-1 flex items-center justify-center gap-6 px-8 py-4 rounded-2xl border border-transparent hover:border-white/10 transition-all cursor-default"
-                    >
-                        <div className="flex items-center gap-3 text-zinc-400 mb-1">
-                            <Clock className="w-4 h-4" />
-                            <span className="text-xs uppercase tracking-widest">Launch Timeline</span>
-                        </div>
-                        <div className="h-8 w-px bg-white/10 mx-2" />
-                        <div className="flex gap-4 font-mono text-xl md:text-2xl font-bold text-white tabular-nums">
-                            <span>{String(timeLeft.days).padStart(2,'0')}d</span>
-                            <span>:</span>
-                            <span>{String(timeLeft.hours).padStart(2,'0')}h</span>
-                            <span>:</span>
-                            <span>{String(timeLeft.minutes).padStart(2,'0')}m</span>
-                        </div>
-                    </motion.div>
+                {/* Main Purchase Card */}
+                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-zinc-900/80 via-zinc-900/60 to-zinc-950/80 border border-white/10 backdrop-blur-xl overflow-hidden">
 
-                    {/* Waitlist / Buy Button */}
-                    <motion.button
-                        onClick={() => isLocked && setIsWaitlistOpen(true)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                        className={`
-                            relative px-8 py-5 rounded-2xl font-bold text-lg flex items-center gap-3 transition-all
-                            ${isLocked 
-                                ? "bg-amber-500 text-black hover:bg-amber-400 shadow-[0_0_30px_-5px_rgba(245,158,11,0.4)] cursor-pointer" 
-                                : "bg-white text-black hover:bg-zinc-200 shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]"
-                            }
-                        `}
-                    >
-                        {isLocked ? (
-                            <>
-                                <Lock className="w-5 h-5" />
-                                <span>Join Waitlist</span>
-                            </>
-                        ) : (
-                            <>
-                                <span>Buy Now</span>
-                                <ArrowRight className="w-5 h-5" />
-                            </>
-                        )}
-                    </motion.button>
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/10 rounded-full blur-[80px] pointer-events-none" />
+
+                    <div className="relative z-10">
+                        {/* Header */}
+                        <div className="text-center mb-8">
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.8 }}
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-4"
+                            >
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                <span className="text-green-400 text-sm font-medium">Black Edition Available Now</span>
+                            </motion.div>
+                            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Get Your Copy Today</h3>
+                            <p className="text-zinc-400">The AI Masterpiece Edition is now available for purchase</p>
+                        </div>
+
+                        {/* Purchase Options */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                            {/* Amazon Button - Primary */}
+                            <motion.a
+                                href="https://www.amazon.in/gp/product/8199573775/ref=cx_skuctr_share_ls_srb?smid=A3U30B7Y7STKIV&tag=ShopReferral_3ecc4584-e5b7-421e-93c3-24acf2931a1c"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                whileHover={{ scale: 1.03, y: -4 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="group relative flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-gradient-to-br from-[#FF9900] via-[#FFB347] to-[#FF9900] text-black font-bold overflow-hidden shadow-[0_0_40px_-10px_rgba(255,153,0,0.5)] hover:shadow-[0_0_60px_-10px_rgba(255,153,0,0.7)] transition-all duration-300 cursor-pointer"
+                            >
+                                {/* Shine Effect */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+
+                                {/* Amazon Logo */}
+                                <svg className="w-28 h-10" viewBox="0 0 603 182" fill="currentColor">
+                                    <path d="M374.006 142.184c-34.784 25.702-85.144 39.38-128.574 39.38-60.858 0-115.656-22.52-157.14-59.99-3.256-2.942-.338-6.962 3.572-4.668 44.764 26.052 100.11 41.73 157.244 41.73 38.54 0 80.932-7.988 119.916-24.546 5.876-2.5 10.81 3.858 5.014 8.094h-.032z"/>
+                                    <path d="M388.002 126.166c-4.434-5.688-29.368-2.694-40.568-1.358-3.404.416-3.924-2.556-.858-4.694 19.858-13.962 52.436-9.93 56.232-5.252 3.798 4.702-.994 37.28-19.646 52.842-2.866 2.392-5.59 1.118-4.324-2.052 4.194-10.478 13.6-33.962 9.162-39.486h.002zM348.312 20.972V6.584c0-2.184 1.654-3.642 3.64-3.642h64.382c2.068 0 3.724 1.486 3.724 3.642v12.318c-.022 2.086-1.78 4.818-4.894 9.088l-33.358 47.622c12.39-.302 25.47 1.546 36.698 7.894 2.532 1.432 3.222 3.538 3.418 5.614v15.346c0 2.106-2.322 4.566-4.76 3.294-19.886-10.422-46.296-11.56-68.296.108-2.244 1.214-4.594-1.212-4.594-3.32v-14.574c0-2.36.032-6.388 2.442-9.974l38.64-55.428h-33.628c-2.068 0-3.724-1.458-3.724-3.614l-.002.006.314-.006h.002zm-237.326 85.69h-19.584c-1.872-.142-3.36-1.544-3.5-3.332V6.802c0-2.012 1.676-3.614 3.76-3.614h18.254c1.902.084 3.424 1.544 3.566 3.362v14.008h.366c4.774-13.37 13.756-19.612 25.854-19.612 12.282 0 19.966 6.242 25.488 19.612 4.746-13.37 15.532-19.612 27.202-19.612 8.252 0 17.264 3.406 22.776 11.048 6.244 8.506 4.978 20.884 4.978 31.726l-.022 59.372c0 2.01-1.676 3.642-3.758 3.642h-19.558c-1.948-.142-3.51-1.7-3.51-3.642V54.198c0-4.268.366-14.91-.548-18.936-1.466-6.74-5.856-8.632-11.55-8.632-4.758 0-9.722 3.166-11.744 8.252-2.022 5.086-1.832 13.584-1.832 19.316v48.916c0 2.01-1.676 3.642-3.758 3.642h-19.558c-1.962-.142-3.508-1.7-3.508-3.642l-.022-48.916c0-11.304 1.852-27.948-12.098-27.948-14.132 0-13.576 16.264-13.576 27.948v48.916c0 2.01-1.676 3.642-3.758 3.642l.092-.02zm360.066-85.69c29.08 0 44.808 24.978 44.808 56.704 0 30.67-17.38 55.02-44.808 55.02-28.528 0-44.064-24.978-44.064-56.076 0-31.284 15.724-55.648 44.064-55.648zm.182 20.52c-14.5 0-15.414 19.754-15.414 32.082 0 12.342-.184 38.696 15.232 38.696 15.232 0 15.964-21.256 15.964-34.214 0-8.524-.366-18.71-2.938-26.842-2.208-7.072-6.6-10.722-12.844-10.722v1zM522.494 106.662h-19.482c-1.948-.142-3.51-1.7-3.51-3.642l-.024-96.236c.168-1.87 1.792-3.334 3.76-3.334h18.148c1.706.084 3.104 1.256 3.482 2.828v14.72h.366c5.49-13.246 13.21-19.612 26.78-19.612 8.8 0 17.382 3.166 22.896 11.924 5.124 8.134 5.124 21.824 5.124 31.726v58.112c-.21 1.8-1.82 3.214-3.76 3.214h-19.662c-1.814-.142-3.304-1.472-3.486-3.214V53.196c0-11.048 1.28-27.21-12.282-27.21-4.774 0-9.172 3.194-11.366 8.036-2.754 6.114-3.108 12.202-3.108 19.174v49.902c-.024 2.012-1.724 3.642-3.784 3.642l-.092-.078zm-227.376-38.7c0 7.704.184 14.136-3.692 21.01-3.142 5.602-8.134 9.054-13.662 9.054-7.574 0-12.012-5.772-12.012-14.3 0-16.82 15.068-19.876 29.366-19.876v4.112zm19.9 48.118c-1.304 1.16-3.19 1.242-4.664.468-6.554-5.448-7.738-7.976-11.328-13.166-10.836 11.052-18.52 14.362-32.56 14.362-16.628 0-29.558-10.262-29.558-30.794 0-16.036 8.684-26.956 21.064-32.296 10.732-4.712 25.722-5.554 37.186-6.856v-2.556c0-4.696.366-10.252-2.39-14.314-2.392-3.638-6.966-5.138-11.012-5.138-7.48 0-14.148 3.838-15.78 11.798-.334 1.77-1.632 3.514-3.408 3.602l-18.998-2.052c-1.606-.36-3.39-1.656-2.932-4.114C250.05 9.546 273.21.946 293.864.946c10.364 0 23.912 2.76 32.096 10.614 10.364 9.68 9.378 22.604 9.378 36.66v33.216c0 9.984 4.142 14.362 8.038 19.764 1.362 1.924 1.66 4.228-.07 5.666-4.324 3.614-12.012 10.322-16.248 14.088l-.044-.058v-.016z"/>
+                                </svg>
+
+                                <div className="flex items-center gap-2">
+                                    <ShoppingCart className="w-5 h-5" />
+                                    <span className="text-lg">Buy Now on Amazon</span>
+                                </div>
+
+                                <span className="text-sm opacity-80">Instant Delivery Available</span>
+                            </motion.a>
+
+                            {/* Flipkart - Coming Soon */}
+                            <motion.div
+                                initial={{ opacity: 0.6 }}
+                                className="relative flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 cursor-not-allowed"
+                            >
+                                <div className="absolute inset-0 bg-zinc-900/50 backdrop-blur-sm rounded-2xl" />
+                                <div className="relative z-10 flex flex-col items-center gap-3">
+                                    {/* Flipkart Logo */}
+                                    <svg className="w-28 h-10 opacity-50" viewBox="0 0 244 60" fill="currentColor">
+                                        <path d="M27.4 0H2.7C1.2 0 0 1.2 0 2.7v24.7C0 28.8 1.2 30 2.7 30h24.7c1.5 0 2.7-1.2 2.7-2.7V2.7C30 1.2 28.8 0 27.4 0zM15 25.5c-5.8 0-10.5-4.7-10.5-10.5S9.2 4.5 15 4.5 25.5 9.2 25.5 15 20.8 25.5 15 25.5z"/>
+                                        <path d="M51.2 8.6h-8.1v2.6h8.1v2.9h-8.1v6.4h-3.3V5.7h11.4v2.9zm8.7 11.9h-3.1V5.7h3.1v14.8zm4.7-7.1v7.1h-3.1V5.7h3.1v5.9c.5-.4 1.1-.7 1.8-.9.7-.2 1.4-.3 2.1-.3 1.5 0 2.7.5 3.5 1.4.8.9 1.3 2.2 1.3 3.8v5h-3.1v-4.6c0-.9-.2-1.5-.6-2-.4-.4-.9-.7-1.6-.7-.5 0-1 .1-1.4.3-.4.2-.8.5-1 .9zm23.3 2.8c0 .4 0 .7-.1 1h-9.1c.1.8.4 1.4.9 1.8.5.4 1.1.6 1.9.6.6 0 1.1-.1 1.5-.4.4-.2.7-.6.9-1h3.2c-.3 1.1-.9 2-1.8 2.7-.9.7-2 1-3.5 1-1.1 0-2.1-.2-2.9-.7-.8-.5-1.5-1.1-2-2-.5-.9-.7-1.9-.7-3s.2-2.1.7-3c.5-.9 1.1-1.5 2-2 .9-.5 1.8-.7 2.9-.7s2.1.2 2.9.7c.8.5 1.5 1.1 1.9 1.9.5.8.7 1.7.7 2.8v.3zm-3.2-.8c0-.7-.2-1.3-.7-1.7-.4-.4-1-.6-1.7-.6-.6 0-1.2.2-1.6.6-.4.4-.7 1-.8 1.7h4.8z"/>
+                                    </svg>
+
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="w-4 h-4" />
+                                        <span className="text-sm font-medium">Coming Soon</span>
+                                    </div>
+
+                                    <span className="text-xs text-zinc-500">Flipkart</span>
+                                </div>
+                            </motion.div>
+
+                            {/* Website Purchase - Coming Soon */}
+                            <motion.div
+                                initial={{ opacity: 0.6 }}
+                                className="relative flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 cursor-not-allowed"
+                            >
+                                <div className="absolute inset-0 bg-zinc-900/50 backdrop-blur-sm rounded-2xl" />
+                                <div className="relative z-10 flex flex-col items-center gap-3">
+                                    <div className="w-12 h-12 rounded-xl bg-zinc-700/50 flex items-center justify-center">
+                                        <ShoppingCart className="w-6 h-6 opacity-50" />
+                                    </div>
+
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="w-4 h-4" />
+                                        <span className="text-sm font-medium">Coming Soon</span>
+                                    </div>
+
+                                    <span className="text-xs text-zinc-500">Website Purchase</span>
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        {/* Note */}
+                        <p className="text-center text-zinc-500 text-sm mt-6">
+                            The Black Edition (AI Masterpiece) is exclusively available on Amazon India
+                        </p>
+                    </div>
                 </div>
-                <p className="text-center text-zinc-600 text-xs mt-4">
-                    {isLocked ? "Limited spots available. Join the waitlist for early access." : "The store is open."}
-                </p>
             </motion.div>
 
           </div>
