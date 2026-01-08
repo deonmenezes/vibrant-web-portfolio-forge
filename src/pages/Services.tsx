@@ -18,6 +18,25 @@ import {
 import { PageTransition } from "../components/PageTransition";
 
 const Services = () => {
+  // Google Analytics for Services page
+  useEffect(() => {
+    // Load gtag script if not already loaded
+    const GA_ID = 'G-T8DLRPD9T2';
+    if (!document.querySelector(`script[src*="${GA_ID}"]`)) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      document.head.appendChild(script);
+    }
+
+    // Initialize gtag
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-T8DLRPD9T2');
+  }, []);
   const services = [
   // ...existing code for services array...
   // Place this after the closing bracket of the services array
