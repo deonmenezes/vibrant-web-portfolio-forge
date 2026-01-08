@@ -23,10 +23,12 @@ import DesignServices from "./pages/services/design-services";
 import DigitalMarketing from "./pages/services/digital-marketing";
 import MobileApps from "./pages/services/mobile-apps";
 import UIUXDesign from "./pages/services/ui-ux-design";
+import AISolutions from "./pages/services/ai-solutions";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import ScrollToTop from "./components/ScrollToTop";
 import { AIChatbot } from "./components/custom/AIChatbot";
 import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
+import { GoogleAdsCTA } from "./components/custom/GoogleAdsCTA";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
 import { BookingProvider, useBooking } from "./contexts/BookingContext";
 import { BookingFormDialog } from "./components/BookingFormDialog";
@@ -66,7 +68,8 @@ const AppWithAnalytics = () => {
         <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
         <Route path="/services/mobile-apps" element={<MobileApps />} />
         <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
-        
+        <Route path="/services/ai-solutions" element={<AISolutions />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
@@ -85,6 +88,7 @@ const AppContent = () => {
       {/* Global components available on all pages */}
       <AIChatbot />
       <WhatsAppBooking />
+      <GoogleAdsCTA />
       <BookingFormDialog open={isOpen} onOpenChange={closeBookingDialog} />
     </>
   );

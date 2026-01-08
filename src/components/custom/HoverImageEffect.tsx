@@ -34,7 +34,7 @@ export const HoverImageEffect = ({ children, isNavbar = false }: HoverImageEffec
       >
         <div className="w-32 h-32 rounded-full overflow-hidden shadow-xl">
           <img 
-            src="/deon_ghibli.png" 
+            src="/deonprofessionalbgless.png" 
             alt="Deon" 
             className="w-full h-full object-cover"
           />

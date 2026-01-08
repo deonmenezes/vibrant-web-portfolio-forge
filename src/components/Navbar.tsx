@@ -49,7 +49,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
     let pageTitle = title;
     let pageDescription = description;
     let pageKeywords = "AI Agents, web development, digital solutions, business transformation";
-    
+
     switch(path) {
       case "/services":
         pageTitle = "Services - Virelity.com | AI Agents, Web Development & Digital Solutions";
@@ -81,13 +81,69 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageDescription = "Join our innovative team of AI and digital experts. Explore career opportunities in web development, design, and technology at Virelity.com";
         pageKeywords = "career, jobs, employment, web development jobs, AI jobs, tech careers, join our team";
         break;
+      case "/book":
+        pageTitle = "Business in the Age of AI - Book by Deon Menezes | Virelity.com";
+        pageDescription = "Get your copy of 'Business in the Age of AI' by Deon Menezes. Learn how to transform your business with artificial intelligence strategies.";
+        pageKeywords = "AI book, business AI, Deon Menezes, artificial intelligence business, AI transformation guide";
+        break;
+      // Service Pages
+      case "/services/ai-solutions":
+        pageTitle = "AI Solutions & Chatbots - Virelity.com | Custom AI Development";
+        pageDescription = "Transform your business with custom AI solutions. We build intelligent chatbots, automation systems, and predictive analytics to boost productivity by 100%.";
+        pageKeywords = "AI solutions, AI chatbots, custom AI development, business automation, predictive analytics, GPT integration, machine learning";
+        break;
+      case "/services/web-development":
+        pageTitle = "Web Development Services - Virelity.com | Modern Websites & Web Apps";
+        pageDescription = "Professional web development services. We build responsive websites, e-commerce platforms, and custom web applications using React, Next.js, and modern technologies.";
+        pageKeywords = "web development, website design, React development, Next.js, e-commerce, custom web apps, responsive design";
+        break;
+      case "/services/mobile-apps":
+        pageTitle = "Mobile App Development - Virelity.com | iOS & Android Apps";
+        pageDescription = "Expert mobile app development for iOS and Android. We create high-performance native and cross-platform apps using React Native and Flutter.";
+        pageKeywords = "mobile app development, iOS apps, Android apps, React Native, Flutter, cross-platform apps, app design";
+        break;
+      case "/services/ui-ux-design":
+        pageTitle = "UI/UX Design Services - Virelity.com | User Experience Design";
+        pageDescription = "Create exceptional user experiences with our UI/UX design services. We design intuitive interfaces that convert visitors into customers.";
+        pageKeywords = "UI design, UX design, user experience, interface design, wireframing, prototyping, Figma design";
+        break;
+      case "/services/digital-marketing":
+        pageTitle = "Digital Marketing Services - Virelity.com | SEO, PPC & Social Media";
+        pageDescription = "Grow your business with our digital marketing services. Expert SEO, Google Ads, social media marketing, and content strategy to increase leads and sales.";
+        pageKeywords = "digital marketing, SEO services, Google Ads, PPC, social media marketing, content marketing, lead generation";
+        break;
+      case "/services/vr-ar-development":
+        pageTitle = "VR/AR Development - Virelity.com | Virtual & Augmented Reality";
+        pageDescription = "Immersive VR and AR development services. We create virtual reality experiences, augmented reality apps, and 3D interactive content for businesses.";
+        pageKeywords = "VR development, AR development, virtual reality, augmented reality, immersive experiences, 3D apps, metaverse";
+        break;
+      case "/services/ar-vr-marketing":
+        pageTitle = "AR/VR Marketing - Virelity.com | Immersive Marketing Solutions";
+        pageDescription = "Engage customers with AR/VR marketing experiences. Create memorable brand interactions with augmented and virtual reality campaigns.";
+        pageKeywords = "AR marketing, VR marketing, immersive marketing, interactive campaigns, brand experiences, AR filters";
+        break;
+      case "/services/3d-development":
+        pageTitle = "3D Development Services - Virelity.com | 3D Modeling & Animation";
+        pageDescription = "Professional 3D development services including 3D modeling, animation, product visualization, and interactive 3D experiences for web and apps.";
+        pageKeywords = "3D development, 3D modeling, 3D animation, product visualization, WebGL, Three.js, 3D rendering";
+        break;
+      case "/services/video-editing":
+        pageTitle = "Video Editing Services - Virelity.com | Professional Video Production";
+        pageDescription = "Professional video editing and production services. We create engaging video content, motion graphics, and promotional videos for your business.";
+        pageKeywords = "video editing, video production, motion graphics, promotional videos, corporate videos, video content";
+        break;
+      case "/services/design-services":
+        pageTitle = "Design Services - Virelity.com | Graphic Design & Branding";
+        pageDescription = "Creative design services including logo design, branding, graphic design, and visual identity creation for businesses of all sizes.";
+        pageKeywords = "graphic design, logo design, branding, visual identity, brand design, creative design, marketing design";
+        break;
       default:
         // Home page or fallback
         pageTitle = "Virelity.com | AI Agents that Transform Businesses";
         pageDescription = "We build AI Agents that transform businesses. Increase productivity by 100% through AI integration and boost sales by 100% with our solutions.";
         pageKeywords = "AI Agents, digital transformation, web development, business solutions, productivity increase";
     }
-    
+
     return { pageTitle, pageDescription, pageKeywords };
   };
   
