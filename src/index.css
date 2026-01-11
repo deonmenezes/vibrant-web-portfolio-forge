@@ -155,7 +155,17 @@
   );
   animation: shimmer 2s infinite;
 }
+/* Scroll Reveal Animation */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
 
+.scroll-reveal.reveal-active {
+  opacity: 1;
+  transform: translateY(0);
+}
 /* Gradient backgrounds */
 .gradient-bg {
   background: linear-gradient(90deg, #B78628 0%, #F5D061 100%);

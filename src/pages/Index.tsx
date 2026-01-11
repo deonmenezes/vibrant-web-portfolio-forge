@@ -998,7 +998,8 @@ const Index = () => {
             </span>
           </Marquee>
         </section>
- <section ref={servicesRef} className="py-20 bg-black border-y-4 border-white overflow-hidden">
+        {/* service section */}
+        <section ref={servicesRef} className="py-20 bg-black border-y-4 border-white overflow-hidden">
           <div className="container mb-16">
             {/* Section Header */}
             <motion.div
@@ -1011,21 +1012,21 @@ const Index = () => {
                 <div className="relative">
                   <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
                   <div className="relative bg-black border-4 border-white px-6 py-3">
-                    <span className="font-black uppercase tracking-widest text-white">Our Services</span>
+                    <span className="font-black uppercase tracking-widest text-white text-xs sm:text-sm">Our Services</span>
                   </div>
                 </div>
               </div>
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase mb-4">
                 What We <span className="text-vision-gold">Build</span>
               </h2>
-              <p className="text-xl text-white/70 font-medium max-w-2xl mx-auto">
+              <p className="text-base sm:text-xl text-white/70 font-medium max-w-2xl mx-auto px-4">
                 End-to-end digital solutions that drive real business results
               </p>
             </motion.div>
           </div>
 
-          {/* Infinite Services Scroll Rows */}
-          <div className="space-y-6 mb-12">
+          {/* Desktop: Infinite Scroll | Mobile: Grid */}
+          <div className="hidden lg:block space-y-6 mb-12">
             {/* First Row - Scroll Right */}
             <InfiniteScrollRow services={services.slice(0, 4)} direction="right" />
             
@@ -1033,12 +1034,21 @@ const Index = () => {
             <InfiniteScrollRow services={services.slice(4, 8)} direction="left" />
           </div>
 
+          {/* Mobile & Tablet: Responsive Grid */}
+          <div className="lg:hidden container mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 px-4">
+              {services.map((service, index) => (
+                <NeoServiceCard key={service.title} service={service} index={index} />
+              ))}
+            </div>
+          </div>
+
           {/* View All Button */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-12 px-4"
           >
             <motion.div
               whileHover={{ scale: 1.03 }}
@@ -1048,11 +1058,11 @@ const Index = () => {
               <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white transition-transform group-hover:translate-x-3 group-hover:translate-y-3" />
               <Button
                 asChild
-                className="relative bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider px-10 py-7 text-lg border-4 border-white rounded-none"
+                className="relative bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider px-6 sm:px-10 py-5 sm:py-7 text-base sm:text-lg border-4 border-white rounded-none"
               >
                 <Link to="/services">
                   View All Services
-                  <ArrowRight className="w-6 h-6 ml-3" />
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 sm:ml-3" />
                 </Link>
               </Button>
             </motion.div>
