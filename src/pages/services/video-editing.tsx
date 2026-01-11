@@ -135,7 +135,7 @@ const VideoEditingService = () => {
     const packages = [
         {
             name: "Basic Video Edit",
-            price: "$500",
+            price: "$0",
             description: "Perfect for simple video editing needs",
             features: [
                 "Basic video editing",

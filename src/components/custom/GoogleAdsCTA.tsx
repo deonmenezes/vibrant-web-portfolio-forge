@@ -129,7 +129,7 @@ export const GoogleAdsCTA = () => {
     // Redirect to WhatsApp with automated message
     const phoneNumber = '971566433640';
     const message = encodeURIComponent(
-      `Hi Virelity! 👋\n\nI'm interested in the New Year 2026 offer - Free AI Strategy Session worth $500.\n\nI'd like to book a free consultation call to discuss how AI can help transform my business.\n\nLooking forward to hearing from you!`
+      `Hi Virelity! 👋\n\nI'm interested in the New Year 2026 offer - Free AI Strategy Session  $0.\n\nI'd like to book a free consultation call to discuss how AI can help transform my business.\n\nLooking forward to hearing from you!`
     );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -191,7 +191,7 @@ export const GoogleAdsCTA = () => {
 
                       <h3 className="text-white text-lg font-semibold tracking-tight">
                         Free AI Strategy Session
-                        <span className="ml-2 text-amber-400 font-bold">Worth $500</span>
+                        <span className="ml-2 text-amber-400 font-bold"> $0</span>
                       </h3>
                       <p className="text-white/60 text-sm mt-0.5">
                         Start 2026 with a personalized AI roadmap for your business
@@ -245,7 +245,7 @@ export const GoogleAdsCTA = () => {
                       onClick={handleCTAClick}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="group relative overflow-hidden bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-[length:200%_100%] hover:bg-right text-[#1a1a2e] font-semibold px-6 py-3.5 rounded-xl transition-all duration-500 shadow-lg shadow-amber-500/25 flex items-center gap-2.5"
+                      className="group relative overflow-hidden bg-gradient-to-r from-green-500 via-green-400 to-green-500 bg-[length:200%_100%] hover:bg-right text-white font-semibold px-6 py-3.5 rounded-xl transition-all duration-500 shadow-lg shadow-green-500/25 flex items-center gap-2.5"
                     >
                       <PhoneCallIcon />
                       <span>Book Free Call</span>
@@ -295,7 +295,7 @@ export const GoogleAdsCTA = () => {
                       New Year Sale 2026
                     </span>
                     <h3 className="text-white text-base font-semibold mt-0.5">
-                      Free AI Strategy <span className="text-amber-400">($500)</span>
+                      Free AI Strategy <span className="text-amber-400">($0)</span>
                     </h3>
                   </div>
                 </div>
@@ -321,7 +321,7 @@ export const GoogleAdsCTA = () => {
                 <motion.button
                   onClick={handleCTAClick}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-amber-400 to-orange-400 text-[#1a1a2e] font-semibold px-4 py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25"
+                  className="w-full bg-gradient-to-r from-green-500 to-green-400 text-white font-semibold px-4 py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25"
                 >
                   <PhoneCallIcon />
                   <span>Book Free Strategy Call</span>

@@ -106,7 +106,7 @@ export const AIChatbot = () => {
       {/* Chat button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 z-50"
+        className="fixed bottom-24 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 z-[10000]"
         aria-label="Open chat"
       >
         <MessageSquare className="h-6 w-6" />
@@ -114,9 +114,9 @@ export const AIChatbot = () => {
 
       {/* Chat window */}
       {isOpen && (
-        <div 
+        <div
           ref={chatRef}
-          className="fixed bottom-24 right-6 w-[350px] h-[500px] bg-card border border-border rounded-lg shadow-xl flex flex-col z-50"
+          className="fixed bottom-40 right-6 w-[350px] h-[500px] bg-card border border-border rounded-lg shadow-xl flex flex-col z-[10000]"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
