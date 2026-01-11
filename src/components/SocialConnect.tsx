@@ -4,7 +4,7 @@ const SocialConnect = () => {
   return (
     <div className="flex justify-center gap-6 items-center">
       <a 
-        href="https://www.instagram.com/virelity_?igsh=MWo0dDR5aXhjajY1dA=="
+        href="https://www.instagram.com/_virelity_"
         target="_blank"
         rel="noopener noreferrer"
         className="social-icon instagram group"
@@ -26,7 +26,7 @@ const SocialConnect = () => {
       </a>
       
       <a 
-        href="https://www.linkedin.com/company/quizitt/posts/?feedView=all"
+        href="https://www.linkedin.com/company/quizitt"
         target="_blank"
         rel="noopener noreferrer"
         className="social-icon linkedin group"

@@ -23,7 +23,7 @@ const SocialConnect = () => {
           }}
         >
           <div className="flex flex-wrap justify-center gap-8">
-            <a href="#" className="social-icon instagram">
+            <a href="https://www.instagram.com/_virelity_" target="_blank" rel="noopener noreferrer" className="social-icon instagram">
               <div className="icon-container">
                 <svg
                   viewBox="0 0 24 24"
@@ -71,7 +71,7 @@ const SocialConnect = () => {
               <span className="icon-label">GitHub</span>
             </a>
             
-            <a href="#" className="social-icon linkedin">
+            <a href="https://www.linkedin.com/company/quizitt" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
               <div className="icon-container">
                 <svg
                   viewBox="0 0 24 24"

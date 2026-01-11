@@ -170,13 +170,13 @@ export const Footer = () => {
             {/* Social Links */}
             <div className="flex gap-3">
               <SocialButton
-                href="https://www.instagram.com/virelity"
+                href="https://www.instagram.com/_virelity_"
                 icon={Instagram}
                 label="Instagram"
                 color={colors.coral}
               />
               <SocialButton
-                href="https://www.linkedin.com/company/virelity"
+                href="https://www.linkedin.com/company/quizitt"
                 icon={Linkedin}
                 label="LinkedIn"
                 color={colors.cyan}

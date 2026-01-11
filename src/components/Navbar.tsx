@@ -165,8 +165,8 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
       "email": "deonmenezescodes@gmail.com"
     },
     "sameAs": [
-      "https://www.linkedin.com/company/virelity",
-      "https://www.instagram.com/virelity"
+      "https://www.linkedin.com/company/quizitt",
+      "https://www.instagram.com/_virelity_"
     ]
   };
 
