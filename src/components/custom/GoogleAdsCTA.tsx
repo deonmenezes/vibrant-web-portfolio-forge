@@ -144,7 +144,7 @@ export const GoogleAdsCTA = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-          className="fixed bottom-0 left-0 right-0 z-[9999] p-3 md:p-4"
+                    className="fixed inset-0 z-[9999] flex items-center justify-center p-3 md:p-4 bg-black/40 backdrop-blur-sm"
         >
           {/* Desktop Version - Apple-grade glassmorphism design */}
           <div className="hidden md:block">
