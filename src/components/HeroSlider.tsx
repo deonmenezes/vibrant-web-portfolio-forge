@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { HoverImageEffect } from '@/components/custom/HoverImageEffect';
-import { useBooking } from '@/contexts/BookingContext';
 
 // Animated Counter Component
 const AnimatedCounter = ({ end, duration = 2, suffix = "", className = "" }) => {
@@ -39,7 +38,6 @@ const AnimatedCounter = ({ end, duration = 2, suffix = "", className = "" }) => 
 export const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const { openBookingDialog } = useBooking();
 
   const slides = [
     {
@@ -255,14 +253,16 @@ export const HeroSlider = () => {
                 <HoverImageEffect>
                   <div className="relative group">
                     <div className="absolute inset-0 translate-x-2 translate-y-2 bg-green-800 transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
-                    <Button
-                      onClick={openBookingDialog}
+                    <a
+                      href="https://wa.me/918104796542?text=Hi%20Virelity!%20%F0%9F%91%8B%0A%0AI'm%20interested%20in%20your%20services%20and%20would%20like%20to%20book%20a%20free%2015-minute%20consultation%20call.%0A%0ALooking%20forward%20to%20hearing%20from%20you!"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="relative bg-green-500 hover:bg-green-500 text-black font-black uppercase tracking-wider px-8 py-6 text-lg flex items-center gap-2 border-[3px] border-black rounded-none"
-                      title="Book a free 15-minute consultation call"
+                      title="Book a free 15-minute consultation call via WhatsApp"
                     >
                       <Calendar className="h-5 w-5" />
                       Book a Free 15-min Call
-                    </Button>
+                    </a>
                   </div>
                 </HoverImageEffect>
               </div>

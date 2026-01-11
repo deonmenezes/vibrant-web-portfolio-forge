@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Menu, Calendar, BookOpen, X, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { useBooking } from "@/contexts/BookingContext";
 
 const navItems = [
   { name: "Home", path: "/", title: "Virelity.com Homepage - AI Agents & Digital Solutions" },
@@ -27,7 +25,6 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const location = useLocation();
-  const { openBookingDialog } = useBooking();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -332,14 +329,16 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
               className="relative group"
             >
               <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white transition-all duration-200 group-hover:translate-x-3 group-hover:translate-y-3" />
-              <Button
-                onClick={openBookingDialog}
+              <a
+                href="https://wa.me/918104796542?text=Hi%20Virelity!%20%F0%9F%91%8B%0A%0AI'm%20interested%20in%20your%20services%20and%20would%20like%20to%20book%20a%20free%20consultation%20call.%0A%0ALooking%20forward%20to%20hearing%20from%20you!"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="relative bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider px-6 py-5 border-2 border-black rounded-none flex items-center gap-2"
-                aria-label="Book a free consultation call"
+                aria-label="Book a free consultation call via WhatsApp"
               >
                 <Calendar className="h-5 w-5" aria-hidden="true" />
                 Book Free Call
-              </Button>
+              </a>
             </motion.div>
           </div>
 
@@ -451,16 +450,16 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                   >
                     <div className="relative group">
                       <div className="absolute inset-0 translate-x-3 translate-y-3 bg-white" />
-                      <Button
-                        onClick={() => {
-                          openBookingDialog();
-                          setMobileMenuOpen(false);
-                        }}
+                      <a
+                        href="https://wa.me/918104796542?text=Hi%20Virelity!%20%F0%9F%91%8B%0A%0AI'm%20interested%20in%20your%20services%20and%20would%20like%20to%20book%20a%20free%20consultation%20call.%0A%0ALooking%20forward%20to%20hearing%20from%20you!"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setMobileMenuOpen(false)}
                         className="relative w-full bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider py-6 text-lg border-2 border-black rounded-none flex items-center justify-center gap-3"
                       >
                         <Calendar className="h-6 w-6" />
                         Book Free Call
-                      </Button>
+                      </a>
                     </div>
                   </motion.div>
                 </div>

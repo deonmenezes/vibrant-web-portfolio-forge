@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, Home, Info, Briefcase, MessageSquare, Calendar, Instagram, Linkedin, ArrowRight, ArrowUpRight, Zap, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useBooking } from "@/contexts/BookingContext";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
@@ -121,7 +119,6 @@ const SocialButton = ({ href, icon: Icon, label, color }: { href: string; icon: 
 };
 
 export const Footer = () => {
-  const { openBookingDialog } = useBooking();
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
 
@@ -261,13 +258,15 @@ export const Footer = () => {
               className="relative group"
             >
               <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white transition-all duration-200 group-hover:translate-x-3 group-hover:translate-y-3" />
-              <Button
-                onClick={openBookingDialog}
+              <a
+                href="https://wa.me/918104796542?text=Hi%20Virelity!%20%F0%9F%91%8B%0A%0AI'm%20interested%20in%20your%20services%20and%20would%20like%20to%20schedule%20a%20call.%0A%0ALooking%20forward%20to%20hearing%20from%20you!"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="relative w-full bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider py-6 border-2 border-black rounded-none flex items-center justify-center gap-2"
               >
                 <Calendar className="h-5 w-5" />
                 Schedule Call
-              </Button>
+              </a>
             </motion.div>
 
             {/* WhatsApp Quick Link */}

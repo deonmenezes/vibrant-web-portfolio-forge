@@ -1,32 +1,47 @@
 /**
- * Google Apps Script Code for Booking Form Data Collection
- * 
+ * Google Apps Script Code for Contact Form Data Collection
+ *
  * INSTRUCTIONS:
+ * ============
  * 1. Go to https://sheets.google.com and create a new Google Sheet
- * 2. Name it "Booking Form Submissions" or any name you prefer
+ * 2. Name it "Virelity Contact Form" or any name you prefer
  * 3. In Row 1, add these headers (one per column):
- *    - Name | Email | Phone | Message | Timestamp
- * 4. Go to Extensions > Apps Script (or script.google.com)
- * 5. Delete the default code and paste this entire file
- * 6. Replace 'YOUR_SHEET_NAME' with your actual sheet name (line 18)
+ *    A: Name | B: Email | C: Phone | D: Message | E: Timestamp
+ * 4. Go to Extensions > Apps Script
+ * 5. Delete the default code and paste this entire file content
+ * 6. Replace 'YOUR_SHEET_NAME' with your actual sheet tab name (e.g., 'Sheet1')
  * 7. Click "Save" (Ctrl+S or Cmd+S)
  * 8. Click "Deploy" > "New deployment"
- * 9. Select type: "Web app"
+ * 9. Click the gear icon next to "Select type" and choose "Web app"
  * 10. Set:
- *     - Description: "Booking Form Handler"
+ *     - Description: "Virelity Contact Form Handler"
  *     - Execute as: "Me"
  *     - Who has access: "Anyone"
  * 11. Click "Deploy"
- * 12. Copy the "Web app URL" (looks like: https://script.google.com/macros/s/...)
- * 13. Add this URL to your .env file as: VITE_GOOGLE_SCRIPT_URL=your_url_here
- * 14. Restart your dev server
+ * 12. Click "Authorize access" and follow the prompts
+ * 13. Copy the "Web app URL" (looks like: https://script.google.com/macros/s/...)
+ * 14. Add this URL to your .env file as: VITE_GOOGLE_SCRIPT_URL=your_url_here
+ * 15. Restart your dev server
+ *
+ * NOTE: This is used ONLY for the Contact page form.
+ * All other CTAs redirect to WhatsApp.
  */
 
+// Handle GET requests (for testing if the script is deployed correctly)
+function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    message: 'Virelity Contact Form API is running! Use POST to submit form data.',
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Handle POST requests (actual form submissions)
 function doPost(e) {
   try {
     // Open your Google Sheet by name
     // CHANGE THIS to match your sheet name
-    const sheetName = 'YOUR_SHEET_NAME'; // e.g., 'Booking Form Submissions'
+    const sheetName = 'Sheet1'; // Change this to your sheet tab name (e.g., 'Sheet1' or 'Virelity Contact Form')
     const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = spreadsheet.getSheetByName(sheetName) || spreadsheet.getActiveSheet();
     
@@ -69,7 +84,7 @@ function doPost(e) {
 
 // Optional: Function to set up headers if sheet is empty
 function setupHeaders() {
-  const sheetName = 'YOUR_SHEET_NAME'; // Change this to your sheet name
+  const sheetName = 'Sheet1'; // Change this to your sheet tab name
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = spreadsheet.getSheetByName(sheetName) || spreadsheet.getActiveSheet();
   

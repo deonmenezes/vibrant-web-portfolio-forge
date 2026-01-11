@@ -4,6 +4,7 @@ import { useAnalyticsEvents } from "@/hooks/use-analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { saveToGoogleSheets } from "@/lib/googleSheetsService";
 
 export const ContactForm = () => {
   const { toast } = useToast();
@@ -25,40 +26,54 @@ export const ContactForm = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     // Track form submission
     trackFormSubmission('Contact Form');
 
-    // In a real implementation, you would use a service like EmailJS, FormSubmit, or a backend API
-    // Here's a mockup of how you'd send emails to the specified address
-    const mailToLink = `mailto:deonmenezescodes@gmail.com?subject=${encodeURIComponent(
-      `${formData.subject} - Contact Form Submission`
-    )}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`
-    )}`;
+    try {
+      // Save to Google Sheets
+      const saved = await saveToGoogleSheets({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: `[Subject: ${formData.subject}] ${formData.message}`,
+      });
 
-    // Open in a new tab
-    window.open(mailToLink);
-
-    // Simulate form submission response
-    setTimeout(() => {
+      if (saved) {
+        toast({
+          title: "Message sent!",
+          description: "We'll get back to you as soon as possible.",
+          duration: 5000,
+        });
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+          phone: "",
+        });
+      } else {
+        toast({
+          title: "Configuration needed",
+          description: "Please configure Google Sheets integration. Contact us at deon.menezes@virelity.com",
+          variant: "destructive",
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      console.error('Error saving to Google Sheets:', error);
       toast({
-        title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
+        title: "Error submitting form",
+        description: "Please try again or contact us directly at deon.menezes@virelity.com",
+        variant: "destructive",
         duration: 5000,
       });
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        phone: "",
-      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
