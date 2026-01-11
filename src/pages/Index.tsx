@@ -998,20 +998,7 @@ const Index = () => {
             </span>
           </Marquee>
         </section>
-
-        {/* STATS SECTION */}
-        <section className="py-20 bg-black">
-          <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
-                <StatBlock key={stat.label} {...stat} index={index} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SERVICES SECTION - INFINITE LOOP */}
-        <section ref={servicesRef} className="py-20 bg-black border-y-4 border-white overflow-hidden">
+ <section ref={servicesRef} className="py-20 bg-black border-y-4 border-white overflow-hidden">
           <div className="container mb-16">
             {/* Section Header */}
             <motion.div
@@ -1071,6 +1058,19 @@ const Index = () => {
             </motion.div>
           </motion.div>
         </section>
+        {/* STATS SECTION */}
+        <section className="py-20 bg-black">
+          <div className="container">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {stats.map((stat, index) => (
+                <StatBlock key={stat.label} {...stat} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SERVICES SECTION - INFINITE LOOP */}
+       
 
         {/* SECOND MARQUEE - Reverse */}
         <section className="py-4 bg-black border-y-4 border-white">
