@@ -2,13 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, Calendar, BookOpen } from "lucide-react";
-import { HoverImageEffect } from "@/components/custom/HoverImageEffect";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Menu, Calendar, BookOpen, X, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { useBooking } from "@/contexts/BookingContext";
 
@@ -18,8 +13,6 @@ const navItems = [
   { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
   { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
-  // { name: "Career", path: "/career", title: "Join Our Team - Career Opportunities at Virelity.com" },
-  // { name: "Team", path: "/team", title: "Meet Our Team - AI & Digital Experts" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
   { name: "Book", path: "/book", title: "Business in the Age of AI - Book by Deon Menezes", isBook: true },
 ];
@@ -31,6 +24,8 @@ type NavbarProps = {
 
 export const Navbar = ({ title = "Virelity.com - AI Agents that transform businesses", description = "We build AI Agents that transform businesses. Increase productivity by 100% through AI integration and boost sales by 100% with our solutions." }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const location = useLocation();
   const { openBookingDialog } = useBooking();
 
@@ -42,6 +37,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   // Create page-specific metadata based on current path
   const getPageMetadata = () => {
@@ -86,7 +86,6 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageDescription = "Get your copy of 'Business in the Age of AI' by Deon Menezes. Learn how to transform your business with artificial intelligence strategies.";
         pageKeywords = "AI book, business AI, Deon Menezes, artificial intelligence business, AI transformation guide";
         break;
-      // Service Pages
       case "/services/ai-solutions":
         pageTitle = "AI Solutions & Chatbots - Virelity.com | Custom AI Development";
         pageDescription = "Transform your business with custom AI solutions. We build intelligent chatbots, automation systems, and predictive analytics to boost productivity by 100%.";
@@ -138,7 +137,6 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageKeywords = "graphic design, logo design, branding, visual identity, brand design, creative design, marketing design";
         break;
       default:
-        // Home page or fallback
         pageTitle = "Virelity.com | AI Agents that Transform Businesses";
         pageDescription = "We build AI Agents that transform businesses. Increase productivity by 100% through AI integration and boost sales by 100% with our solutions.";
         pageKeywords = "AI Agents, digital transformation, web development, business solutions, productivity increase";
@@ -146,7 +144,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
 
     return { pageTitle, pageDescription, pageKeywords };
   };
-  
+
   const { pageTitle, pageDescription, pageKeywords } = getPageMetadata();
 
   // Create structured data for organization
@@ -178,35 +176,24 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
   return (
     <>
       <Helmet>
-        {/* Primary Meta Tags */}
         <title>{pageTitle}</title>
         <meta name="title" content={pageTitle} />
         <meta name="description" content={pageDescription} />
         <meta name="keywords" content={pageKeywords} />
-        
-        {/* Canonical URL */}
         <link rel="canonical" href={`https://virelity.com${location.pathname}`} />
-        
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://virelity.com${location.pathname}`} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content="https://virelity.com/virelity_logo_transparent.png" />
-        
-        {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={`https://virelity.com${location.pathname}`} />
         <meta property="twitter:title" content={pageTitle} />
         <meta property="twitter:description" content={pageDescription} />
         <meta property="twitter:image" content="https://virelity.com/virelity_logo_transparent.png" />
-        
-        {/* Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-        
-        {/* Additional SEO Tags */}
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />
         <meta name="author" content="Virelity.com" />
@@ -214,157 +201,274 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
-      <header
+      {/* NEOBRUTALIST NAVBAR */}
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "py-2 bg-background/90 backdrop-blur-lg shadow-md border-b border-vision-gold/20"
-            : "py-4 bg-transparent"
+            ? "bg-black border-b-4 border-vision-gold"
+            : "bg-black/90 backdrop-blur-sm border-b-4 border-white"
         )}
         role="banner"
       >
-        <nav className="container flex items-center justify-between" role="navigation" aria-label="Main Navigation">
+        <nav className="container flex items-center justify-between py-3 md:py-4" role="navigation" aria-label="Main Navigation">
+          {/* Logo - Neobrutalist style */}
           <Link
             to="/"
-            className="flex items-center gap-2 font-bold gold-shine"
+            className="relative group"
             aria-label="Virelity.com Homepage"
             title="Virelity.com - AI Agents that Transform Businesses"
           >
-            {/* Mobile view: Show favicon only */}
-            <img src="/virelity_favicon.png" alt="Virelity.com - AI Agents & Digital Solutions Logo" className="h-12 md:hidden" width="48" height="48" />
-            
-            {/* Desktop view: Show full navbar logo */}
-            <img src="/vireality_navbar.png" alt="Virelity.com - AI Agents & Digital Solutions Company Logo" className="hidden md:block h-10" width="auto" height="40" />
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
+              whileTap={{ scale: 0.98 }}
+              className="relative"
+            >
+              {/* Mobile: Favicon with neobrutalist frame */}
+              <div className="md:hidden relative">
+                <div className="absolute inset-0 translate-x-1 translate-y-1 bg-vision-gold" />
+                <div className="relative border-2 border-white p-1 bg-black">
+                  <img src="/virelity_favicon.png" alt="Virelity.com" className="h-10 w-10" width="40" height="40" />
+                </div>
+              </div>
+
+              {/* Desktop: Full logo with neobrutalist treatment */}
+              <div className="hidden md:block relative">
+                <motion.div
+                  className="absolute inset-0 bg-vision-gold"
+                  animate={{ x: hoveredItem === 'logo' ? 3 : 2, y: hoveredItem === 'logo' ? 3 : 2 }}
+                  transition={{ duration: 0.2 }}
+                />
+                <div
+                  className="relative border-2 border-white px-3 py-2 bg-black flex items-center gap-2"
+                  onMouseEnter={() => setHoveredItem('logo')}
+                  onMouseLeave={() => setHoveredItem(null)}
+                >
+                  <Zap className="w-5 h-5 text-vision-gold" />
+                  <img src="/vireality_navbar.png" alt="Virelity.com" className="h-8" width="auto" height="32" />
+                </div>
+              </div>
+            </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8" role="menubar">
-            {navItems.map((item) => (
+          {/* Desktop Navigation - Neobrutalist */}
+          <ul className="hidden lg:flex items-center gap-2" role="menubar">
+            {navItems.map((item, index) => (
               <li key={item.name} role="none">
                 {item.isBook ? (
-                  <Link
-                    to={item.path}
-                    className={cn(
-                      "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-lg transition-all duration-200 border border-amber-400/30 bg-gradient-to-r from-amber-400/10 to-amber-200/5 hover:bg-amber-400/20 hover:text-amber-500 shadow-sm relative",
-                      location.pathname === item.path
-                        ? "text-amber-500 border-amber-400 bg-amber-400/10"
-                        : "text-amber-400"
-                    )}
-                    role="menuitem"
-                    title={item.title}
-                    aria-current={location.pathname === item.path ? "page" : undefined}
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative group"
                   >
-                    <BookOpen className="h-5 w-5" />
-                    <span>Book</span>
-                    <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-amber-500 text-black font-bold animate-pulse">NEW</span>
-                  </Link>
+                    <div className="absolute inset-0 translate-x-1 translate-y-1 bg-amber-400 transition-all group-hover:translate-x-2 group-hover:translate-y-2" />
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        "relative flex items-center gap-2 px-4 py-2 font-bold uppercase tracking-wider text-sm border-2 border-black bg-black text-amber-400 transition-colors",
+                        location.pathname === item.path && "bg-amber-400 text-black"
+                      )}
+                      role="menuitem"
+                      title={item.title}
+                      aria-current={location.pathname === item.path ? "page" : undefined}
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      <span>Book</span>
+                      <span className="px-2 py-0.5 text-[10px] bg-amber-500 text-black font-black animate-pulse">
+                        NEW
+                      </span>
+                    </Link>
+                  </motion.div>
                 ) : (
-                  <Link
-                    to={item.path}
-                    className={cn(
-                      "text-lg font-medium transition-colors hover:text-vision-gold-light relative animated-underline",
-                      location.pathname === item.path
-                        ? "text-vision-gold"
-                        : "text-muted-foreground"
-                    )}
-                    role="menuitem"
-                    title={item.title}
-                    aria-current={location.pathname === item.path ? "page" : undefined}
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    onMouseEnter={() => setHoveredItem(item.name)}
+                    onMouseLeave={() => setHoveredItem(null)}
+                    className="relative"
                   >
-                    {item.name}
-                  </Link>
+                    <motion.div
+                      className="absolute inset-0 bg-vision-gold"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: hoveredItem === item.name || location.pathname === item.path ? 1 : 0,
+                        x: hoveredItem === item.name ? 2 : 1,
+                        y: hoveredItem === item.name ? 2 : 1,
+                      }}
+                      transition={{ duration: 0.15 }}
+                    />
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        "relative block px-4 py-2 font-bold uppercase tracking-wider text-sm border-2 transition-all duration-200",
+                        location.pathname === item.path
+                          ? "bg-vision-gold text-black border-black"
+                          : "bg-black text-white border-transparent hover:border-white"
+                      )}
+                      role="menuitem"
+                      title={item.title}
+                      aria-current={location.pathname === item.path ? "page" : undefined}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
                 )}
               </li>
             ))}
           </ul>
 
-          <div className="hidden md:flex items-center gap-4">
-            <HoverImageEffect isNavbar={true}>
-              <Button 
+          {/* Desktop CTA Button - Neobrutalist */}
+          <div className="hidden lg:block">
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="relative group"
+            >
+              <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white transition-all duration-200 group-hover:translate-x-3 group-hover:translate-y-3" />
+              <Button
                 onClick={openBookingDialog}
-                className="gold-gradient hover:gold-glow text-vision-black transition-all duration-300 shadow-lg flex items-center gap-2"
+                className="relative bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider px-6 py-5 border-2 border-black rounded-none flex items-center gap-2"
                 aria-label="Book a free consultation call"
               >
-                <Calendar className="h-4 w-4" aria-hidden="true" />
-                Book a Free Call
+                <Calendar className="h-5 w-5" aria-hidden="true" />
+                Book Free Call
               </Button>
-            </HoverImageEffect>
+            </motion.div>
           </div>
 
-          {/* Mobile Navigation */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden"
-                aria-label="Open navigation menu"
-              >
-                <Menu className="h-6 w-6" aria-hidden="true" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col h-full" aria-label="Mobile Navigation">
-                <Link to="/" className="flex items-center gap-2 font-bold py-4 border-b" aria-label="Virelity.com Homepage" title="Virelity.com - AI Agents that Transform Businesses">
-                  <img src="/virelity_logo_transparent.png" alt="Virelity.com - AI Agents & Digital Solutions Mobile Logo" className="h-6" width="24" height="24" />
-                </Link>
-                <div className="flex flex-col gap-3 py-4" role="menu">
-                  {navItems.map((item) => (
-                    item.isBook ? (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        className={cn(
-                          "flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-lg transition-all duration-200 border border-amber-400/30 bg-gradient-to-r from-amber-400/10 to-amber-200/5 hover:bg-amber-400/20 hover:text-amber-500 shadow-sm relative",
-                          location.pathname === item.path
-                            ? "text-amber-500 border-amber-400 bg-amber-400/10"
-                            : "text-amber-400"
-                        )}
-                        role="menuitem"
-                        title={item.title}
-                        aria-current={location.pathname === item.path ? "page" : undefined}
-                      >
-                        <BookOpen className="h-5 w-5" />
-                        <span>Book</span>
-                        <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-amber-500 text-black font-bold animate-pulse">NEW</span>
-                      </Link>
-                    ) : (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        className={cn(
-                          "text-lg py-2 px-4 rounded-lg transition-colors",
-                          location.pathname === item.path
-                            ? "bg-vision-gold/20 text-vision-gold font-medium"
-                            : "text-muted-foreground hover:bg-muted"
-                        )}
-                        role="menuitem"
-                        title={item.title}
-                        aria-current={location.pathname === item.path ? "page" : undefined}
-                      >
-                        {item.name}
-                      </Link>
-                    )
-                  ))}
-                </div>
-                <div className="mt-auto">
-                  <HoverImageEffect>
-                    <Button
-                      onClick={openBookingDialog}
-                      className="gold-gradient hover:gold-glow text-vision-black flex items-center gap-2 justify-center"
-                      aria-label="Book a free consultation call"
+          {/* Mobile Menu Button - Neobrutalist */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden relative group"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            <div className="absolute inset-0 translate-x-1 translate-y-1 bg-vision-gold transition-all group-hover:translate-x-2 group-hover:translate-y-2" />
+            <div className="relative border-2 border-white p-3 bg-black">
+              <AnimatePresence mode="wait">
+                {mobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="h-6 w-6 text-white" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="h-6 w-6 text-white" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.button>
+        </nav>
+
+        {/* Mobile Menu - Neobrutalist Full Screen */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="lg:hidden bg-black border-t-4 border-vision-gold overflow-hidden"
+            >
+              <nav className="container py-6" aria-label="Mobile Navigation">
+                <div className="flex flex-col gap-3">
+                  {navItems.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -50 }}
+                      transition={{ delay: index * 0.05 }}
                     >
-                      <Calendar className="h-4 w-4" aria-hidden="true" />
-                      Book a Free Call
-                    </Button>
-                  </HoverImageEffect>
+                      {item.isBook ? (
+                        <div className="relative group">
+                          <div className="absolute inset-0 translate-x-2 translate-y-2 bg-amber-400" />
+                          <Link
+                            to={item.path}
+                            className={cn(
+                              "relative flex items-center gap-3 px-5 py-4 font-black uppercase tracking-wider text-lg border-2 border-black",
+                              location.pathname === item.path
+                                ? "bg-amber-400 text-black"
+                                : "bg-black text-amber-400"
+                            )}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <BookOpen className="h-5 w-5" />
+                            <span>Book</span>
+                            <span className="px-2 py-1 text-xs bg-amber-500 text-black font-black">NEW</span>
+                          </Link>
+                        </div>
+                      ) : (
+                        <div className="relative group">
+                          <motion.div
+                            className="absolute inset-0 bg-vision-gold"
+                            initial={{ x: 2, y: 2 }}
+                            whileHover={{ x: 4, y: 4 }}
+                          />
+                          <Link
+                            to={item.path}
+                            className={cn(
+                              "relative flex items-center px-5 py-4 font-black uppercase tracking-wider text-lg border-2 transition-colors",
+                              location.pathname === item.path
+                                ? "bg-vision-gold text-black border-black"
+                                : "bg-black text-white border-white hover:bg-vision-gold hover:text-black"
+                            )}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {item.name}
+                          </Link>
+                        </div>
+                      )}
+                    </motion.div>
+                  ))}
+
+                  {/* Mobile CTA */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: navItems.length * 0.05 }}
+                    className="mt-4"
+                  >
+                    <div className="relative group">
+                      <div className="absolute inset-0 translate-x-3 translate-y-3 bg-white" />
+                      <Button
+                        onClick={() => {
+                          openBookingDialog();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="relative w-full bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider py-6 text-lg border-2 border-black rounded-none flex items-center justify-center gap-3"
+                      >
+                        <Calendar className="h-6 w-6" />
+                        Book Free Call
+                      </Button>
+                    </div>
+                  </motion.div>
                 </div>
               </nav>
-            </SheetContent>
-          </Sheet>
-        </nav>
-      </header>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
     </>
   );
 };
