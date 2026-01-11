@@ -4,158 +4,258 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PageTransition } from "@/components/PageTransition";
 import Example from "../components/image-gallery";
-import { motion } from "framer-motion";
-import { 
-  Users, 
-  Target, 
-  Award, 
-  TrendingUp, 
-  Lightbulb, 
-  CheckCircle, 
-  Users2, 
+import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  Users,
+  Target,
+  Award,
+  TrendingUp,
+  Lightbulb,
+  CheckCircle,
+  Users2,
   Heart,
   Sparkles,
   Star,
   Zap,
-  Shield
+  Shield,
+  ArrowRight,
+  ArrowUpRight
 } from "lucide-react";
 
+// Neobrutalist colors
+const colors = {
+  gold: "#D4AF37",
+  electric: "#00FF87",
+  coral: "#FF6B6B",
+  violet: "#A855F7",
+  cyan: "#00D4FF",
+  lime: "#BFFF00",
+};
+
+// Marquee component
+const AboutMarquee = ({ text, reverse = false }: { text: string; reverse?: boolean }) => (
+  <div className="overflow-hidden whitespace-nowrap border-y-4 border-white bg-black py-4">
+    <motion.div
+      animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
+      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+      className="inline-flex"
+    >
+      {[...Array(4)].map((_, idx) => (
+        <span key={idx} className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-white uppercase">
+          <span>{text}</span>
+          <span className="w-4 h-4 bg-vision-gold rotate-45" />
+          <span>{text}</span>
+          <span className="w-4 h-4 bg-electric rotate-45" style={{ backgroundColor: colors.electric }} />
+        </span>
+      ))}
+    </motion.div>
+  </div>
+);
+
+// Neobrutalist stat block
+const NeoStatBlock = ({ value, label, color, index }: { value: string; label: string; color: string; index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50, rotate: -5 }}
+      animate={isInView ? { opacity: 1, y: 0, rotate: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="relative group"
+    >
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          x: isHovered ? 8 : 4,
+          y: isHovered ? 8 : 4,
+        }}
+        style={{ backgroundColor: color }}
+      />
+      <div className="relative bg-black border-4 border-white p-6 md:p-8 text-center">
+        <motion.div
+          animate={{ scale: isHovered ? 1.1 : 1 }}
+          className="text-4xl md:text-6xl font-black text-vision-gold mb-2"
+        >
+          {value}
+        </motion.div>
+        <div className="text-white font-bold uppercase tracking-wider text-sm md:text-base">
+          {label}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Neobrutalist value card
+const NeoValueCard = ({ title, description, icon: Icon, color, index }: { title: string; description: string; icon: any; color: string; index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const rotations = [-2, 1.5, -1];
+  const rotation = rotations[index % rotations.length];
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60, rotate: rotation }}
+      animate={isInView ? { opacity: 1, y: 0, rotate: rotation } : {}}
+      whileHover={{ rotate: 0, scale: 1.02 }}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="relative group cursor-pointer"
+    >
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          x: isHovered ? 10 : 5,
+          y: isHovered ? 10 : 5,
+        }}
+        style={{ backgroundColor: color }}
+      />
+      <div className="relative bg-black border-4 border-white p-8">
+        {/* Icon */}
+        <motion.div
+          animate={{ rotate: isHovered ? 360 : 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-16 h-16 border-4 border-white flex items-center justify-center mb-6"
+          style={{ backgroundColor: color }}
+        >
+          <Icon className="w-8 h-8 text-black" />
+        </motion.div>
+
+        <h3 className="text-2xl font-black text-white uppercase mb-4">{title}</h3>
+        <p className="text-white/70 font-medium leading-relaxed">{description}</p>
+
+        {/* Hover indicator */}
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: isHovered ? "100%" : 0 }}
+          className="absolute bottom-0 left-0 h-1"
+          style={{ backgroundColor: color }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
 const About = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
   const stats = [
-    { value: "50+", label: "Projects Completed" },
-    { value: "15+", label: "Expert Team Members" },
-    { value: "10+", label: "Years Experience" },
-    { value: "30+", label: "Happy Clients" },
+    { value: "50+", label: "Projects Completed", color: colors.gold },
+    { value: "15+", label: "Expert Team Members", color: colors.electric },
+    { value: "10+", label: "Years Experience", color: colors.coral },
+    { value: "30+", label: "Happy Clients", color: colors.violet },
   ];
 
   const values = [
     {
       title: "Innovation",
-      description:
-        "We stay at the forefront of technology trends and continuously explore new approaches to solve complex problems.",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-primary"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        </svg>
-      ),
+      description: "We stay at the forefront of technology trends and continuously explore new approaches to solve complex problems.",
+      icon: Lightbulb,
+      color: colors.electric,
     },
     {
       title: "Quality",
-      description:
-        "We never compromise on quality, ensuring every project meets the highest standards of performance and reliability.",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-primary"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-          <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-      ),
+      description: "We never compromise on quality, ensuring every project meets the highest standards of performance and reliability.",
+      icon: Award,
+      color: colors.coral,
     },
     {
       title: "Collaboration",
-      description:
-        "We believe in working closely with our clients as true partners fostering open communication and mutual respect.",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 text-primary"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-      ),
+      description: "We believe in working closely with our clients as true partners fostering open communication and mutual respect.",
+      icon: Users,
+      color: colors.violet,
     },
   ];
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex flex-col">
+      <div ref={containerRef} className="min-h-screen flex flex-col bg-black">
+        {/* Progress Bar */}
+        <motion.div
+          style={{ scaleX }}
+          className="fixed top-0 left-0 right-0 h-2 bg-vision-gold origin-left z-[60]"
+        />
+
         <Navbar />
 
-        {/* Hero Section - Redesigned */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
-          {/* Animated Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
+        {/* Hero Section - Neobrutalist */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pt-20">
+          {/* Animated grid background */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `linear-gradient(${colors.gold}40 1px, transparent 1px), linear-gradient(90deg, ${colors.gold}40 1px, transparent 1px)`,
+              backgroundSize: '60px 60px'
+            }} />
           </div>
 
-          {/* Floating Particles */}
-          <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-white/20 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.2, 0.8, 0.2],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 2,
-                }}
-              />
-            ))}
-          </div>
+          {/* Floating shapes */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute top-20 right-20 w-32 h-32 border-4 border-vision-gold"
+          />
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-40 left-20 w-24 h-24"
+            style={{ backgroundColor: colors.electric }}
+          />
+          <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute top-1/3 left-1/4 w-16 h-16 bg-coral rotate-45"
+            style={{ backgroundColor: colors.coral }}
+          />
 
           <div className="container relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto"
+              className="text-center max-w-5xl mx-auto"
             >
               {/* Badge */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                animate={{ opacity: 1, scale: 1, rotate: -2 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-blue-500/20 border border-primary/30 backdrop-blur-sm mb-8"
+                className="inline-block relative mb-8"
               >
-                <Sparkles className="w-5 h-5 text-primary" />
-                <span className="text-primary font-semibold">About Virelity</span>
+                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-3">
+                  <Sparkles className="w-6 h-6 text-vision-gold" />
+                  <span className="text-white font-black uppercase tracking-wider">About Virelity</span>
+                </div>
               </motion.div>
 
               {/* Main Heading */}
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="text-5xl md:text-7xl font-bold mb-8"
+                className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 uppercase"
               >
-                <span className="bg-gradient-to-r from-white via-primary to-blue-400 bg-clip-text text-transparent">
-                  Our Story
+                <span className="text-white">Our</span>
+                <br />
+                <span className="text-vision-gold relative inline-block">
+                  Story
+                  <motion.div
+                    className="absolute -bottom-2 left-0 h-4 bg-vision-gold/30 w-full"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                  />
                 </span>
               </motion.h1>
 
@@ -163,43 +263,37 @@ const About = () => {
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto font-medium mb-12"
               >
                 Learn about our journey, our mission, and the values that drive us to create exceptional digital experiences.
               </motion.p>
 
-              {/* Floating Stats */}
+              {/* Scroll indicator */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="flex flex-wrap justify-center gap-8 mt-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, y: [0, 10, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
+                className="inline-flex flex-col items-center gap-2"
               >
-                {[
-                  { icon: Users, label: "Expert Team", value: "15+" },
-                  { icon: Award, label: "Projects", value: "50+" },
-                  { icon: TrendingUp, label: "Years", value: "10+" },
-                  { icon: Heart, label: "Happy Clients", value: "30+" }
-                ].map((stat, index) => (
+                <span className="text-white/50 font-bold uppercase text-sm tracking-widest">Scroll</span>
+                <div className="w-6 h-12 border-4 border-white/50 relative">
                   <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                    className="flex flex-col items-center p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 transition-all duration-300"
-                  >
-                    <stat.icon className="w-8 h-8 text-primary mb-2" />
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-gray-400">{stat.label}</div>
-                  </motion.div>
-                ))}
+                    animate={{ y: [0, 20, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="w-2 h-2 bg-vision-gold absolute top-2 left-1/2 -translate-x-1/2"
+                  />
+                </div>
               </motion.div>
             </motion.div>
           </div>
         </section>
-        {/* About Us Content - Redesigned */}
-        <section className="py-20 relative overflow-hidden">
+
+        {/* Marquee */}
+        <AboutMarquee text="Digital Excellence" />
+
+        {/* Stats Section */}
+        <section className="py-20 md:py-32 bg-black">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -208,148 +302,117 @@ const About = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
-                Who We Are & Our Mission
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Discover the story behind Virelity and the mission that drives our passion for digital excellence.
-              </p>
+              <div className="relative inline-block mb-6">
+                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-electric" style={{ backgroundColor: colors.electric }} />
+                <h2 className="relative bg-black border-4 border-white px-8 py-4 text-3xl md:text-4xl font-black text-white uppercase">
+                  Our Impact
+                </h2>
+              </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {stats.map((stat, index) => (
+                <NeoStatBlock key={stat.label} {...stat} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Who We Are Section */}
+        <section className="py-20 md:py-32 bg-black border-y-4 border-white">
+          <div className="container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
               {/* Gallery Section */}
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
+                initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden">
-                  {/* Animated Background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-500/5 opacity-50"></div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl"></div>
-                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-500/20 to-transparent rounded-full blur-xl"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-8">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center">
-                        <Users2 className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold">Meet Our Team</h3>
-                        <p className="text-muted-foreground">The talented individuals behind our success</p>
-                      </div>
+                <div className="absolute inset-0 translate-x-4 translate-y-4 bg-vision-gold" />
+                <div className="relative bg-black border-4 border-white p-6 md:p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 bg-vision-gold border-4 border-white flex items-center justify-center">
+                      <Users2 className="w-7 h-7 text-black" />
                     </div>
-                    <Example />
+                    <div>
+                      <h3 className="text-2xl font-black text-white uppercase">Meet Our Team</h3>
+                      <p className="text-white/60 font-medium">The talented individuals behind our success</p>
+                    </div>
                   </div>
+                  <Example />
                 </div>
               </motion.div>
 
               {/* Content Section */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="space-y-8"
-              >
-                {/* Who We Are Card */}
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-50"></div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/20 to-transparent rounded-full blur-2xl"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-                        <Target className="h-6 w-6 text-white" />
+              <div className="space-y-8">
+                {/* Who We Are */}
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 translate-x-4 translate-y-4 transition-all duration-300 group-hover:translate-x-6 group-hover:translate-y-6" style={{ backgroundColor: colors.electric }} />
+                  <div className="relative bg-black border-4 border-white p-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-14 h-14 border-4 border-white flex items-center justify-center" style={{ backgroundColor: colors.electric }}>
+                        <Target className="w-7 h-7 text-black" />
                       </div>
-                      <h3 className="text-2xl font-bold">Who We Are</h3>
+                      <h3 className="text-2xl font-black text-white uppercase">Who We Are</h3>
                     </div>
-                    <p className="text-muted-foreground mb-4">
+                    <p className="text-white/70 font-medium mb-4 leading-relaxed">
                       Founded in 2025, Virelity.com has been at the forefront of digital innovation, helping businesses transform their online presence and leverage technology to achieve their goals.
                     </p>
-                    <p className="text-muted-foreground">
+                    <p className="text-white/70 font-medium leading-relaxed">
                       Our team of expert designers, developers, and strategists combines creativity with technical expertise to deliver solutions that not only look great but perform exceptionally well.
                     </p>
                   </div>
-                </div>
+                </motion.div>
 
-                {/* Our Mission Card */}
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-50"></div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-2xl"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                        <Zap className="h-6 w-6 text-white" />
+                {/* Our Mission */}
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 translate-x-4 translate-y-4 transition-all duration-300 group-hover:translate-x-6 group-hover:translate-y-6" style={{ backgroundColor: colors.violet }} />
+                  <div className="relative bg-black border-4 border-white p-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-14 h-14 border-4 border-white flex items-center justify-center" style={{ backgroundColor: colors.violet }}>
+                        <Zap className="w-7 h-7 text-black" />
                       </div>
-                      <h3 className="text-2xl font-bold">Our Mission</h3>
+                      <h3 className="text-2xl font-black text-white uppercase">Our Mission</h3>
                     </div>
-                    <p className="text-muted-foreground mb-6">
+                    <p className="text-white/70 font-medium mb-6 leading-relaxed">
                       To empower businesses through innovative digital solutions that drive growth, enhance user experiences, and create lasting value in an ever-evolving digital landscape.
                     </p>
-                    <Button className="bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white">
-                      Learn About Our Team
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Remove duplicate About Us section. Only keep the previous one with gallery. */}
-
-        {/* Stats Section - Redesigned */}
-        <section className="py-20 relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
-          <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
-                Our Impact in Numbers
-              </h2>
-              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-                The results speak for themselves - here's what we've achieved together with our clients.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <motion.div 
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 text-center overflow-hidden hover:border-primary/30 transition-all duration-300"
-                >
-                  {/* Animated Background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-primary bg-clip-text text-transparent mb-2">
-                      {stat.value}
-                    </div>
-                    <div className="text-lg text-gray-300 group-hover:text-white transition-colors duration-300">
-                      {stat.label}
-                    </div>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="relative inline-block group/btn">
+                      <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white transition-all duration-200 group-hover/btn:translate-x-3 group-hover/btn:translate-y-3" />
+                      <Link
+                        to="/team"
+                        className="relative flex items-center gap-2 bg-vision-gold text-black font-black uppercase tracking-wider px-6 py-3 border-4 border-black"
+                      >
+                        Meet Our Team
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                    </motion.div>
                   </div>
                 </motion.div>
-              ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Our Values - Redesigned */}
-        <section className="py-20 relative overflow-hidden">
+        {/* Marquee */}
+        <AboutMarquee text="Innovation & Quality" reverse />
+
+        {/* Our Values Section */}
+        <section className="py-20 md:py-32 bg-black">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -359,65 +422,57 @@ const About = () => {
               className="text-center mb-16"
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                initial={{ opacity: 0, scale: 0.8, rotate: 3 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-blue-500/20 border border-primary/30 backdrop-blur-sm mb-8"
+                className="inline-block relative mb-6"
               >
-                <Star className="w-5 h-5 text-primary" />
-                <span className="text-primary font-semibold">Our Values</span>
+                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.coral }} />
+                <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-3">
+                  <Star className="w-6 h-6 text-vision-gold" />
+                  <span className="text-white font-black uppercase tracking-wider">Our Values</span>
+                </div>
               </motion.div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
-                What Drives Us
+
+              <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-6">
+                What <span className="text-vision-gold">Drives</span> Us
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-xl text-white/60 max-w-2xl mx-auto font-medium">
                 Our core values shape everything we do and guide our approach to creating exceptional digital experiences.
               </p>
             </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, staggerChildren: 0.2 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {values.map((value, index) => (
-                <motion.div
-                  key={value.title}
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden hover:border-primary/30 transition-all duration-300"
-                >
-                  {/* Animated Background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex flex-col items-start space-y-6">
-                      <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/20 to-blue-500/20 group-hover:from-primary/30 group-hover:to-blue-500/30 transition-all duration-300">
-                        {value.icon}
-                      </div>
-                      <h3 className="text-xl font-semibold text-white group-hover:text-primary transition-colors duration-300">
-                        {value.title}
-                      </h3>
-                      <p className="text-gray-300 group-hover:text-white transition-colors duration-300 leading-relaxed">
-                        {value.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
+                <NeoValueCard key={value.title} {...value} index={index} />
               ))}
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* Call to Action - Redesigned */}
-        <section className="py-20 relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
-          <div className="container">
+        {/* CTA Section */}
+        <section className="py-20 md:py-32 bg-vision-gold border-y-4 border-black relative overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `linear-gradient(black 2px, transparent 2px), linear-gradient(90deg, black 2px, transparent 2px)`,
+              backgroundSize: '40px 40px'
+            }} />
+          </div>
+
+          {/* Floating shapes */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="absolute top-10 right-10 w-40 h-40 border-4 border-black opacity-20"
+          />
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-10 left-10 w-32 h-32 bg-black opacity-10"
+          />
+
+          <div className="container relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -425,42 +480,42 @@ const About = () => {
               viewport={{ once: true }}
               className="text-center max-w-4xl mx-auto"
             >
-              {/* Animated Background Elements */}
-              <div className="absolute inset-0">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="inline-block relative mb-8"
+              >
+                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black" />
+                <div className="relative bg-white border-4 border-black px-6 py-3 flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-black" />
+                  <span className="text-black font-black uppercase tracking-wider">Ready to Start?</span>
+                </div>
+              </motion.div>
 
-              <div className="relative z-10">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true }}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-blue-500/20 border border-primary/30 backdrop-blur-sm mb-8"
-                >
-                  <Shield className="w-5 h-5 text-primary" />
-                  <span className="text-primary font-semibold">Ready to Start?</span>
-                </motion.div>
+              <h2 className="text-5xl md:text-7xl font-black text-black uppercase mb-6">
+                Ready to Work<br />With Us?
+              </h2>
+              <p className="text-xl md:text-2xl text-black/70 mb-12 max-w-2xl mx-auto font-medium">
+                Let's collaborate to create digital solutions that elevate your brand and drive results.
+              </p>
 
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
-                  Ready to work with us?
-                </h2>
-                <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-                  Let's collaborate to create digital solutions that elevate your brand and drive results.
-                </p>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  viewport={{ once: true }}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative inline-block group"
+              >
+                <div className="absolute inset-0 translate-x-3 translate-y-3 bg-black transition-all duration-200 group-hover:translate-x-4 group-hover:translate-y-4" />
+                <Button
+                  asChild
+                  className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-12 py-8 text-xl border-4 border-black rounded-none"
                 >
-                  <Button asChild className="bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white px-12 py-6 text-lg rounded-2xl shadow-2xl hover:shadow-primary/25 transition-all duration-300">
-                    <Link to="/contact">Get in Touch</Link>
-                  </Button>
-                </motion.div>
-              </div>
+                  <Link to="/contact" className="flex items-center gap-3">
+                    Get in Touch
+                    <ArrowUpRight className="w-6 h-6" />
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
           </div>
         </section>
