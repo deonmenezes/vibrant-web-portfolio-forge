@@ -16,7 +16,7 @@ const SplineScene = React.lazy(() => import("@/components/ui/splite").then(m => 
 // Infinite scrolling row for services
 const InfiniteScrollRow = ({ services, direction }: { services: any[]; direction: "left" | "right" }) => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-visible">
       <motion.div
         animate={{
           x: direction === "right" ? ["0%", "-50%"] : ["-50%", "0%"]
@@ -26,7 +26,7 @@ const InfiniteScrollRow = ({ services, direction }: { services: any[]; direction
           repeat: Infinity,
           ease: "linear"
         }}
-        className="flex gap-6"
+        className="flex gap-6 py-4"
       >
         {/* Duplicate services array for seamless loop */}
         {[...services, ...services, ...services].map((service, index) => (
@@ -999,8 +999,8 @@ const Index = () => {
           </Marquee>
         </section>
         {/* service section */}
-        <section ref={servicesRef} className="py-20 bg-black border-y-4 border-white overflow-hidden">
-          <div className="container mb-16">
+        <section ref={servicesRef} className="py-32 bg-black border-y-4 border-white overflow-hidden">
+          <div className="container mb-16 pt-8">
             {/* Section Header */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -1026,12 +1026,16 @@ const Index = () => {
           </div>
 
           {/* Desktop: Infinite Scroll | Mobile: Grid */}
-          <div className="hidden lg:block space-y-6 mb-12">
+          <div className="hidden lg:block space-y-8 py-8 mb-12">
             {/* First Row - Scroll Right */}
-            <InfiniteScrollRow services={services.slice(0, 4)} direction="right" />
-            
+            <div className="py-4">
+              <InfiniteScrollRow services={services.slice(0, 4)} direction="right" />
+            </div>
+
             {/* Second Row - Scroll Left */}
-            <InfiniteScrollRow services={services.slice(4, 8)} direction="left" />
+            <div className="py-4">
+              <InfiniteScrollRow services={services.slice(4, 8)} direction="left" />
+            </div>
           </div>
 
           {/* Mobile & Tablet: Responsive Grid */}
