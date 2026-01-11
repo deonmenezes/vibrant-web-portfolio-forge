@@ -93,14 +93,15 @@ export const BookingFormDialog = ({ open, onOpenChange }: BookingFormDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-background to-background/95 backdrop-blur-xl border-2 border-primary/20">
+      <DialogContent className="sm:max-w-[500px] bg-background">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-blue-500 flex items-center justify-center">
-              <Calendar className="h-5 w-5 text-white" />
+            {/* Neobrutalist Icon */}
+            <div className="h-12 w-12 bg-yellow-400 border-[3px] border-black shadow-[4px_4px_0px_0px_#000] flex items-center justify-center">
+              <Calendar className="h-6 w-6 text-black" />
             </div>
             <div>
-              <DialogTitle className="text-2xl font-bold">Book a Free 15-Minute Call</DialogTitle>
+              <DialogTitle className="text-2xl">Book a Free 15-Minute Call</DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground mt-1">
                 Let's discuss your project and how we can help transform your business
               </DialogDescription>
@@ -110,7 +111,7 @@ export const BookingFormDialog = ({ open, onOpenChange }: BookingFormDialogProps
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">
+            <label htmlFor="name" className="text-sm font-bold uppercase tracking-wide">
               Full Name <span className="text-red-500">*</span>
             </label>
             <Input
@@ -120,12 +121,11 @@ export const BookingFormDialog = ({ open, onOpenChange }: BookingFormDialogProps
               onChange={handleChange}
               placeholder="Enter your full name"
               required
-              className="border-muted bg-background/50 focus:border-primary"
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
+            <label htmlFor="email" className="text-sm font-bold uppercase tracking-wide">
               Email Address <span className="text-red-500">*</span>
             </label>
             <Input
@@ -136,12 +136,11 @@ export const BookingFormDialog = ({ open, onOpenChange }: BookingFormDialogProps
               onChange={handleChange}
               placeholder="Enter your email address"
               required
-              className="border-muted bg-background/50 focus:border-primary"
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium">
+            <label htmlFor="phone" className="text-sm font-bold uppercase tracking-wide">
               Phone Number <span className="text-red-500">*</span>
             </label>
             <Input
@@ -152,12 +151,11 @@ export const BookingFormDialog = ({ open, onOpenChange }: BookingFormDialogProps
               onChange={handleChange}
               placeholder="Enter your phone number"
               required
-              className="border-muted bg-background/50 focus:border-primary"
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="message" className="text-sm font-medium">
+            <label htmlFor="message" className="text-sm font-bold uppercase tracking-wide">
               Message (Optional)
             </label>
             <Textarea
@@ -166,26 +164,34 @@ export const BookingFormDialog = ({ open, onOpenChange }: BookingFormDialogProps
               value={formData.message}
               onChange={handleChange}
               placeholder="Tell us about your project or what you'd like to discuss..."
-              className="min-h-[100px] border-muted bg-background/50 focus:border-primary"
+              className="min-h-[100px]"
             />
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="flex-1"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex-1 bg-primary hover:bg-primary/90 text-white"
-            >
-              {isSubmitting ? "Sending..." : "Book Call"}
-            </Button>
+            {/* Neobrutalist Cancel Button */}
+            <div className="relative group flex-1">
+              <div className="absolute inset-0 translate-x-1 translate-y-1 bg-gray-400 transition-all group-hover:translate-x-2 group-hover:translate-y-2" />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="relative w-full bg-white text-black font-bold uppercase tracking-wide border-[3px] border-black rounded-none"
+              >
+                Cancel
+              </Button>
+            </div>
+            {/* Neobrutalist Submit Button */}
+            <div className="relative group flex-1">
+              <div className="absolute inset-0 translate-x-1 translate-y-1 bg-black transition-all group-hover:translate-x-2 group-hover:translate-y-2" />
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="relative w-full bg-yellow-400 hover:bg-yellow-400 text-black font-bold uppercase tracking-wide border-[3px] border-black rounded-none"
+              >
+                {isSubmitting ? "Sending..." : "Book Call"}
+              </Button>
+            </div>
           </div>
         </form>
       </DialogContent>

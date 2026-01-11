@@ -65,7 +65,7 @@ export const ContactForm = () => {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label htmlFor="name" className="text-sm font-medium">
+          <label htmlFor="name" className="text-sm font-bold uppercase tracking-wide">
             Full Name
           </label>
           <Input
@@ -75,11 +75,10 @@ export const ContactForm = () => {
             onChange={handleChange}
             placeholder="Enter your full name"
             required
-            className="border-muted bg-background/50 focus:border-primary"
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium">
+          <label htmlFor="email" className="text-sm font-bold uppercase tracking-wide">
             Email Address
           </label>
           <Input
@@ -90,13 +89,12 @@ export const ContactForm = () => {
             onChange={handleChange}
             placeholder="Enter your email address"
             required
-            className="border-muted bg-background/50 focus:border-primary"
           />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label htmlFor="phone" className="text-sm font-medium">
+          <label htmlFor="phone" className="text-sm font-bold uppercase tracking-wide">
             Phone Number
           </label>
           <Input
@@ -106,11 +104,10 @@ export const ContactForm = () => {
             value={formData.phone}
             onChange={handleChange}
             placeholder="Enter your phone number"
-            className="border-muted bg-background/50 focus:border-primary"
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="subject" className="text-sm font-medium">
+          <label htmlFor="subject" className="text-sm font-bold uppercase tracking-wide">
             Subject
           </label>
           <Input
@@ -120,12 +117,11 @@ export const ContactForm = () => {
             onChange={handleChange}
             placeholder="How can we help you?"
             required
-            className="border-muted bg-background/50 focus:border-primary"
           />
         </div>
       </div>
       <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-medium">
+        <label htmlFor="message" className="text-sm font-bold uppercase tracking-wide">
           Message
         </label>
         <Textarea
@@ -135,16 +131,20 @@ export const ContactForm = () => {
           onChange={handleChange}
           placeholder="Tell us more about your project, needs and timeline..."
           required
-          className="min-h-[150px] border-muted bg-background/50 focus:border-primary"
+          className="min-h-[150px]"
         />
       </div>
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg font-medium"
-      >
-        {isSubmitting ? "Sending..." : "Send Message"}
-      </Button>
+      {/* Neobrutalist Submit Button */}
+      <div className="relative group">
+        <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="relative w-full bg-yellow-400 hover:bg-yellow-400 text-black py-6 text-lg font-black uppercase tracking-wider border-[3px] border-black rounded-none"
+        >
+          {isSubmitting ? "Sending..." : "Send Message"}
+        </Button>
+      </div>
     </form>
   );
 };

@@ -43,42 +43,42 @@ export const ProjectCard = ({
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         )}
       >
-        {/* Front of Card */}
-        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-neutral-900 rounded-xl overflow-hidden shadow-lg pointer-events-none">
+        {/* Front of Card - Neobrutalist */}
+        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] bg-black border-[3px] border-yellow-400 shadow-[6px_6px_0px_0px_#facc15] overflow-hidden pointer-events-none">
           <img
             src={image}
             alt={`${title} project screenshot`}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-vision-dark/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
           <div className="relative z-10 p-6 h-full flex flex-col justify-end text-white">
             <div className="flex flex-wrap gap-2 mb-2">
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 bg-vision-gold/20 text-vision-gold-light text-xs font-medium rounded-full"
+                  className="px-3 py-1 bg-yellow-400 text-black text-xs font-bold uppercase tracking-wide border-2 border-black shadow-[2px_2px_0px_0px_#000]"
                 >
                   {tag}
                 </span>
               ))}
             </div>
-            <h3 className="text-xl font-bold text-white">{title}</h3>
+            <h3 className="text-xl font-black uppercase tracking-wide text-white">{title}</h3>
           </div>
         </div>
 
-        {/* Back of Card */}
-        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-gradient-to-br from-vision-dark via-vision-black to-neutral-900 rounded-xl overflow-hidden shadow-lg">
+        {/* Back of Card - Neobrutalist */}
+        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-black border-[3px] border-yellow-400 shadow-[6px_6px_0px_0px_#facc15] overflow-hidden">
           <div className="relative z-10 p-6 h-full flex flex-col justify-between text-white pointer-events-auto">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
-              <p className="text-white text-sm leading-relaxed mb-4">
+              <h3 className="text-2xl font-black uppercase text-yellow-400 mb-4">{title}</h3>
+              <p className="text-white/80 text-sm leading-relaxed mb-4 font-medium">
                 {description}
               </p>
               <div className="flex flex-wrap gap-2">
                 {tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-1 bg-vision-gold/20 text-vision-gold-light text-xs font-medium rounded-full"
+                    className="px-3 py-1 bg-yellow-400 text-black text-xs font-bold uppercase tracking-wide border-2 border-black shadow-[2px_2px_0px_0px_#000]"
                   >
                     {tag}
                   </span>
@@ -88,20 +88,20 @@ export const ProjectCard = ({
             <div className="flex justify-center relative z-50">
               {hasValidUrl && (
                 isExternalUrl ? (
-                  <a 
-                    href={url} 
-                    target="_blank" 
+                  <a
+                    href={url}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="gold-gradient hover:gold-glow text-vision-black w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 cursor-pointer"
+                    className="bg-yellow-400 text-black w-full inline-flex items-center justify-center text-sm font-black uppercase tracking-wide transition-all h-12 px-4 py-2 cursor-pointer border-[3px] border-black shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px]"
                     title={`View ${title} project details and case study`}
                     onClick={(e) => e.stopPropagation()}
                   >
                     View Project
                   </a>
                 ) : (
-                  <Link 
-                    to={url} 
-                    className="gold-gradient hover:gold-glow text-vision-black w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 cursor-pointer"
+                  <Link
+                    to={url}
+                    className="bg-yellow-400 text-black w-full inline-flex items-center justify-center text-sm font-black uppercase tracking-wide transition-all h-12 px-4 py-2 cursor-pointer border-[3px] border-black shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px]"
                     title={`View ${title} project details and case study`}
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -110,7 +110,7 @@ export const ProjectCard = ({
                 )
               )}
               {showComingSoon && (
-                <button disabled className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 opacity-50 cursor-not-allowed bg-muted text-muted-foreground">
+                <button disabled className="w-full inline-flex items-center justify-center text-sm font-bold uppercase h-12 px-4 py-2 opacity-50 cursor-not-allowed bg-gray-700 text-gray-400 border-[3px] border-gray-600">
                   Coming Soon
                 </button>
               )}

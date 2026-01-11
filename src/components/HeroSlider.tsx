@@ -213,14 +213,15 @@ export const HeroSlider = () => {
               className="space-y-8"
             >
               <div className="space-y-4">
-                <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium">
+                {/* Neobrutalist Badge */}
+                <span className="inline-block px-4 py-2 bg-yellow-400 text-black font-black uppercase tracking-wider text-sm border-[3px] border-black shadow-[4px_4px_0px_0px_#000]">
                   {currentSlideData.badge}
                 </span>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-tight tracking-tight">
                   {currentSlideData.title.split(' ').map((word, index) => {
                     const isHighlight = ['AI', 'Agents', 'Digital', 'Marketing', 'AR', 'VR', 'Immersive', '3D', 'Three', 'Dimensions', 'UI/UX', 'Design'].includes(word);
                     return (
-                      <span key={index} className={isHighlight ? 'text-gradient' : ''}>
+                      <span key={index} className={isHighlight ? 'text-yellow-400' : ''}>
                         {word}{' '}
                       </span>
                     );
@@ -241,21 +242,28 @@ export const HeroSlider = () => {
                 </div>
               </div>
 
+              {/* Neobrutalist CTA Buttons */}
               <div className="flex flex-wrap gap-4">
-                <Button asChild className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
-                  <Link to={currentSlideData.buttonLink} title={`${currentSlideData.buttonText} - Virelity`}>
-                    {currentSlideData.buttonText}
-                  </Link>
-                </Button>
-                <HoverImageEffect>
-                  <Button
-                    onClick={openBookingDialog}
-                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg flex items-center gap-2"
-                    title="Book a free 15-minute consultation call"
-                  >
-                    <Calendar className="h-5 w-5" />
-                    Book a Free 15-min Call
+                <div className="relative group">
+                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                  <Button asChild className="relative bg-yellow-400 hover:bg-yellow-400 text-black font-black uppercase tracking-wider px-8 py-6 text-lg border-[3px] border-black rounded-none">
+                    <Link to={currentSlideData.buttonLink} title={`${currentSlideData.buttonText} - Virelity`}>
+                      {currentSlideData.buttonText}
+                    </Link>
                   </Button>
+                </div>
+                <HoverImageEffect>
+                  <div className="relative group">
+                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-green-800 transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                    <Button
+                      onClick={openBookingDialog}
+                      className="relative bg-green-500 hover:bg-green-500 text-black font-black uppercase tracking-wider px-8 py-6 text-lg flex items-center gap-2 border-[3px] border-black rounded-none"
+                      title="Book a free 15-minute consultation call"
+                    >
+                      <Calendar className="h-5 w-5" />
+                      Book a Free 15-min Call
+                    </Button>
+                  </div>
                 </HoverImageEffect>
               </div>
             </motion.div>
@@ -271,7 +279,8 @@ export const HeroSlider = () => {
               transition={{ duration: 0.5, type: "spring", stiffness: 300, damping: 30 }}
               className="relative"
             >
-              <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 animate-floating">
+              {/* Neobrutalist Video Frame */}
+              <div className="relative z-10 border-[4px] border-black dark:border-yellow-400 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#facc15] overflow-hidden animate-floating">
                 <video
                   src={currentSlideData.video}
                   autoPlay
@@ -292,7 +301,7 @@ export const HeroSlider = () => {
           </AnimatePresence>
         </div>
 
-        {/* Slider Controls */}
+        {/* Neobrutalist Slider Controls */}
         <div className="flex justify-center items-center mt-12 space-x-6">
           {/* Previous Button */}
           <button
@@ -301,14 +310,14 @@ export const HeroSlider = () => {
               e.stopPropagation();
               prevSlide();
             }}
-            className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+            className="p-3 bg-black border-[3px] border-yellow-400 shadow-[4px_4px_0px_0px_#facc15] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#facc15] transition-all duration-200"
             aria-label="Previous slide"
             type="button"
           >
-            <ChevronLeft className="w-6 h-6 text-white" />
+            <ChevronLeft className="w-6 h-6 text-yellow-400" />
           </button>
 
-          {/* Slide Indicators */}
+          {/* Slide Indicators - Neobrutalist */}
           <div className="flex space-x-3">
             {slides.map((_, index) => (
               <button
@@ -318,10 +327,10 @@ export const HeroSlider = () => {
                   e.stopPropagation();
                   goToSlide(index);
                 }}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentSlide 
-                    ? 'bg-vision-gold scale-125' 
-                    : 'bg-white/40 hover:bg-white/60'
+                className={`w-4 h-4 border-2 border-black transition-all duration-200 ${
+                  index === currentSlide
+                    ? 'bg-yellow-400 scale-125 shadow-[2px_2px_0px_0px_#000]'
+                    : 'bg-white/40 hover:bg-yellow-400/60'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
                 type="button"
@@ -336,11 +345,11 @@ export const HeroSlider = () => {
               e.stopPropagation();
               nextSlide();
             }}
-            className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+            className="p-3 bg-black border-[3px] border-yellow-400 shadow-[4px_4px_0px_0px_#facc15] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#facc15] transition-all duration-200"
             aria-label="Next slide"
             type="button"
           >
-            <ChevronRight className="w-6 h-6 text-white" />
+            <ChevronRight className="w-6 h-6 text-yellow-400" />
           </button>
         </div>
       </div>

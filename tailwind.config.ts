@@ -54,7 +54,7 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         vision: {
-          gold: "#F59E0B", 
+          gold: "#F59E0B",
           "gold-light": "#FBBF24",
           "gold-dark": "#B78628",
           "gold-metallic": "#D4AF37",
@@ -62,6 +62,20 @@ export default {
           "black-light": "#1A1508",
           dark: "#121008",
           "dark-light": "#1B180C",
+        },
+        // Neobrutalist color palette
+        neo: {
+          yellow: "#facc15",
+          "yellow-dark": "#eab308",
+          black: "#000000",
+          white: "#ffffff",
+          red: "#ef4444",
+          blue: "#3b82f6",
+          green: "#22c55e",
+          purple: "#a855f7",
+          pink: "#ec4899",
+          orange: "#f97316",
+          cyan: "#06b6d4",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
