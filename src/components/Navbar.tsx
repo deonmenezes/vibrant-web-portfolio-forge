@@ -247,7 +247,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                   onMouseEnter={() => setHoveredItem('logo')}
                   onMouseLeave={() => setHoveredItem(null)}
                 >
-                  <Zap className="w-5 h-5 text-vision-gold" />
+                  {/* <Zap className="w-5 h-5 text-vision-gold" /> */}
                   <img src="/vireality_navbar.png" alt="Virelity.com" className="h-8" width="auto" height="32" />
                 </div>
               </div>

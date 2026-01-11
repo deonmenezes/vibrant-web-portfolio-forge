@@ -322,7 +322,7 @@ const Services = () => {
                 <div className="relative group">
                   <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
                   <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-vision-gold" />
+                    {/* <Zap className="w-5 h-5 text-vision-gold" /> */}
                     <span className="font-black uppercase tracking-widest text-white text-sm">Our Services</span>
                   </div>
                 </div>

@@ -160,7 +160,7 @@ export const Footer = () => {
               <div className="inline-block relative group">
                 <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
                 <div className="relative border-2 border-white p-3 bg-black flex items-center gap-2">
-                  <Zap className="w-6 h-6 text-vision-gold" />
+                  {/* <Zap className="w-6 h-6 text-vision-gold" /> */}
                   <img src="/virelity_logo_transparent.png" alt="Virelity.com" className="h-8" />
                 </div>
               </div>

@@ -389,7 +389,7 @@ const Utility = () => {
               >
                 <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black" />
                 <div className="relative bg-white border-4 border-black px-6 py-3 flex items-center gap-3">
-                  <Zap className="w-6 h-6 text-black" />
+                  {/* <Zap className="w-6 h-6 text-black" /> */}
                   <span className="text-black font-black uppercase tracking-wider">Need a Custom Tool?</span>
                 </div>
               </motion.div>

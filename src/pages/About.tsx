@@ -384,7 +384,7 @@ const About = () => {
                   <div className="relative bg-black border-4 border-white p-8">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="w-14 h-14 border-4 border-white flex items-center justify-center" style={{ backgroundColor: colors.violet }}>
-                        <Zap className="w-7 h-7 text-black" />
+                        {/* <Zap className="w-7 h-7 text-black" /> */}
                       </div>
                       <h3 className="text-2xl font-black text-white uppercase">Our Mission</h3>
                     </div>
