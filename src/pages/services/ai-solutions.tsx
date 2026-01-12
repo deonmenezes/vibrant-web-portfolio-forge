@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
-import { useBooking } from '@/contexts/BookingContext';
+import { Footer } from '@/components/Footer';
 import {
     Brain,
     CheckCircle2,
@@ -11,18 +11,40 @@ import {
     Sparkles,
     MessageSquare,
     BarChart3,
-    Clock,
     Workflow,
     Eye
 } from 'lucide-react';
 
+// Neobrutalist colors
+const colors = {
+    gold: "#D4AF37",
+    electric: "#00FF87",
+    coral: "#FF6B6B",
+    violet: "#A855F7",
+    cyan: "#00D4FF",
+    lime: "#BFFF00",
+};
+
+// Marquee component
+const Marquee = ({ children, reverse = false, speed = 30 }: { children: React.ReactNode; reverse?: boolean; speed?: number }) => (
+    <div className="overflow-hidden whitespace-nowrap">
+        <motion.div
+            animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
+            transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+            className="inline-flex"
+        >
+            {children}
+            {children}
+        </motion.div>
+    </div>
+);
+
 const AISolutionsService = () => {
-    const { openBookingDialog } = useBooking();
-    const navigate = useNavigate();
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
     // Scroll to top on mount
     useEffect(() => {
-        // Use Lenis if available, else fallback
         const lenis = (window as any).lenis;
         if (lenis && typeof lenis.scrollTo === 'function') {
             lenis.scrollTo(0, { immediate: true });
@@ -35,32 +57,38 @@ const AISolutionsService = () => {
         {
             icon: Bot,
             title: "Custom AI Chatbots",
-            description: "Intelligent conversational agents that handle customer inquiries 24/7 with human-like responses."
+            description: "Intelligent conversational agents that handle customer inquiries 24/7 with human-like responses.",
+            color: colors.violet
         },
         {
             icon: Sparkles,
             title: "Generative AI Integration",
-            description: "Leverage GPT, Claude, and other LLMs to automate content creation and enhance productivity."
+            description: "Leverage GPT, Claude, and other LLMs to automate content creation and enhance productivity.",
+            color: colors.electric
         },
         {
             icon: Eye,
             title: "Computer Vision",
-            description: "Image recognition, object detection, and visual analysis solutions for your business needs."
+            description: "Image recognition, object detection, and visual analysis solutions for your business needs.",
+            color: colors.cyan
         },
         {
             icon: BarChart3,
             title: "Predictive Analytics",
-            description: "Data-driven insights and forecasting models to make smarter business decisions."
+            description: "Data-driven insights and forecasting models to make smarter business decisions.",
+            color: colors.coral
         },
         {
             icon: Workflow,
             title: "Process Automation",
-            description: "AI-powered automation to streamline workflows and reduce manual tasks."
+            description: "AI-powered automation to streamline workflows and reduce manual tasks.",
+            color: colors.lime
         },
         {
             icon: MessageSquare,
             title: "Natural Language Processing",
-            description: "Text analysis, sentiment detection, and language understanding for your applications."
+            description: "Text analysis, sentiment detection, and language understanding for your applications.",
+            color: colors.violet
         }
     ];
 
@@ -68,67 +96,46 @@ const AISolutionsService = () => {
         {
             title: "Customer Service AI",
             description: "Transform your customer support with intelligent AI agents that never sleep.",
-            examples: ["AI chatbots", "Voice assistants", "Email automation", "Ticket routing"]
+            examples: ["AI chatbots", "Voice assistants", "Email automation", "Ticket routing"],
+            color: colors.electric
         },
         {
             title: "Business Intelligence",
             description: "Turn your data into actionable insights with AI-powered analytics.",
-            examples: ["Sales forecasting", "Market analysis", "Risk assessment", "Trend prediction"]
+            examples: ["Sales forecasting", "Market analysis", "Risk assessment", "Trend prediction"],
+            color: colors.coral
         },
         {
             title: "Content Generation",
             description: "Scale your content creation with AI-assisted writing and media generation.",
-            examples: ["Marketing copy", "Product descriptions", "Social media posts", "Report generation"]
+            examples: ["Marketing copy", "Product descriptions", "Social media posts", "Report generation"],
+            color: colors.cyan
         },
         {
             title: "Automation & Integration",
             description: "Connect AI capabilities to your existing tools and workflows.",
-            examples: ["CRM integration", "Document processing", "Data extraction", "Workflow automation"]
+            examples: ["CRM integration", "Document processing", "Data extraction", "Workflow automation"],
+            color: colors.violet
         }
     ];
 
     const technologies = [
-        { name: "OpenAI GPT", description: "Advanced language models for text generation and understanding" },
-        { name: "Claude AI", description: "Anthropic's AI assistant for complex reasoning tasks" },
+        { name: "OpenAI GPT", description: "Advanced language models for text generation" },
+        { name: "Claude AI", description: "AI assistant for complex reasoning tasks" },
         { name: "TensorFlow", description: "Open-source machine learning framework" },
-        { name: "PyTorch", description: "Deep learning framework for research and production" },
-        { name: "LangChain", description: "Framework for building LLM-powered applications" },
-        { name: "Hugging Face", description: "Open-source NLP models and tools" },
+        { name: "PyTorch", description: "Deep learning framework" },
+        { name: "LangChain", description: "LLM-powered applications framework" },
+        { name: "Hugging Face", description: "Open-source NLP models" },
         { name: "AWS AI Services", description: "Cloud-based AI and ML services" },
-        { name: "Vector Databases", description: "Pinecone, Weaviate for semantic search and RAG" }
+        { name: "Vector Databases", description: "Semantic search and RAG" }
     ];
 
     const processSteps = [
-        {
-            step: "01",
-            title: "Discovery & Assessment",
-            description: "Analyze your business needs and identify AI opportunities that deliver real value.",
-            duration: "1-2 weeks"
-        },
-        {
-            step: "02",
-            title: "Strategy & Design",
-            description: "Design the AI solution architecture and define success metrics.",
-            duration: "1-2 weeks"
-        },
-        {
-            step: "03",
-            title: "Development & Training",
-            description: "Build and train AI models tailored to your specific use cases.",
-            duration: "4-8 weeks"
-        },
-        {
-            step: "04",
-            title: "Integration & Testing",
-            description: "Integrate AI into your systems and conduct thorough testing.",
-            duration: "2-3 weeks"
-        },
-        {
-            step: "05",
-            title: "Deployment & Optimization",
-            description: "Launch your AI solution and continuously optimize performance.",
-            duration: "Ongoing"
-        }
+        { step: "01", title: "Discovery", description: "Analyze business needs and identify AI opportunities", color: colors.electric },
+        { step: "02", title: "Strategy", description: "Design solution architecture and define success metrics", color: colors.coral },
+        { step: "03", title: "Development", description: "Build and train AI models for your use cases", color: colors.cyan },
+        { step: "04", title: "Integration", description: "Integrate AI into your systems with thorough testing", color: colors.violet },
+        { step: "05", title: "Optimization", description: "Launch and continuously optimize performance", color: colors.lime }
     ];
 
     const packages = [
@@ -136,154 +143,191 @@ const AISolutionsService = () => {
             name: "AI Starter",
             price: "$5,000",
             description: "Perfect for businesses starting their AI journey",
-            features: [
-                "Custom AI chatbot",
-                "Basic NLP integration",
-                "Single platform deployment",
-                "Knowledge base training",
-                "Basic analytics dashboard",
-                "3 months support"
-            ],
-            highlighted: false
+            features: ["Custom AI chatbot", "Basic NLP integration", "Single platform deployment", "Knowledge base training", "3 months support"],
+            color: colors.electric
         },
         {
             name: "AI Business",
             price: "$15,000",
             description: "Comprehensive AI solution for growing businesses",
-            features: [
-                "Advanced AI chatbot",
-                "Multi-channel deployment",
-                "Custom LLM fine-tuning",
-                "Process automation",
-                "Advanced analytics",
-                "API integrations",
-                "6 months support"
-            ],
-            highlighted: true
+            features: ["Advanced AI chatbot", "Multi-channel deployment", "Custom LLM fine-tuning", "Process automation", "Advanced analytics", "6 months support"],
+            highlighted: true,
+            color: colors.violet
         },
         {
             name: "Enterprise AI",
             price: "Custom",
             description: "Full-scale AI transformation for enterprises",
-            features: [
-                "Custom AI models",
-                "Multi-system integration",
-                "Predictive analytics",
-                "Computer vision solutions",
-                "Dedicated AI team",
-                "12 months support",
-                "Training & documentation",
-                "SLA guarantees"
-            ],
-            highlighted: false
-        }
-    ];
-
-    const portfolio = [
-        {
-            title: "AI Customer Service Bot",
-            description: "Intelligent chatbot handling 10,000+ customer inquiries monthly with 95% resolution rate",
-            image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=800",
-            tech: ["OpenAI GPT", "LangChain", "Python", "React"]
-        },
-        {
-            title: "Predictive Sales Platform",
-            description: "ML-powered sales forecasting system improving prediction accuracy by 40%",
-            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
-            tech: ["TensorFlow", "Python", "AWS", "Tableau"]
-        },
-        {
-            title: "Document Intelligence System",
-            description: "Automated document processing and data extraction for a legal firm",
-            image: "https://images.unsplash.com/photo-1568952433726-3896e3881c65?auto=format&fit=crop&q=80&w=800",
-            tech: ["Claude AI", "OCR", "Python", "PostgreSQL"]
+            features: ["Custom AI models", "Multi-system integration", "Predictive analytics", "Computer vision", "Dedicated AI team", "12 months support"],
+            color: colors.coral
         }
     ];
 
     return (
-        <div className="min-h-screen bg-background">
-            {/* Navbar */}
-            <Navbar
-                title="AI Solutions - Virelity.com"
-                description="Transform your business with custom AI solutions including chatbots, automation, predictive analytics, and generative AI integration."
+        <div className="min-h-screen flex flex-col bg-black">
+            {/* Scroll Progress */}
+            <motion.div
+                className="fixed top-0 left-0 right-0 h-2 bg-vision-gold z-50 origin-left"
+                style={{ scaleX }}
             />
 
-            {/* Hero Section */}
-            <section className="h-screen min-h-[500px] bg-gradient-to-br from-purple-600/10 to-cyan-600/10 relative overflow-hidden flex items-center justify-center">
-                {/* Background gradient animation */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-background to-cyan-900/20 z-0" />
-                <div className="absolute inset-0 bg-grid-pattern opacity-5 z-10" />
+            <Navbar />
 
-                {/* Animated particles/orbs effect */}
-                <div className="absolute inset-0 overflow-hidden z-5">
-                    <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-                </div>
+            {/* HERO SECTION - Neobrutalist */}
+            <section className="pt-32 pb-20 relative overflow-hidden">
+                {/* Background shapes */}
+                <motion.div
+                    animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+                    transition={{ duration: 6, repeat: Infinity }}
+                    className="absolute top-20 right-20 w-32 h-32 border-4 border-vision-gold hidden lg:block"
+                />
+                <motion.div
+                    animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
+                    transition={{ duration: 8, repeat: Infinity }}
+                    className="absolute bottom-20 left-20 w-24 h-24 hidden lg:block"
+                    style={{ backgroundColor: colors.violet }}
+                />
 
-                <div className="container relative z-20 flex flex-col items-center justify-center h-full">
-                    <div className="max-w-4xl mx-auto text-center w-full">
+                <div className="container relative z-10">
+                    <div className="text-center max-w-4xl mx-auto">
+                        {/* Badge */}
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
+                            initial={{ opacity: 0, y: 30, rotate: -3 }}
+                            animate={{ opacity: 1, y: 0, rotate: 0 }}
+                            className="inline-block mb-8"
                         >
-                            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-purple-600/10 to-cyan-600/10 rounded-full px-6 py-3 mb-8">
-                                <Brain className="w-6 h-6 text-purple-400" />
-                                <span className="text-purple-400 font-semibold">AI Solutions</span>
+                            <div className="relative group">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.violet }} />
+                                <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-2">
+                                    <Brain className="w-5 h-5 text-vision-gold" />
+                                    <span className="font-black uppercase tracking-widest text-white text-sm">AI Solutions</span>
+                                </div>
                             </div>
+                        </motion.div>
 
-                            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                                Transform Your Business With Intelligent AI
-                            </h1>
+                        {/* Main Title */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none mb-6"
+                        >
+                            <span className="text-white block">Transform With</span>
+                            <span className="text-vision-gold block">Intelligent AI</span>
+                        </motion.h1>
 
-                            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-                                Harness the power of artificial intelligence to automate processes, enhance customer experiences, and unlock data-driven insights that drive growth.
-                            </p>
+                        {/* Subtitle */}
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="text-xl md:text-2xl text-white/70 font-medium max-w-2xl mx-auto mb-10"
+                        >
+                            Harness the power of artificial intelligence to automate processes, enhance customer experiences, and unlock data-driven insights.
+                        </motion.p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button
-                                    onClick={() => openBookingDialog()}
-                                    className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                        {/* CTA Buttons */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                            className="flex flex-col sm:flex-row gap-4 justify-center"
+                        >
+                            <div className="relative group inline-block">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-green-800 transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                <a
+                                    href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20AI%20Solutions%20for%20my%20business.%20Can%20we%20discuss?"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="relative bg-green-500 hover:bg-green-500 text-black font-black uppercase tracking-wider px-8 py-4 text-lg border-[3px] border-black inline-flex items-center gap-2"
+                                >
                                     Start Your AI Journey
-                                </button>
-                                <button
-                                    onClick={() => navigate('/portfolio')}
-                                    className="border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
+                                    <ArrowRight className="w-5 h-5" />
+                                </a>
+                            </div>
+                            <div className="relative group inline-block">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                <Link
+                                    to="/portfolio"
+                                    className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-8 py-4 text-lg border-[3px] border-black inline-flex items-center gap-2"
+                                >
                                     View AI Projects
-                                </button>
+                                </Link>
                             </div>
                         </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* Features Section */}
-            <section className="py-20">
+            {/* MARQUEE */}
+            <section className="py-4 bg-vision-gold border-y-4 border-black">
+                <Marquee speed={25}>
+                    <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-black uppercase">
+                        <span>AI Chatbots</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>Machine Learning</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>NLP</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>Computer Vision</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>Automation</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                    </span>
+                </Marquee>
+            </section>
+
+            {/* FEATURES SECTION */}
+            <section className="py-20 bg-white border-y-4 border-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Capabilities We Deliver</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <div className="inline-block mb-6">
+                            <div className="relative">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.electric }} />
+                                <div className="relative bg-black border-4 border-black px-6 py-3">
+                                    <span className="font-black uppercase tracking-widest text-white">Capabilities</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                            AI <span className="text-vision-gold">Capabilities</span>
+                        </h2>
+                        <p className="text-xl text-gray-700 font-medium max-w-2xl mx-auto">
                             From conversational AI to predictive analytics, we build intelligent solutions that solve real business problems.
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {features.map((feature, index) => {
                             const IconComponent = feature.icon;
+                            const rotations = [-2, 1.5, -1, 2, -1.5, 1];
+                            const rotation = rotations[index % rotations.length];
                             return (
                                 <motion.div
                                     key={feature.title}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, y: 30, rotate: rotation }}
+                                    whileInView={{ opacity: 1, y: 0, rotate: rotation }}
+                                    whileHover={{ rotate: 0, scale: 1.03, y: -5 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
                                     viewport={{ once: true }}
-                                    className="bg-card border border-border rounded-xl p-6 hover:border-purple-400/30 hover:shadow-lg transition-all duration-300"
+                                    className="relative"
                                 >
-                                    <div className="bg-gradient-to-r from-purple-600/10 to-cyan-600/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                                        <IconComponent className="w-6 h-6 text-purple-400" />
+                                    <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: feature.color }} />
+                                    <div className="relative bg-black border-4 border-black p-6 h-full">
+                                        <div
+                                            className="w-14 h-14 flex items-center justify-center border-2 border-vision-gold mb-4"
+                                            style={{ backgroundColor: feature.color }}
+                                        >
+                                            <IconComponent className="w-7 h-7 text-black" />
+                                        </div>
+                                        <h3 className="text-xl font-black text-white uppercase mb-2">{feature.title}</h3>
+                                        <p className="text-white/70 font-medium">{feature.description}</p>
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                                    <p className="text-muted-foreground">{feature.description}</p>
                                 </motion.div>
                             );
                         })}
@@ -291,200 +335,223 @@ const AISolutionsService = () => {
                 </div>
             </section>
 
-            {/* Applications Section */}
-            <section className="py-20 bg-muted/30">
+            {/* Second Marquee */}
+            <section className="py-4 bg-black border-y-4 border-white">
+                <Marquee reverse speed={20}>
+                    <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-white uppercase">
+                        <span>GPT Integration</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                        <span>Claude AI</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                        <span>LangChain</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                        <span>TensorFlow</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                    </span>
+                </Marquee>
+            </section>
+
+            {/* APPLICATIONS SECTION */}
+            <section className="py-20 bg-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Solutions For Your Business</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4">
+                            AI <span className="text-vision-gold">Applications</span>
+                        </h2>
+                        <p className="text-xl text-white/70 font-medium max-w-2xl mx-auto">
                             Practical AI applications that deliver measurable results and competitive advantages.
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {applications.map((app, index) => (
                             <motion.div
                                 key={app.title}
-                                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="bg-card border border-border rounded-xl p-8 hover:border-purple-400/30 hover:shadow-lg transition-all duration-300"
-                            >
-                                <h3 className="text-2xl font-semibold mb-4 text-purple-400">{app.title}</h3>
-                                <p className="text-muted-foreground mb-6">{app.description}</p>
-                                <ul className="space-y-2">
-                                    {app.examples.map((example, idx) => (
-                                        <li key={idx} className="flex items-center space-x-3">
-                                            <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0" />
-                                            <span className="text-sm">{example}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Technologies Section */}
-            <section className="py-20">
-                <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Technologies We Use</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            We leverage the latest AI frameworks and platforms to build powerful, scalable solutions.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {technologies.map((tech, index) => (
-                            <motion.div
-                                key={tech.name}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="bg-card border border-border rounded-lg p-6 text-center hover:border-purple-400/30 hover:shadow-lg transition-all duration-300"
-                            >
-                                <h3 className="text-lg font-semibold mb-2 text-purple-400">{tech.name}</h3>
-                                <p className="text-sm text-muted-foreground">{tech.description}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Process Section */}
-            <section className="py-20 bg-muted/30">
-                <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our AI Development Process</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            A structured approach to delivering AI solutions that meet your business objectives.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                        {processSteps.map((step, index) => (
-                            <motion.div
-                                key={step.step}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
                                 className="relative"
                             >
-                                <div className="bg-card border border-border rounded-xl p-6 hover:border-purple-400/30 hover:shadow-lg transition-all duration-300 h-full">
-                                    <div className="text-3xl font-bold text-purple-400 mb-3">{step.step}</div>
-                                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                                    <p className="text-muted-foreground mb-4">{step.description}</p>
-                                    <div className="flex items-center text-sm text-purple-400">
-                                        <Clock className="w-4 h-4 mr-2" />
-                                        {step.duration}
-                                    </div>
+                                <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: app.color }} />
+                                <div className="relative bg-white border-4 border-black p-8">
+                                    <h3 className="text-2xl font-black text-black uppercase mb-4">{app.title}</h3>
+                                    <p className="text-gray-700 font-medium mb-6">{app.description}</p>
+                                    <ul className="space-y-2">
+                                        {app.examples.map((example, idx) => (
+                                            <li key={idx} className="flex items-center gap-3">
+                                                <CheckCircle2 className="w-5 h-5 text-vision-gold flex-shrink-0" />
+                                                <span className="text-gray-800 font-medium">{example}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                {index < processSteps.length - 1 && (
-                                    <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                                        <ArrowRight className="w-8 h-8 text-purple-400/30" />
-                                    </div>
-                                )}
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Pricing Section */}
-            <section className="py-20">
+            {/* PROCESS SECTION */}
+            <section className="py-20 bg-vision-gold border-y-4 border-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Solution Packages</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            Flexible AI packages designed to meet businesses at every stage of their AI journey.
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                            Our <span className="text-white">Process</span>
+                        </h2>
+                        <p className="text-xl text-black/70 font-medium max-w-2xl mx-auto">
+                            A structured approach to delivering AI solutions that meet your business objectives.
                         </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        {processSteps.map((step, index) => (
+                            <motion.div
+                                key={step.step}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                whileHover={{ y: -10 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="relative"
+                            >
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black" />
+                                <div className="relative bg-white border-4 border-black p-6 h-full">
+                                    <div
+                                        className="text-4xl font-black mb-3"
+                                        style={{ color: step.color }}
+                                    >
+                                        {step.step}
+                                    </div>
+                                    <h3 className="text-lg font-black text-black uppercase mb-2">{step.title}</h3>
+                                    <p className="text-gray-700 text-sm font-medium">{step.description}</p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
+                </div>
+            </section>
+
+            {/* PRICING SECTION */}
+            <section className="py-20 bg-white border-y-4 border-black">
+                <div className="container">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <div className="inline-block mb-6">
+                            <div className="relative">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.coral }} />
+                                <div className="relative bg-black border-4 border-black px-6 py-3">
+                                    <span className="font-black uppercase tracking-widest text-white">Packages</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                            AI <span className="text-vision-gold">Packages</span>
+                        </h2>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {packages.map((pkg, index) => (
                             <motion.div
                                 key={pkg.name}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, y: 30, rotate: index === 1 ? 0 : (index === 0 ? -2 : 2) }}
+                                whileInView={{ opacity: 1, y: 0, rotate: index === 1 ? 0 : (index === 0 ? -2 : 2) }}
+                                whileHover={{ rotate: 0, scale: 1.03, y: -10 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className={`bg-card border rounded-xl p-8 hover:shadow-lg transition-all duration-300 ${pkg.highlighted ? 'border-purple-400 shadow-lg scale-105' : 'border-border'
-                                    }`}
+                                className={`relative ${pkg.highlighted ? 'z-10' : ''}`}
                             >
-                                {pkg.highlighted && (
-                                    <div className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">
-                                        Most Popular
-                                    </div>
-                                )}
-                                <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
-                                <div className="text-3xl font-bold text-purple-400 mb-2">{pkg.price}</div>
-                                <p className="text-muted-foreground mb-6">{pkg.description}</p>
+                                <div
+                                    className="absolute inset-0 translate-x-3 translate-y-3"
+                                    style={{ backgroundColor: pkg.color }}
+                                />
+                                <div className={`relative border-4 border-black p-8 h-full ${pkg.highlighted ? 'bg-black' : 'bg-white'}`}>
+                                    {pkg.highlighted && (
+                                        <div className="bg-vision-gold text-black text-sm font-black uppercase px-4 py-2 border-2 border-black inline-block mb-4">
+                                            Most Popular
+                                        </div>
+                                    )}
+                                    <h3 className={`text-2xl font-black uppercase mb-2 ${pkg.highlighted ? 'text-white' : 'text-black'}`}>
+                                        {pkg.name}
+                                    </h3>
+                                    <div className="text-4xl font-black text-vision-gold mb-2">{pkg.price}</div>
+                                    <p className={`mb-6 font-medium ${pkg.highlighted ? 'text-white/70' : 'text-gray-700'}`}>
+                                        {pkg.description}
+                                    </p>
 
-                                <ul className="space-y-3 mb-8">
-                                    {pkg.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start space-x-3">
-                                            <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                                            <span className="text-sm">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                                    <ul className="space-y-3 mb-8">
+                                        {pkg.features.map((feature, idx) => (
+                                            <li key={idx} className="flex items-start gap-3">
+                                                <CheckCircle2 className="w-5 h-5 text-vision-gold flex-shrink-0 mt-0.5" />
+                                                <span className={`text-sm font-medium ${pkg.highlighted ? 'text-white' : 'text-gray-800'}`}>
+                                                    {feature}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
 
-                                <button
-                                    onClick={openBookingDialog}
-                                    className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
-                                        ? 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white'
-                                        : 'border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white'
-                                    }`}>
-                                    Get Started
-                                </button>
+                                    <a
+                                        href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20the%20AI%20Solutions%20package.%20Can%20we%20discuss?"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`w-full px-6 py-4 font-black uppercase text-center border-4 border-black inline-block transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_#000] ${pkg.highlighted
+                                            ? 'bg-vision-gold text-black'
+                                            : 'bg-black text-white'
+                                            }`}
+                                    >
+                                        Get Started
+                                    </a>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Portfolio Section */}
-            <section className="py-20 bg-muted/30">
+            {/* TECHNOLOGIES SECTION */}
+            <section className="py-20 bg-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Projects We've Delivered</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            Real-world AI implementations that have transformed businesses across industries.
-                        </p>
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4">
+                            Tech <span className="text-vision-gold">Stack</span>
+                        </h2>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {portfolio.map((project, index) => (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {technologies.map((tech, index) => (
                             <motion.div
-                                key={project.title}
+                                key={tech.name}
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                whileHover={{ scale: 1.05 }}
+                                transition={{ duration: 0.3, delay: index * 0.05 }}
                                 viewport={{ once: true }}
-                                className="group relative overflow-hidden rounded-xl bg-card border border-border hover:border-purple-400/30 hover:shadow-lg transition-all duration-300"
+                                className="relative"
                             >
-                                <div className="aspect-video overflow-hidden">
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                                    <p className="text-muted-foreground mb-4">{project.description}</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {project.tech.map((tech) => (
-                                            <span key={tech} className="bg-purple-400/10 text-purple-400 text-xs px-2 py-1 rounded-full">
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                <div className="relative bg-white border-4 border-black p-4 text-center">
+                                    <h3 className="text-lg font-black text-black uppercase mb-1">{tech.name}</h3>
+                                    <p className="text-sm text-gray-700 font-medium">{tech.description}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -492,31 +559,58 @@ const AISolutionsService = () => {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
-                <div className="container">
-                    <div className="text-center max-w-3xl mx-auto">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                            Ready to Embrace AI?
+            {/* CTA SECTION */}
+            <section className="py-24 bg-vision-gold relative overflow-hidden">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -top-20 -right-20 w-64 h-64 border-8 border-black opacity-20"
+                />
+                <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="absolute -bottom-20 -left-20 w-48 h-48 bg-black opacity-10"
+                />
+
+                <div className="container relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center max-w-4xl mx-auto"
+                    >
+                        <h2 className="text-5xl md:text-7xl font-black text-black uppercase mb-6 leading-none">
+                            Ready to
+                            <br />
+                            <span className="text-white">Embrace AI?</span>
                         </h2>
-                        <p className="text-xl text-muted-foreground mb-8">
+                        <p className="text-xl text-black/70 font-medium mb-10 max-w-2xl mx-auto">
                             Let's explore how AI can transform your business operations, enhance customer experiences, and drive innovation.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button
-                                onClick={() => openBookingDialog()}
-                                className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                                Schedule AI Consultation
-                            </button>
-                            <button
-                                onClick={() => navigate('/portfolio')}
-                                className="border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
-                                View More Projects
-                            </button>
-                        </div>
-                    </div>
+
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="inline-block"
+                        >
+                            <div className="relative group">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-x-3 group-hover:translate-y-3" />
+                                <a
+                                    href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20AI%20Solutions.%20Let's%20schedule%20a%20consultation!"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-12 py-6 text-xl border-4 border-black inline-flex items-center gap-3"
+                                >
+                                    Schedule AI Consultation
+                                    <ArrowRight className="w-6 h-6" />
+                                </a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
+
+            <Footer />
         </div>
     );
 };

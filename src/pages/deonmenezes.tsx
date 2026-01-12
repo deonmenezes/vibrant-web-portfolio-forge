@@ -1,356 +1,254 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PageTransition } from "@/components/PageTransition";
-import { motion } from "framer-motion";
-import { Sparkles, Award, BookOpen, Linkedin, Twitter, Mail, Instagram, Youtube } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { Award, BookOpen, Linkedin, Twitter, Mail, Instagram, Youtube, ArrowRight, Zap, Play } from "lucide-react";
+import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
+// Neobrutalist colors
+const colors = {
+  gold: "#D4AF37",
+  electric: "#00FF87",
+  coral: "#FF6B6B",
+  violet: "#A855F7",
+  cyan: "#00D4FF",
+  lime: "#BFFF00",
+};
+
+// Marquee component
+const Marquee = ({ children, reverse = false, speed = 30 }: { children: React.ReactNode; reverse?: boolean; speed?: number }) => (
+  <div className="overflow-hidden whitespace-nowrap">
+    <motion.div
+      animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
+      transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+      className="inline-flex"
+    >
+      {children}
+      {children}
+    </motion.div>
+  </div>
+);
 
 const DeonMenezes = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const revealRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLDivElement>(null);
-  const socialRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
-  const [trails, setTrails] = useState<Array<{ x: number; y: number; opacity: number; scale: number }>>([]);
-  const animationFrameRef = useRef<number>();
-  const trailPositions = useRef<Array<{ x: number; y: number; scale: number }>>([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
-  useEffect(() => {
-    // Initialize trail positions
-    trailPositions.current = Array(8).fill(null).map(() => ({ 
-      x: window.innerWidth / 2, 
-      y: window.innerHeight / 2, 
-      scale: 1 
-    }));
+  // Scroll progress
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    const animate = () => {
-      setCurrentPos((prev) => {
-        const ease = 0.12;
-        const newX = prev.x + (mousePos.x - prev.x) * ease;
-        const newY = prev.y + (mousePos.y - prev.y) * ease;
-
-        // Calculate speed for trail effect
-        const speed = Math.sqrt(
-          Math.pow(newX - mousePos.x, 2) + Math.pow(newY - mousePos.y, 2)
-        );
-
-        // Update reveal clip path
-        if (revealRef.current) {
-          const blobSize = 200 + Math.min(speed * 2, 100);
-          revealRef.current.style.clipPath = `circle(${blobSize}px at ${newX}px ${newY}px)`;
-        }
-
-        // Update trail positions
-        trailPositions.current.unshift({ 
-          x: newX, 
-          y: newY, 
-          scale: 1 - (speed / 100) * 0.3 
-        });
-        trailPositions.current.pop();
-
-        // Update trails state
-        const newTrails = trailPositions.current.map((pos, index) => {
-          const opacity = 1 - (index / 8);
-          const scale = pos.scale - (index / 8) * 0.2;
-          return { x: pos.x, y: pos.y, opacity: opacity * 0.5, scale };
-        });
-        setTrails(newTrails);
-
-        // Check element inversion
-        checkElementInversion(nameRef.current, newX, newY);
-        checkElementInversion(socialRef.current, newX, newY);
-
-        return { x: newX, y: newY };
-      });
-
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    const checkElementInversion = (element: HTMLElement | null, cursorX: number, cursorY: number) => {
-      if (!element) return;
-      const rect = element.getBoundingClientRect();
-      const blobRadius = 100;
-      
-      const isInside = (
-        cursorX > rect.left - blobRadius &&
-        cursorX < rect.right + blobRadius &&
-        cursorY > rect.top - blobRadius &&
-        cursorY < rect.bottom + blobRadius
-      );
-
-      if (isInside) {
-        element.classList.add('text-inverted');
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
       } else {
-        element.classList.remove('text-inverted');
+        videoRef.current.play();
       }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    animationFrameRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [mousePos]);
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   return (
     <PageTransition>
-      <Navbar />
-      <style>{`
-        .hero-section {
-          cursor: none;
-        }
-        
-        .text-inverted {
-          color: white !important;
-          transition: color 0.3s ease;
-        }
+      {/* Scroll Progress */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-2 bg-vision-gold z-50 origin-left"
+        style={{ scaleX }}
+      />
 
-        .text-inverted .lucide {
-          color: white !important;
-        }
+      <div className="min-h-screen flex flex-col bg-black">
+        <Navbar />
 
-        .wave-line {
-          position: absolute;
-          width: 200%;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-          left: -50%;
-          pointer-events: none;
-        }
-
-        .wave-line:nth-child(1) {
-          top: 20%;
-          animation: wave1 8s ease-in-out infinite;
-        }
-
-        .wave-line:nth-child(2) {
-          top: 40%;
-          animation: wave2 10s ease-in-out infinite;
-          animation-delay: -2s;
-        }
-
-        .wave-line:nth-child(3) {
-          top: 60%;
-          animation: wave3 12s ease-in-out infinite;
-          animation-delay: -4s;
-        }
-
-        .wave-line:nth-child(4) {
-          top: 80%;
-          animation: wave1 9s ease-in-out infinite;
-          animation-delay: -6s;
-        }
-
-        @keyframes wave1 {
-          0%, 100% { transform: translateX(0) translateY(0); }
-          50% { transform: translateX(-25%) translateY(-10px); }
-        }
-
-        @keyframes wave2 {
-          0%, 100% { transform: translateX(0) translateY(0); }
-          50% { transform: translateX(-30%) translateY(15px); }
-        }
-
-        @keyframes wave3 {
-          0%, 100% { transform: translateX(0) translateY(0); }
-          50% { transform: translateX(-20%) translateY(-15px); }
-        }
-
-        .blob-trail {
-          position: fixed;
-          border-radius: 50%;
-          pointer-events: none;
-          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-          mix-blend-mode: screen;
-        }
-      `}</style>
-
-      <div className="min-h-screen bg-background">
-        {/* Hero Section with Blob Cursor Effect */}
-        <section 
-          ref={heroRef}
-          className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-        >
-          {/* Primary Background Layer */}
-          <div 
-            className="absolute inset-0 z-0"
-            style={{
-              backgroundImage: 'url(/deonmenezes.png)',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#ffffff',
-              transform: `translate(${-(mousePos.x / window.innerWidth - 0.5) * 30}px, ${-(mousePos.y / window.innerHeight - 0.5) * 30}px)`,
-              transition: 'transform 0.1s ease-out'
-            }}
+        {/* HERO SECTION - Neobrutalist with Video */}
+        <section className="pt-32 pb-20 relative overflow-hidden">
+          {/* Background shapes */}
+          <motion.div
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 6, repeat: Infinity }}
+            className="absolute top-20 right-20 w-32 h-32 border-4 border-vision-gold hidden lg:block"
+          />
+          <motion.div
+            animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
+            transition={{ duration: 8, repeat: Infinity }}
+            className="absolute bottom-20 left-20 w-24 h-24 hidden lg:block"
+            style={{ backgroundColor: colors.cyan }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 5, repeat: Infinity }}
+            className="absolute top-1/2 right-1/4 w-16 h-16 hidden lg:block"
+            style={{ backgroundColor: colors.coral }}
           />
 
-          {/* Reveal Layer with Clip Path */}
-          <div 
-            ref={revealRef}
-            className="absolute inset-0 z-10"
-            style={{
-              backgroundImage: 'url(/deonmenezes.png)',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#ffffff',
-              clipPath: 'circle(0% at 50% 50%)',
-              filter: 'grayscale(100%) contrast(1.2)',
-              transform: `translate(${-(mousePos.x / window.innerWidth - 0.5) * 30}px, ${-(mousePos.y / window.innerHeight - 0.5) * 30}px)`,
-              transition: 'transform 0.1s ease-out'
-            }}
-          />
+          <div className="container relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Content Side */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                {/* Badge */}
+                <div className="inline-block">
+                  <div className="relative group">
+                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                    <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-2">
+                      <Zap className="w-5 h-5 text-vision-gold" />
+                      <span className="font-black uppercase tracking-widest text-white text-sm">Serial Entrepreneur & Author</span>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Animated Wave Lines */}
-          <div className="absolute inset-0 z-20 pointer-events-none opacity-30">
-            <div className="wave-line"></div>
-            <div className="wave-line"></div>
-            <div className="wave-line"></div>
-            <div className="wave-line"></div>
-          </div>
+                {/* Main Title */}
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none">
+                  <span className="text-white block">Deon</span>
+                  <span className="text-vision-gold block">Menezes</span>
+                </h1>
 
-          {/* Blob Trails */}
-          {trails.map((trail, index) => (
-            <div
-              key={index}
-              className="blob-trail z-30"
-              style={{
-                left: `${trail.x}px`,
-                top: `${trail.y}px`,
-                width: '180px',
-                height: '180px',
-                opacity: trail.opacity,
-                transform: `translate(-50%, -50%) scale(${trail.scale})`,
-              }}
-            />
-          ))}
+                {/* Subtitle */}
+                <p className="text-xl md:text-2xl text-white/70 font-medium max-w-xl">
+                  Founder of Virelity.com | AI Solutions Architect | Author of "Business in the Age of AI"
+                </p>
 
-          {/* Name in Top Left */}
-          <motion.div
-            ref={nameRef}
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="fixed top-12 left-12 z-40 pointer-events-none"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '4rem',
-              fontWeight: 600,
-              lineHeight: 0.95,
-              letterSpacing: '-1px',
-              color: '#000000',
-              transition: 'color 0.3s ease'
-            }}
-          >
-            <div>Deon</div>
-            <div>Menezes</div>
-          </motion.div>
+                {/* Stats */}
+                <div className="flex flex-wrap gap-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 translate-x-1 translate-y-1" style={{ backgroundColor: colors.electric }} />
+                    <div className="relative bg-black border-2 border-white px-4 py-3">
+                      <div className="text-2xl font-black text-vision-gold">7+</div>
+                      <div className="text-xs text-white uppercase tracking-wider">Years Experience</div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 translate-x-1 translate-y-1" style={{ backgroundColor: colors.coral }} />
+                    <div className="relative bg-black border-2 border-white px-4 py-3">
+                      <div className="text-2xl font-black text-vision-gold">50+</div>
+                      <div className="text-xs text-white uppercase tracking-wider">Projects Delivered</div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 translate-x-1 translate-y-1" style={{ backgroundColor: colors.violet }} />
+                    <div className="relative bg-black border-2 border-white px-4 py-3">
+                      <div className="text-2xl font-black text-vision-gold">2026</div>
+                      <div className="text-xs text-white uppercase tracking-wider">Book Launch</div>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Portfolio Link Top Right */}
-          <motion.a
-            href="#portfolio"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="fixed top-16 right-12 z-40 text-xl font-medium tracking-wider hover:translate-y-[-2px] transition-all"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              color: '#000000',
-              transition: 'color 0.3s ease, transform 0.3s ease'
-            }}
-          >
-            PORTFOLIO
-          </motion.a>
+                {/* Social Links - Neobrutalist */}
+                <div className="flex gap-4">
+                  {[
+                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/deonmenezes", color: colors.coral },
+                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/DeonMen", color: colors.cyan },
+                    { icon: <Youtube className="w-5 h-5" />, href: "https://youtube.com/@deonmenezes", color: colors.coral },
+                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/deon-menezes-a82552254/", color: colors.electric },
+                    { icon: <Mail className="w-5 h-5" />, href: "mailto:deon.menezes@virelity.com", color: colors.violet },
+                  ].map((social, index) => (
+                    <motion.a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative group"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className="absolute inset-0 translate-x-1 translate-y-1" style={{ backgroundColor: social.color }} />
+                      <div className="relative w-12 h-12 bg-black border-2 border-white flex items-center justify-center text-white group-hover:text-vision-gold transition-colors">
+                        {social.icon}
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+              </motion.div>
 
-          {/* Social Icons Bottom Right */}
-          <motion.div
-            ref={socialRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="fixed bottom-12 right-12 z-40 flex gap-6"
-          >
-            <a 
-              href="https://instagram.com/deonmenezes" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:translate-y-[-4px] hover:scale-110 transition-all"
-              style={{ color: '#000000', transition: 'color 0.3s ease, transform 0.3s ease' }}
-            >
-              <Instagram className="w-7 h-7" fill="currentColor" />
-            </a>
-            <a 
-              href="https://x.com/DeonMen" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:translate-y-[-4px] hover:scale-110 transition-all"
-              style={{ color: '#000000', transition: 'color 0.3s ease, transform 0.3s ease' }}
-            >
-              <Twitter className="w-7 h-7" fill="currentColor" />
-            </a>
-            <a 
-              href="https://youtube.com/@deonmenezes" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:translate-y-[-4px] hover:scale-110 transition-all"
-              style={{ color: '#000000', transition: 'color 0.3s ease, transform 0.3s ease' }}
-            >
-              <Youtube className="w-7 h-7" fill="currentColor" />
-            </a>
-            <a 
-              href="https://www.linkedin.com/in/deon-menezes-a82552254/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:translate-y-[-4px] hover:scale-110 transition-all"
-              style={{ color: '#000000', transition: 'color 0.3s ease, transform 0.3s ease' }}
-            >
-              <Linkedin className="w-7 h-7" fill="currentColor" />
-            </a>
-          </motion.div>
+              {/* Video Side */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative"
+              >
+                {/* Neobrutalist Video Frame */}
+                <div className="relative">
+                  <div className="absolute inset-0 translate-x-4 translate-y-4 bg-vision-gold" />
+                  <div className="relative border-4 border-white overflow-hidden">
+                    <video
+                      ref={videoRef}
+                      src="/videos/deondoesresearch.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full aspect-video object-cover"
+                    />
+                    {/* Play/Pause Button */}
+                    <motion.button
+                      onClick={toggleVideo}
+                      className="absolute bottom-4 right-4 w-14 h-14 bg-black border-2 border-white flex items-center justify-center text-white hover:bg-vision-gold hover:text-black transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Play className={`w-6 h-6 ${isPlaying ? 'opacity-50' : ''}`} fill={isPlaying ? 'currentColor' : 'none'} />
+                    </motion.button>
+                  </div>
+                </div>
 
-          {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-40"
-          >
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-sm tracking-widest text-gray-800" style={{ mixBlendMode: 'difference' }}>SCROLL</span>
-              <div className="w-px h-16 bg-gradient-to-b from-gray-800 to-transparent animate-pulse" style={{ mixBlendMode: 'difference' }}></div>
+                {/* Floating decoration */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute -top-8 -right-8 w-24 h-24 border-4 border-vision-gold hidden lg:block"
+                />
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </section>
 
-        {/* About Section */}
-        <section className="py-20 bg-background">
+        {/* MARQUEE */}
+        <section className="py-4 bg-vision-gold border-y-4 border-black">
+          <Marquee speed={25}>
+            <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-black uppercase">
+              <span>AI Solutions</span>
+              <span className="w-4 h-4 bg-black rounded-full" />
+              <span>Business Strategy</span>
+              <span className="w-4 h-4 bg-black rounded-full" />
+              <span>Systems Design</span>
+              <span className="w-4 h-4 bg-black rounded-full" />
+              <span>Author</span>
+              <span className="w-4 h-4 bg-black rounded-full" />
+              <span>Entrepreneur</span>
+              <span className="w-4 h-4 bg-black rounded-full" />
+            </span>
+          </Marquee>
+        </section>
+
+        {/* About Section - Neobrutalist */}
+        <section className="py-20 bg-white border-y-4 border-black">
           <div className="container max-w-6xl mx-auto px-4">
+            {/* Section Header */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-blue-500/20 border border-primary/30 backdrop-blur-sm mb-8">
-                <Sparkles className="w-5 h-5 text-primary" />
-                <span className="text-primary font-semibold">About</span>
+              <div className="inline-block mb-6">
+                <div className="relative">
+                  <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.electric }} />
+                  <div className="relative bg-black border-4 border-black px-6 py-3">
+                    <span className="font-black uppercase tracking-widest text-white">About Me</span>
+                  </div>
+                </div>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-                Meet Deon Menezes
+              <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                Meet <span className="text-vision-gold">Deon</span>
               </h2>
             </motion.div>
 
+            {/* Bio Card - Neobrutalist */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -358,13 +256,13 @@ const DeonMenezes = () => {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <div className="relative p-8 md:p-12 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-500/5 opacity-50"></div>
-                <div className="relative z-10">
-                  <p className="text-lg text-gray-300 leading-relaxed mb-6">
+              <div className="relative">
+                <div className="absolute inset-0 translate-x-3 translate-y-3 bg-vision-gold" />
+                <div className="relative bg-black border-4 border-black p-8 md:p-12">
+                  <p className="text-lg text-white leading-relaxed mb-6">
                     Deon Menezes is a serial entrepreneur, author, and AI solutions architect with over 7 years of experience in building and scaling businesses. As the founder of Virelity.com, he has helped numerous organizations leverage technology and artificial intelligence to achieve operational excellence and growth.
                   </p>
-                  <p className="text-lg text-gray-300 leading-relaxed">
+                  <p className="text-lg text-white/80 leading-relaxed">
                     Deon's journey is marked by a relentless pursuit of innovation, a commitment to system clarity, and a passion for empowering the next generation of founders. His upcoming book, "Business in the Age of AI," distills his learnings, failures, and frameworks into actionable strategies for modern entrepreneurs.
                   </p>
                 </div>
@@ -372,109 +270,201 @@ const DeonMenezes = () => {
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-8">
+              {/* Profile Card */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: 30, rotate: -2 }}
+                whileInView={{ opacity: 1, y: 0, rotate: -2 }}
+                whileHover={{ rotate: 0, scale: 1.02 }}
+                transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border"
+                className="relative"
               >
-                <div className="flex flex-col items-center">
-                  <img 
-                    src="/deonmenezes.png" 
-                    alt="Deon Menezes" 
-                    className="w-48 h-48 rounded-full mb-6 object-cover border-4 border-primary shadow-xl" 
-                  />
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Founder & CEO</h3>
-                  <p className="text-muted-foreground text-center mb-4">Virelity.com</p>
-                  <div className="flex items-center gap-2">
-                    <Award className="h-6 w-6 text-yellow-500" />
-                    <span className="font-medium text-yellow-500">7+ Years Experience</span>
-                  </div>
-                  <div className="mt-6 flex gap-4">
-                    <a href="mailto:deon.menezes@virelity.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                      <Mail className="h-6 w-6" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/deon-menezes-a82552254/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                      <Linkedin className="h-6 w-6" />
-                    </a>
-                    <a href="https://x.com/DeonMen" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                      <Twitter className="h-6 w-6" />
-                    </a>
+                <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: colors.coral }} />
+                <div className="relative bg-white border-4 border-black p-8">
+                  <div className="flex flex-col items-center">
+                    <div className="relative mb-6">
+                      <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold rounded-full" />
+                      <img
+                        src="/deonmenezes.png"
+                        alt="Deon Menezes"
+                        className="relative w-40 h-40 rounded-full object-cover border-4 border-black"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-black text-black uppercase mb-2">Founder & CEO</h3>
+                    <p className="text-gray-700 font-medium mb-4">Virelity.com</p>
+                    <div className="flex items-center gap-2 bg-vision-gold px-4 py-2 border-2 border-black">
+                      <Award className="h-5 w-5 text-black" />
+                      <span className="font-black text-black uppercase text-sm">7+ Years Experience</span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
 
+              {/* Book Card */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: 30, rotate: 2 }}
+                whileInView={{ opacity: 1, y: 0, rotate: 2 }}
+                whileHover={{ rotate: 0, scale: 1.02 }}
+                transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border flex flex-col justify-center"
+                className="relative"
               >
-                <div className="flex items-start gap-3 mb-6">
-                  <BookOpen className="h-8 w-8 text-blue-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">Author</h3>
-                    <p className="text-xl font-medium text-blue-500 mb-2">Business in the Age of AI</p>
-                    <p className="text-muted-foreground mb-4">Launching 2026</p>
+                <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: colors.cyan }} />
+                <div className="relative bg-black border-4 border-white p-8 h-full flex flex-col justify-center">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-14 h-14 flex items-center justify-center border-2 border-vision-gold" style={{ backgroundColor: colors.violet }}>
+                      <BookOpen className="h-7 w-7 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white uppercase mb-1">Author</h3>
+                      <p className="text-xl font-black text-vision-gold">Business in the Age of AI</p>
+                      <div className="inline-block mt-2 bg-vision-gold px-3 py-1 border-2 border-black">
+                        <span className="font-black text-black text-sm uppercase">Launching 2026</span>
+                      </div>
+                    </div>
                   </div>
+                  <p className="text-white/80 leading-relaxed">
+                    A founder's guide to system clarity, strategies, and operational frameworks for the AI era. Drawing from years of real-world experience building and scaling companies.
+                  </p>
                 </div>
-                <p className="text-gray-300 leading-relaxed">
-                  A founder's guide to system clarity, strategies, and operational frameworks for the AI era. Drawing from years of real-world experience building and scaling companies, this book provides actionable insights for modern entrepreneurs navigating the rapidly evolving landscape of artificial intelligence.
-                </p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Expertise Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-900/50 to-black/50">
+        {/* Second Marquee */}
+        <section className="py-4 bg-black border-y-4 border-white">
+          <Marquee reverse speed={20}>
+            <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-white uppercase">
+              <span>Innovation</span>
+              <span className="w-4 h-4 bg-vision-gold rounded-full" />
+              <span>Leadership</span>
+              <span className="w-4 h-4 bg-vision-gold rounded-full" />
+              <span>Technology</span>
+              <span className="w-4 h-4 bg-vision-gold rounded-full" />
+              <span>Growth</span>
+              <span className="w-4 h-4 bg-vision-gold rounded-full" />
+            </span>
+          </Marquee>
+        </section>
+
+        {/* Expertise Section - Neobrutalist */}
+        <section className="py-20 bg-black">
           <div className="container max-w-6xl mx-auto px-4">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
-                Areas of Expertise
+              <div className="inline-block mb-6">
+                <div className="relative">
+                  <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.violet }} />
+                  <div className="relative bg-black border-4 border-white px-6 py-3">
+                    <span className="font-black uppercase tracking-widest text-white">What I Do</span>
+                  </div>
+                </div>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4">
+                Areas of <span className="text-vision-gold">Expertise</span>
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
                   title: "AI Solutions",
-                  description: "Architecting and implementing AI-powered systems that drive business transformation and operational efficiency."
+                  description: "Architecting and implementing AI-powered systems that drive business transformation and operational efficiency.",
+                  color: colors.electric,
+                  rotation: -2
                 },
                 {
                   title: "Business Strategy",
-                  description: "Developing comprehensive frameworks and strategies for sustainable growth in the age of artificial intelligence."
+                  description: "Developing comprehensive frameworks and strategies for sustainable growth in the age of artificial intelligence.",
+                  color: colors.coral,
+                  rotation: 1
                 },
                 {
                   title: "Systems Design",
-                  description: "Creating clarity through well-designed systems that scale with your business and adapt to changing needs."
+                  description: "Creating clarity through well-designed systems that scale with your business and adapt to changing needs.",
+                  color: colors.cyan,
+                  rotation: -1
                 }
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: 30, rotate: item.rotation }}
+                  whileInView={{ opacity: 1, y: 0, rotate: item.rotation }}
+                  whileHover={{ rotate: 0, scale: 1.05, y: -10 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-card/60 backdrop-blur-sm p-6 rounded-xl border border-border hover:border-primary/50 transition-all hover:transform hover:scale-105"
+                  className="relative"
                 >
-                  <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                  <p className="text-gray-300 leading-relaxed">{item.description}</p>
+                  <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: item.color }} />
+                  <div className="relative bg-white border-4 border-black p-6 h-full">
+                    <h3 className="text-xl font-black text-black uppercase mb-3">{item.title}</h3>
+                    <p className="text-gray-700 font-medium leading-relaxed">{item.description}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
+
+        {/* CTA Section */}
+        <section className="py-24 bg-vision-gold relative overflow-hidden">
+          {/* Background shapes */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-20 -right-20 w-64 h-64 border-8 border-black opacity-20"
+          />
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute -bottom-20 -left-20 w-48 h-48 bg-black opacity-10"
+          />
+
+          <div className="container relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-4xl mx-auto"
+            >
+              <h2 className="text-5xl md:text-7xl font-black text-black uppercase mb-6 leading-none">
+                Let's Work
+                <br />
+                <span className="text-white">Together</span>
+              </h2>
+              <p className="text-xl text-black/70 font-medium mb-10 max-w-2xl mx-auto">
+                Ready to transform your business with AI and innovative strategies? Let's connect.
+              </p>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block"
+              >
+                <div className="relative group">
+                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-x-3 group-hover:translate-y-3" />
+                  <a
+                    href="https://wa.me/918104796542?text=Hi%20Deon!%20I%27d%20love%20to%20connect%20and%20discuss%20potential%20collaboration."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-12 py-6 text-xl border-4 border-black inline-flex items-center gap-3"
+                  >
+                    Get in Touch
+                    <ArrowRight className="w-6 h-6" />
+                  </a>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        <Footer />
       </div>
-      <Footer />
     </PageTransition>
   );
 };
