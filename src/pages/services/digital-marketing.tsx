@@ -1,28 +1,48 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
-import { useBooking } from '@/contexts/BookingContext';
+import { Footer } from '@/components/Footer';
 import {
     TrendingUp,
     CheckCircle2,
     ArrowRight,
-    Eye,
-    Smartphone,
-    Zap,
-    Shield,
     Target,
-    Layers3,
     BarChart3,
-    Clock,
     MessageSquare,
-    Globe
+    Globe,
+    Zap,
+    Search
 } from 'lucide-react';
 
+// Neobrutalist colors
+const colors = {
+    gold: "#D4AF37",
+    electric: "#00FF87",
+    coral: "#FF6B6B",
+    violet: "#A855F7",
+    cyan: "#00D4FF",
+    lime: "#BFFF00",
+};
+
+// Marquee component
+const Marquee = ({ children, reverse = false, speed = 30 }: { children: React.ReactNode; reverse?: boolean; speed?: number }) => (
+    <div className="overflow-hidden whitespace-nowrap">
+        <motion.div
+            animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
+            transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+            className="inline-flex"
+        >
+            {children}
+            {children}
+        </motion.div>
+    </div>
+);
+
 const DigitalMarketingService = () => {
-    const { openBookingDialog } = useBooking();
-    const navigate = useNavigate();
-    
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
     // Scroll to top on mount
     useEffect(() => {
         const lenis = (window as any).lenis;
@@ -32,36 +52,43 @@ const DigitalMarketingService = () => {
             window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         }
     }, []);
+
     const features = [
         {
             icon: TrendingUp,
             title: "Data-Driven Strategy",
-            description: "Comprehensive digital marketing strategies backed by analytics and performance data."
+            description: "Comprehensive digital marketing strategies backed by analytics and performance data.",
+            color: colors.electric
         },
         {
             icon: Target,
             title: "Targeted Campaigns",
-            description: "Precision-targeted campaigns that reach your ideal audience and drive conversions."
+            description: "Precision-targeted campaigns that reach your ideal audience and drive conversions.",
+            color: colors.coral
         },
         {
             icon: BarChart3,
             title: "Performance Analytics",
-            description: "Real-time tracking and detailed analytics to measure campaign success and ROI."
+            description: "Real-time tracking and detailed analytics to measure campaign success and ROI.",
+            color: colors.cyan
         },
         {
             icon: MessageSquare,
             title: "Social Media Marketing",
-            description: "Engaging social media campaigns that build brand awareness and community."
+            description: "Engaging social media campaigns that build brand awareness and community.",
+            color: colors.violet
         },
         {
             icon: Globe,
             title: "SEO & Content Marketing",
-            description: "Search engine optimization and content strategies that improve online visibility."
+            description: "Search engine optimization and content strategies that improve online visibility.",
+            color: colors.lime
         },
         {
             icon: Zap,
             title: "PPC & Advertising",
-            description: "Pay-per-click campaigns and digital advertising that deliver immediate results."
+            description: "Pay-per-click campaigns and digital advertising that deliver immediate results.",
+            color: colors.coral
         }
     ];
 
@@ -69,67 +96,46 @@ const DigitalMarketingService = () => {
         {
             title: "Search Engine Optimization (SEO)",
             description: "Improve your website's visibility in search engines and drive organic traffic.",
-            examples: ["Keyword research", "On-page optimization", "Technical SEO", "Local SEO"]
+            examples: ["Keyword research", "On-page optimization", "Technical SEO", "Local SEO"],
+            color: colors.electric
         },
         {
             title: "Social Media Marketing",
             description: "Build brand presence and engage with your audience across social platforms.",
-            examples: ["Content creation", "Community management", "Paid social ads", "Influencer partnerships"]
+            examples: ["Content creation", "Community management", "Paid social ads", "Influencer partnerships"],
+            color: colors.coral
         },
         {
             title: "Pay-Per-Click (PPC) Advertising",
             description: "Targeted paid advertising campaigns that deliver immediate traffic and conversions.",
-            examples: ["Google Ads", "Facebook Ads", "LinkedIn Ads", "Remarketing campaigns"]
+            examples: ["Google Ads", "Facebook Ads", "LinkedIn Ads", "Remarketing campaigns"],
+            color: colors.cyan
         },
         {
             title: "Content Marketing",
             description: "Strategic content creation that educates, engages, and converts your audience.",
-            examples: ["Blog content", "Email marketing", "Video content", "Infographics"]
+            examples: ["Blog content", "Email marketing", "Video content", "Infographics"],
+            color: colors.violet
         }
     ];
 
     const technologies = [
-        { name: "Google Analytics", description: "Web analytics service for tracking website performance" },
-        { name: "Google Ads", description: "Online advertising platform for PPC campaigns" },
-        { name: "Facebook Ads", description: "Social media advertising platform for targeted campaigns" },
-        { name: "Mailchimp", description: "Email marketing platform for newsletter and campaign management" },
-        { name: "SEMrush", description: "SEO and competitive research tool for keyword analysis" },
-        { name: "Hootsuite", description: "Social media management platform for scheduling and monitoring" },
-        { name: "HubSpot", description: "Inbound marketing and sales platform for lead generation" },
-        { name: "Canva", description: "Graphic design tool for creating marketing materials" }
+        { name: "Google Analytics", description: "Web analytics service" },
+        { name: "Google Ads", description: "PPC advertising platform" },
+        { name: "Facebook Ads", description: "Social media advertising" },
+        { name: "Mailchimp", description: "Email marketing platform" },
+        { name: "SEMrush", description: "SEO research tool" },
+        { name: "Hootsuite", description: "Social media management" },
+        { name: "HubSpot", description: "Inbound marketing platform" },
+        { name: "Canva", description: "Graphic design tool" }
     ];
 
     const processSteps = [
-        {
-            step: "01",
-            title: "Audit & Analysis",
-            description: "Comprehensive analysis of current digital presence, competitors, and market opportunities.",
-            duration: "1-2 weeks"
-        },
-        {
-            step: "02",
-            title: "Strategy Development",
-            description: "Create data-driven marketing strategies tailored to your business goals and target audience.",
-            duration: "2-3 weeks"
-        },
-        {
-            step: "03",
-            title: "Campaign Implementation",
-            description: "Execute multi-channel marketing campaigns across various digital platforms.",
-            duration: "4-8 weeks"
-        },
-        {
-            step: "04",
-            title: "Monitoring & Optimization",
-            description: "Continuous monitoring of campaign performance and optimization for better results.",
-            duration: "Ongoing"
-        },
-        {
-            step: "05",
-            title: "Reporting & Analysis",
-            description: "Regular reporting on campaign performance, ROI, and strategic recommendations.",
-            duration: "Monthly"
-        }
+        { step: "01", title: "Audit", description: "Analyze current digital presence and market opportunities", color: colors.electric },
+        { step: "02", title: "Strategy", description: "Create data-driven marketing strategies for your goals", color: colors.coral },
+        { step: "03", title: "Execute", description: "Implement multi-channel marketing campaigns", color: colors.cyan },
+        { step: "04", title: "Optimize", description: "Monitor and optimize campaign performance", color: colors.violet },
+        { step: "05", title: "Report", description: "Regular reporting on ROI and recommendations", color: colors.lime }
     ];
 
     const packages = [
@@ -145,7 +151,7 @@ const DigitalMarketingService = () => {
                 "Monthly reporting",
                 "3 months support"
             ],
-            highlighted: false
+            color: colors.electric
         },
         {
             name: "Growth Marketing",
@@ -160,7 +166,8 @@ const DigitalMarketingService = () => {
                 "6 months support",
                 "Weekly performance calls"
             ],
-            highlighted: true
+            highlighted: true,
+            color: colors.violet
         },
         {
             name: "Enterprise Marketing",
@@ -176,68 +183,25 @@ const DigitalMarketingService = () => {
                 "Quarterly strategy reviews",
                 "Custom reporting dashboard"
             ],
-            highlighted: false
+            color: colors.coral
         }
     ];
-
-    const portfolio = [
-        {
-            title: "E-commerce SEO Campaign",
-            description: "Increased organic traffic by 300% for an online retail store through comprehensive SEO strategy",
-            image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800",
-            tech: ["Google Analytics", "SEMrush", "Technical SEO"]
-        },
-        {
-            title: "Social Media Growth",
-            description: "Built engaged social media community of 50K+ followers for a B2B software company",
-            image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&q=80&w=800",
-            tech: ["Facebook Ads", "LinkedIn Marketing", "Content Strategy"]
-        },
-        {
-            title: "PPC Lead Generation",
-            description: "Generated 200+ qualified leads per month through targeted PPC campaigns",
-            image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
-            tech: ["Google Ads", "Facebook Ads", "Conversion Optimization"]
-        }
-    ];
-
-    // Lenis smooth scroll integration
-    const lenisRef = useRef(null);
-    useEffect(() => {
-        import('lenis').then(({ default: Lenis }) => {
-            if (!lenisRef.current) {
-                lenisRef.current = new Lenis({
-                    // smooth: true, // Removed invalid property
-                    lerp: 0.08,
-                });
-                function raf(time) {
-                    lenisRef.current.raf(time);
-                    requestAnimationFrame(raf);
-                }
-                requestAnimationFrame(raf);
-            }
-        });
-        return () => {
-            if (lenisRef.current) {
-                lenisRef.current.destroy();
-                lenisRef.current = null;
-            }
-        };
-    }, []);
 
     return (
-        <div className="min-h-screen bg-background relative overflow-hidden">
-            {/* Navbar */}
-            <Navbar 
-                title="Digital Marketing Services - Virelity.com"
-                description="Comprehensive digital marketing services including SEO, PPC, social media marketing, and content marketing to drive business growth."
+        <div className="min-h-screen flex flex-col bg-black">
+            {/* Scroll Progress */}
+            <motion.div
+                className="fixed top-0 left-0 right-0 h-2 bg-vision-gold z-50 origin-left"
+                style={{ scaleX }}
             />
-            
-            {/* Hero Section */}
-            <section className="h-screen min-h-[500px] bg-gradient-to-br from-green-600/10 to-emerald-600/10 relative overflow-hidden flex items-center justify-center">
-                {/* Background Video only in hero */}
+
+            <Navbar />
+
+            {/* HERO SECTION - Neobrutalist */}
+            <section className="pt-32 pb-20 relative overflow-hidden">
+                {/* Background Video */}
                 <video
-                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-30"
+                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-20"
                     src="/videos/digital-market.mp4"
                     autoPlay
                     loop
@@ -245,67 +209,161 @@ const DigitalMarketingService = () => {
                     playsInline
                     poster="/virelity_navbar.png"
                 />
-                <div className="absolute inset-0 bg-grid-pattern opacity-5 z-10" />
-                <div className="container relative z-20 flex flex-col items-center justify-center h-full">
-                    <div className="max-w-4xl mx-auto text-center w-full">
+                <div className="absolute inset-0 bg-black/60 z-[1]" />
+
+                {/* Background shapes */}
+                <motion.div
+                    animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+                    transition={{ duration: 6, repeat: Infinity }}
+                    className="absolute top-20 right-20 w-32 h-32 border-4 border-vision-gold hidden lg:block z-[2]"
+                />
+                <motion.div
+                    animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
+                    transition={{ duration: 8, repeat: Infinity }}
+                    className="absolute bottom-20 left-20 w-24 h-24 hidden lg:block z-[2]"
+                    style={{ backgroundColor: colors.electric }}
+                />
+
+                <div className="container relative z-10">
+                    <div className="text-center max-w-4xl mx-auto">
+                        {/* Badge */}
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
+                            initial={{ opacity: 0, y: 30, rotate: -3 }}
+                            animate={{ opacity: 1, y: 0, rotate: 0 }}
+                            className="inline-block mb-8"
                         >
-                            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-green-600/10 to-emerald-600/10 rounded-full px-6 py-3 mb-8">
-                                <TrendingUp className="w-6 h-6 text-green-400" />
-                                <span className="text-green-400 font-semibold">Digital Marketing</span>
+                            <div className="relative group">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.electric }} />
+                                <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-2">
+                                    <TrendingUp className="w-5 h-5 text-vision-gold" />
+                                    <span className="font-black uppercase tracking-widest text-white text-sm">Digital Marketing</span>
+                                </div>
                             </div>
+                        </motion.div>
 
-                            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-green-400 to-emerald-400 bg-clip-text text-transparent">
-                                Drive Growth with Data-Driven Marketing
-                            </h1>
+                        {/* Main Title */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none mb-6"
+                        >
+                            <span className="text-white block">Drive Growth</span>
+                            <span className="text-vision-gold block">With Data</span>
+                        </motion.h1>
 
-                            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-                                Comprehensive digital marketing strategies that increase your online visibility, drive qualified traffic, and convert visitors into loyal customers through targeted campaigns and measurable results.
-                            </p>
+                        {/* Subtitle */}
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="text-xl md:text-2xl text-white/70 font-medium max-w-2xl mx-auto mb-10"
+                        >
+                            Comprehensive digital marketing strategies that increase your online visibility, drive qualified traffic, and convert visitors into loyal customers.
+                        </motion.p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                                    Start Your Marketing Campaign
-                                </button>
-                                <button className="border border-green-400 text-green-400 hover:bg-green-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
-                                    View Marketing Results
-                                </button>
+                        {/* CTA Buttons */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                            className="flex flex-col sm:flex-row gap-4 justify-center"
+                        >
+                            <div className="relative group inline-block">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-green-800 transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                <a
+                                    href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20Digital%20Marketing%20services.%20Can%20we%20discuss?"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="relative bg-green-500 hover:bg-green-500 text-black font-black uppercase tracking-wider px-8 py-4 text-lg border-[3px] border-black inline-flex items-center gap-2"
+                                >
+                                    Start Your Campaign
+                                    <ArrowRight className="w-5 h-5" />
+                                </a>
+                            </div>
+                            <div className="relative group inline-block">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                <Link
+                                    to="/portfolio"
+                                    className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-8 py-4 text-lg border-[3px] border-black inline-flex items-center gap-2"
+                                >
+                                    View Results
+                                </Link>
                             </div>
                         </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* Features Section */}
-            <section className="py-20">
+            {/* MARQUEE */}
+            <section className="py-4 bg-vision-gold border-y-4 border-black">
+                <Marquee speed={25}>
+                    <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-black uppercase">
+                        <span>SEO</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>PPC</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>Social Media</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>Content Marketing</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                        <span>Email Campaigns</span>
+                        <span className="w-4 h-4 bg-black rounded-full" />
+                    </span>
+                </Marquee>
+            </section>
+
+            {/* FEATURES SECTION */}
+            <section className="py-20 bg-white border-y-4 border-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Our Digital Marketing?</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <div className="inline-block mb-6">
+                            <div className="relative">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.electric }} />
+                                <div className="relative bg-black border-4 border-black px-6 py-3">
+                                    <span className="font-black uppercase tracking-widest text-white">Why Choose Us</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                            Marketing <span className="text-vision-gold">Features</span>
+                        </h2>
+                        <p className="text-xl text-gray-700 font-medium max-w-2xl mx-auto">
                             We create data-driven marketing strategies that deliver measurable results and drive sustainable business growth.
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {features.map((feature, index) => {
                             const IconComponent = feature.icon;
+                            const rotations = [-2, 1.5, -1, 2, -1.5, 1];
+                            const rotation = rotations[index % rotations.length];
                             return (
                                 <motion.div
                                     key={feature.title}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, y: 30, rotate: rotation }}
+                                    whileInView={{ opacity: 1, y: 0, rotate: rotation }}
+                                    whileHover={{ rotate: 0, scale: 1.03, y: -5 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
                                     viewport={{ once: true }}
-                                    className="bg-card border border-border rounded-xl p-6 hover:border-green-400/30 hover:shadow-lg transition-all duration-300"
+                                    className="relative"
                                 >
-                                    <div className="bg-gradient-to-r from-green-600/10 to-emerald-600/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                                        <IconComponent className="w-6 h-6 text-green-400" />
+                                    <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: feature.color }} />
+                                    <div className="relative bg-black border-4 border-black p-6 h-full">
+                                        <div
+                                            className="w-14 h-14 flex items-center justify-center border-2 border-vision-gold mb-4"
+                                            style={{ backgroundColor: feature.color }}
+                                        >
+                                            <IconComponent className="w-7 h-7 text-black" />
+                                        </div>
+                                        <h3 className="text-xl font-black text-white uppercase mb-2">{feature.title}</h3>
+                                        <p className="text-white/70 font-medium">{feature.description}</p>
                                     </div>
-                                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                                    <p className="text-muted-foreground">{feature.description}</p>
                                 </motion.div>
                             );
                         })}
@@ -313,198 +371,229 @@ const DigitalMarketingService = () => {
                 </div>
             </section>
 
-            {/* Applications Section */}
-            <section className="py-20 bg-muted/30">
+            {/* Second Marquee */}
+            <section className="py-4 bg-black border-y-4 border-white">
+                <Marquee reverse speed={20}>
+                    <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-white uppercase">
+                        <span>Google Ads</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                        <span>Facebook Ads</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                        <span>Analytics</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                        <span>Conversion</span>
+                        <span className="w-4 h-4 bg-vision-gold rounded-full" />
+                    </span>
+                </Marquee>
+            </section>
+
+            {/* APPLICATIONS SECTION */}
+            <section className="py-20 bg-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Digital Marketing Services</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4">
+                            Marketing <span className="text-vision-gold">Services</span>
+                        </h2>
+                        <p className="text-xl text-white/70 font-medium max-w-2xl mx-auto">
                             Discover how our comprehensive digital marketing services can transform your online presence and drive business growth.
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {applications.map((app, index) => (
                             <motion.div
                                 key={app.title}
-                                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="bg-card border border-border rounded-xl p-8 hover:border-green-400/30 hover:shadow-lg transition-all duration-300"
-                            >
-                                <h3 className="text-2xl font-semibold mb-4 text-green-400">{app.title}</h3>
-                                <p className="text-muted-foreground mb-6">{app.description}</p>
-                                <ul className="space-y-2">
-                                    {app.examples.map((example, idx) => (
-                                        <li key={idx} className="flex items-center space-x-3">
-                                            <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
-                                            <span className="text-sm">{example}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Technologies Section */}
-            <section className="py-20">
-                <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Marketing Technologies & Tools</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            We leverage industry-leading marketing tools and platforms to deliver exceptional results and provide detailed insights.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {technologies.map((tech, index) => (
-                            <motion.div
-                                key={tech.name}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="bg-card border border-border rounded-lg p-6 text-center hover:border-green-400/30 hover:shadow-lg transition-all duration-300"
-                            >
-                                <h3 className="text-lg font-semibold mb-2 text-green-400">{tech.name}</h3>
-                                <p className="text-sm text-muted-foreground">{tech.description}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Process Section */}
-            <section className="py-20 bg-muted/30">
-                <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Digital Marketing Process</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            We follow a proven methodology to create and execute successful digital marketing campaigns that deliver measurable results.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                        {processSteps.map((step, index) => (
-                            <motion.div
-                                key={step.step}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
                                 className="relative"
                             >
-                                <div className="bg-card border border-border rounded-xl p-6 hover:border-green-400/30 hover:shadow-lg transition-all duration-300 h-full">
-                                    <div className="text-3xl font-bold text-green-400 mb-3">{step.step}</div>
-                                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                                    <p className="text-muted-foreground mb-4">{step.description}</p>
-                                    <div className="flex items-center text-sm text-green-400">
-                                        <Clock className="w-4 h-4 mr-2" />
-                                        {step.duration}
-                                    </div>
+                                <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: app.color }} />
+                                <div className="relative bg-white border-4 border-black p-8">
+                                    <h3 className="text-2xl font-black text-black uppercase mb-4">{app.title}</h3>
+                                    <p className="text-gray-700 font-medium mb-6">{app.description}</p>
+                                    <ul className="space-y-2">
+                                        {app.examples.map((example, idx) => (
+                                            <li key={idx} className="flex items-center gap-3">
+                                                <CheckCircle2 className="w-5 h-5 text-vision-gold flex-shrink-0" />
+                                                <span className="text-gray-800 font-medium">{example}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                {index < processSteps.length - 1 && (
-                                    <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                                        <ArrowRight className="w-8 h-8 text-green-400/30" />
-                                    </div>
-                                )}
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Pricing Section */}
-            <section className="py-20">
+            {/* PROCESS SECTION */}
+            <section className="py-20 bg-vision-gold border-y-4 border-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Digital Marketing Packages</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                            Our <span className="text-white">Process</span>
+                        </h2>
+                        <p className="text-xl text-black/70 font-medium max-w-2xl mx-auto">
+                            A proven methodology to create and execute successful digital marketing campaigns.
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        {processSteps.map((step, index) => (
+                            <motion.div
+                                key={step.step}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                whileHover={{ y: -10 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="relative"
+                            >
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black" />
+                                <div className="relative bg-white border-4 border-black p-6 h-full">
+                                    <div
+                                        className="text-4xl font-black mb-3"
+                                        style={{ color: step.color }}
+                                    >
+                                        {step.step}
+                                    </div>
+                                    <h3 className="text-lg font-black text-black uppercase mb-2">{step.title}</h3>
+                                    <p className="text-gray-700 text-sm font-medium">{step.description}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* PRICING SECTION */}
+            <section className="py-20 bg-white border-y-4 border-black">
+                <div className="container">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <div className="inline-block mb-6">
+                            <div className="relative">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2" style={{ backgroundColor: colors.coral }} />
+                                <div className="relative bg-black border-4 border-black px-6 py-3">
+                                    <span className="font-black uppercase tracking-widest text-white">Packages</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4">
+                            Marketing <span className="text-vision-gold">Packages</span>
+                        </h2>
+                        <p className="text-xl text-gray-700 font-medium max-w-2xl mx-auto">
                             Choose the perfect package for your digital marketing needs and start driving growth today.
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {packages.map((pkg, index) => (
                             <motion.div
                                 key={pkg.name}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, y: 30, rotate: index === 1 ? 0 : (index === 0 ? -2 : 2) }}
+                                whileInView={{ opacity: 1, y: 0, rotate: index === 1 ? 0 : (index === 0 ? -2 : 2) }}
+                                whileHover={{ rotate: 0, scale: 1.03, y: -10 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className={`bg-card border rounded-xl p-8 hover:shadow-lg transition-all duration-300 ${pkg.highlighted ? 'border-green-400 shadow-lg scale-105' : 'border-border'
-                                    }`}
+                                className={`relative ${pkg.highlighted ? 'z-10' : ''}`}
                             >
-                                {pkg.highlighted && (
-                                    <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">
-                                        Most Popular
-                                    </div>
-                                )}
-                                <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
-                                <div className="text-3xl font-bold text-green-400 mb-2">{pkg.price}</div>
-                                <p className="text-muted-foreground mb-6">{pkg.description}</p>
+                                <div
+                                    className="absolute inset-0 translate-x-3 translate-y-3"
+                                    style={{ backgroundColor: pkg.color }}
+                                />
+                                <div className={`relative border-4 border-black p-8 h-full ${pkg.highlighted ? 'bg-black' : 'bg-white'}`}>
+                                    {pkg.highlighted && (
+                                        <div className="bg-vision-gold text-black text-sm font-black uppercase px-4 py-2 border-2 border-black inline-block mb-4">
+                                            Most Popular
+                                        </div>
+                                    )}
+                                    <h3 className={`text-2xl font-black uppercase mb-2 ${pkg.highlighted ? 'text-white' : 'text-black'}`}>
+                                        {pkg.name}
+                                    </h3>
+                                    <div className="text-4xl font-black text-vision-gold mb-2">{pkg.price}</div>
+                                    <p className={`mb-6 font-medium ${pkg.highlighted ? 'text-white/70' : 'text-gray-700'}`}>
+                                        {pkg.description}
+                                    </p>
 
-                                <ul className="space-y-3 mb-8">
-                                    {pkg.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start space-x-3">
-                                            <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                                            <span className="text-sm">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                                    <ul className="space-y-3 mb-8">
+                                        {pkg.features.map((feature, idx) => (
+                                            <li key={idx} className="flex items-start gap-3">
+                                                <CheckCircle2 className="w-5 h-5 text-vision-gold flex-shrink-0 mt-0.5" />
+                                                <span className={`text-sm font-medium ${pkg.highlighted ? 'text-white' : 'text-gray-800'}`}>
+                                                    {feature}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
 
-                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
-                                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white'
-                                        : 'border border-green-400 text-green-400 hover:bg-green-400 hover:text-white'
-                                    }`}>
-                                    Get Started
-                                </button>
+                                    <a
+                                        href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20the%20Digital%20Marketing%20package.%20Can%20we%20discuss?"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`w-full px-6 py-4 font-black uppercase text-center border-4 border-black inline-block transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_#000] ${pkg.highlighted
+                                            ? 'bg-vision-gold text-black'
+                                            : 'bg-black text-white'
+                                            }`}
+                                    >
+                                        Get Started
+                                    </a>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Portfolio Section */}
-            <section className="py-20 bg-muted/30">
+            {/* TECHNOLOGIES SECTION */}
+            <section className="py-20 bg-black">
                 <div className="container">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Digital Marketing Success Stories</h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            Explore our portfolio of successful digital marketing campaigns that delivered exceptional results for our clients.
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4">
+                            Marketing <span className="text-vision-gold">Tools</span>
+                        </h2>
+                        <p className="text-xl text-white/70 font-medium max-w-2xl mx-auto">
+                            We leverage industry-leading marketing tools and platforms to deliver exceptional results.
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {portfolio.map((project, index) => (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {technologies.map((tech, index) => (
                             <motion.div
-                                key={project.title}
+                                key={tech.name}
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                whileHover={{ scale: 1.05 }}
+                                transition={{ duration: 0.3, delay: index * 0.05 }}
                                 viewport={{ once: true }}
-                                className="group relative overflow-hidden rounded-xl bg-card border border-border hover:border-green-400/30 hover:shadow-lg transition-all duration-300"
+                                className="relative"
                             >
-                                <div className="aspect-video overflow-hidden">
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                                    <p className="text-muted-foreground mb-4">{project.description}</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {project.tech.map((tech) => (
-                                            <span key={tech} className="bg-green-400/10 text-green-400 text-xs px-2 py-1 rounded-full">
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                <div className="relative bg-white border-4 border-black p-4 text-center">
+                                    <h3 className="text-lg font-black text-black uppercase mb-1">{tech.name}</h3>
+                                    <p className="text-sm text-gray-700 font-medium">{tech.description}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -512,31 +601,58 @@ const DigitalMarketingService = () => {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-r from-green-600/10 to-emerald-600/10">
-                <div className="container">
-                    <div className="text-center max-w-3xl mx-auto">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                            Ready to Accelerate Your Growth?
+            {/* CTA SECTION */}
+            <section className="py-24 bg-vision-gold relative overflow-hidden">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -top-20 -right-20 w-64 h-64 border-8 border-black opacity-20"
+                />
+                <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="absolute -bottom-20 -left-20 w-48 h-48 bg-black opacity-10"
+                />
+
+                <div className="container relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center max-w-4xl mx-auto"
+                    >
+                        <h2 className="text-5xl md:text-7xl font-black text-black uppercase mb-6 leading-none">
+                            Ready to
+                            <br />
+                            <span className="text-white">Accelerate Growth?</span>
                         </h2>
-                        <p className="text-xl text-muted-foreground mb-8">
-                            Let's discuss how our data-driven digital marketing strategies can increase your online visibility, drive qualified traffic, and boost your business growth.
+                        <p className="text-xl text-black/70 font-medium mb-10 max-w-2xl mx-auto">
+                            Let's discuss how our data-driven digital marketing strategies can increase your online visibility and boost your business growth.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button 
-                                onClick={() => openBookingDialog()}
-                                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                                Schedule Marketing Consultation
-                            </button>
-                            <button 
-                                onClick={() => navigate('/portfolio')}
-                                className="border border-green-400 text-green-400 hover:bg-green-400 hover:text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
-                                View More Results
-                            </button>
-                        </div>
-                    </div>
+
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="inline-block"
+                        >
+                            <div className="relative group">
+                                <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-x-3 group-hover:translate-y-3" />
+                                <a
+                                    href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20Digital%20Marketing.%20Let's%20schedule%20a%20consultation!"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-12 py-6 text-xl border-4 border-black inline-flex items-center gap-3"
+                                >
+                                    Schedule Marketing Consultation
+                                    <ArrowRight className="w-6 h-6" />
+                                </a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
+
+            <Footer />
         </div>
     );
 };
