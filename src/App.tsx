@@ -26,12 +26,8 @@ import UIUXDesign from "./pages/services/ui-ux-design";
 import AISolutions from "./pages/services/ai-solutions";
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import ScrollToTop from "./components/ScrollToTop";
-import { AIChatbot } from "./components/custom/AIChatbot";
-import { WhatsAppBooking } from "./components/custom/WhatsAppBooking";
-import { GoogleAdsCTA } from "./components/custom/GoogleAdsCTA";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
-import { BookingProvider, useBooking } from "./contexts/BookingContext";
-import { BookingFormDialog } from "./components/BookingFormDialog";
+import { BookingProvider } from "./contexts/BookingContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
 import BookPage from "./pages/book";
@@ -79,19 +75,12 @@ const AppWithAnalytics = () => {
 };
 
 const AppContent = () => {
-  const { isOpen, openBookingDialog, closeBookingDialog } = useBooking();
-
   return (
     <>
       <ScrollToTop />
       <AppWithAnalytics />
       <SpeedInsights></SpeedInsights>
       <Analytics />
-      {/* Global components available on all pages */}
-      <AIChatbot />
-      <WhatsAppBooking />
-      <GoogleAdsCTA />
-      <BookingFormDialog open={isOpen} onOpenChange={closeBookingDialog} />
     </>
   );
 };
