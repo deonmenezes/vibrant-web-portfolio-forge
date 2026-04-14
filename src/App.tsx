@@ -36,6 +36,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
 import BookPage from "./pages/book";
 import DeonMenezes from "./pages/deonmenezes";
+import Linktree from "./pages/Linktree";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const AppWithAnalytics = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/book" element={<BookPage />} />
         <Route path="/deonmenezes" element={<DeonMenezes />} />
+        <Route path="/linktree" element={<Linktree />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />

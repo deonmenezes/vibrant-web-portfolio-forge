@@ -11,6 +11,7 @@ const navItems = [
   { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
   { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
+  { name: "Linktree", path: "/linktree", title: "Deon Menezes Linktree - X, Discord, GitHub, LinkedIn, YouTube" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
   { name: "Book", path: "/book", title: "Business in the Age of AI - Book by Deon Menezes", isBook: true },
 ];
@@ -72,6 +73,11 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         pageTitle = "Contact Us - Virelity.com | Get in Touch";
         pageDescription = "Contact our team for inquiries, quotes or to discuss your project. Book a free 15-minute consultation call.";
         pageKeywords = "contact, support, inquiry, consultation, free call, project discussion";
+        break;
+      case "/linktree":
+        pageTitle = "Deon Menezes Linktree | X, Discord, GitHub, LinkedIn, YouTube";
+        pageDescription = "Visit Deon Menezes across X, Discord, GitHub, LinkedIn, and YouTube from one page.";
+        pageKeywords = "Deon Menezes, linktree, social links, X, Discord, GitHub, LinkedIn, YouTube";
         break;
       case "/career":
         pageTitle = "Career Opportunities - Virelity.com | Join Our Team";
