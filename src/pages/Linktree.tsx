@@ -1,203 +1,124 @@
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
 import { PageTransition } from "@/components/PageTransition";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { ArrowUpRight, Github, Linkedin, MessageCircle, Twitter, Youtube } from "lucide-react";
-
-const accentColors = {
-  gold: "#D4AF37",
-  electric: "#00FF87",
-  coral: "#FF6B6B",
-  violet: "#A855F7",
-  cyan: "#00D4FF",
-};
 
 const links = [
   {
     name: "X",
-    handle: "@DeonMen",
+    subtitle: "@DeonMen",
     href: "https://x.com/DeonMen",
     icon: Twitter,
-    color: accentColors.cyan,
-    description: "Short thoughts, updates, and internet experiments.",
   },
   {
     name: "Discord",
-    handle: "Join the server",
+    subtitle: "Join the server",
     href: "https://discord.gg/Gkx8aKDQ",
     icon: MessageCircle,
-    color: accentColors.violet,
-    description: "Community chats, collabs, and real-time conversations.",
   },
   {
     name: "GitHub",
-    handle: "deonmenezes",
+    subtitle: "deonmenezes",
     href: "https://github.com/deonmenezes",
     icon: Github,
-    color: accentColors.electric,
-    description: "Projects, experiments, and code shipped in public.",
   },
   {
     name: "LinkedIn",
-    handle: "Deon Menezes",
+    subtitle: "Deon Menezes",
     href: "https://www.linkedin.com/in/deon-menezes-a82552254/",
     icon: Linkedin,
-    color: accentColors.gold,
-    description: "Professional background, wins, and business updates.",
   },
   {
     name: "YouTube",
-    handle: "@DeonMenezes",
+    subtitle: "@DeonMenezes",
     href: "https://www.youtube.com/@DeonMenezes",
     icon: Youtube,
-    color: accentColors.coral,
-    description: "Videos, breakdowns, and things worth showing visually.",
   },
 ];
 
 const Linktree = () => {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black text-white">
-        <Navbar
-          title="Deon Menezes Linktree | Social Links and Profiles"
-          description="One place to find Deon Menezes across X, Discord, GitHub, LinkedIn, and YouTube."
-        />
-
-        <main className="relative overflow-hidden">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-24 -right-24 h-64 w-64 border-8 border-white/10"
+      <>
+        <Helmet>
+          <title>Deon Menezes Linktree | X, Discord, GitHub, LinkedIn, YouTube</title>
+          <meta
+            name="description"
+            content="One simple page to find Deon Menezes on X, Discord, GitHub, LinkedIn, and YouTube."
           />
+          <link rel="canonical" href="https://virelity.com/linktree" />
+          <meta property="og:title" content="Deon Menezes Linktree" />
+          <meta
+            property="og:description"
+            content="One simple page to find Deon Menezes on X, Discord, GitHub, LinkedIn, and YouTube."
+          />
+          <meta property="og:url" content="https://virelity.com/linktree" />
+          <meta property="og:type" content="website" />
+        </Helmet>
+
+        <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#121212] px-4 py-6 text-white">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#2f2f2f,transparent_40%),linear-gradient(180deg,#1a1a1a_0%,#101010_100%)]" />
           <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-            className="absolute left-[-5rem] top-72 h-40 w-40 bg-vision-gold/10"
+            animate={{ scale: [1, 1.08, 1], opacity: [0.18, 0.28, 0.18] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-1/2 top-16 h-56 w-56 -translate-x-1/2 rounded-full bg-[#d4af37] blur-3xl"
           />
 
-          <section className="container relative z-10 px-4 pb-24 pt-32 md:pt-40">
-            <div className="mx-auto max-w-5xl">
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="mb-16 text-center"
-              >
-                <div className="mb-6 inline-block">
-                  <div className="relative">
-                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
-                    <div className="relative border-4 border-white bg-black px-6 py-3">
-                      <span className="font-black uppercase tracking-[0.35em] text-white">Linktree</span>
-                    </div>
-                  </div>
-                </div>
-
-                <h1 className="mb-6 text-5xl font-black uppercase leading-none md:text-7xl">
-                  <span className="block text-white">Find</span>
-                  <span className="block text-vision-gold">Deon Online</span>
-                </h1>
-
-                <p className="mx-auto max-w-2xl text-lg font-medium text-white/70 md:text-xl">
-                  One clean hub for all the places I post, build, and hang out online.
+          <section className="relative z-10 w-full max-w-md">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-md"
+            >
+              <div className="mb-5 text-center">
+                <img
+                  src="/deonmenezes.png"
+                  alt="Deon Menezes"
+                  className="mx-auto mb-4 h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg"
+                />
+                <h1 className="text-2xl font-black tracking-tight text-white">Deon Menezes</h1>
+                <p className="mt-1 text-sm font-medium text-white/70">
+                  Founder, builder, creator. Pick a platform below.
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.15 }}
-                className="mb-16"
-              >
-                <div className="relative">
-                  <div className="absolute inset-0 translate-x-3 translate-y-3 bg-vision-gold" />
-                  <div className="relative grid gap-6 border-4 border-white bg-black p-6 md:p-10">
-                    {links.map((link, index) => {
-                      const Icon = link.icon;
+              <div className="space-y-3">
+                {links.map((link, index) => {
+                  const Icon = link.icon;
 
-                      return (
-                        <motion.a
-                          key={link.name}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.25 + index * 0.08, duration: 0.45 }}
-                          whileHover={{ y: -6 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="group relative block"
-                        >
-                          <div
-                            className="absolute inset-0 translate-x-2 translate-y-2 transition-transform duration-200 group-hover:translate-x-3 group-hover:translate-y-3"
-                            style={{ backgroundColor: link.color }}
-                          />
-                          <div className="relative flex flex-col gap-5 border-4 border-white bg-black p-6 md:flex-row md:items-center md:justify-between">
-                            <div className="flex items-start gap-4">
-                              <div
-                                className="flex h-14 w-14 shrink-0 items-center justify-center border-2 border-black"
-                                style={{ backgroundColor: link.color }}
-                              >
-                                <Icon className="h-7 w-7 text-black" />
-                              </div>
+                  return (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.08 * index, duration: 0.35 }}
+                      whileHover={{ y: -2, scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-center justify-between rounded-2xl border border-white/10 bg-white px-4 py-4 text-black shadow-[0_10px_30px_rgba(0,0,0,0.15)] transition-colors hover:bg-[#f4f1e8]"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#121212] text-white">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-base font-black">{link.name}</div>
+                          <div className="text-sm font-medium text-black/60">{link.subtitle}</div>
+                        </div>
+                      </div>
 
-                              <div>
-                                <div className="mb-1 flex flex-wrap items-center gap-3">
-                                  <h2 className="text-2xl font-black uppercase text-white">{link.name}</h2>
-                                  <span className="bg-white px-3 py-1 text-xs font-black uppercase tracking-wider text-black">
-                                    {link.handle}
-                                  </span>
-                                </div>
-                                <p className="max-w-xl text-sm font-medium text-white/70 md:text-base">
-                                  {link.description}
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-3 self-end md:self-auto">
-                              <span className="text-sm font-black uppercase tracking-[0.2em] text-vision-gold">
-                                Open
-                              </span>
-                              <div className="flex h-12 w-12 items-center justify-center border-2 border-white bg-white text-black">
-                                <ArrowUpRight className="h-6 w-6" />
-                              </div>
-                            </div>
-                          </div>
-                        </motion.a>
-                      );
-                    })}
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.75, delay: 0.35 }}
-                className="grid gap-6 md:grid-cols-3"
-              >
-                <div className="relative md:col-span-2">
-                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white" />
-                  <div className="relative border-4 border-white bg-vision-gold p-8 text-black">
-                    <p className="mb-2 text-sm font-black uppercase tracking-[0.3em]">Direct Link</p>
-                    <p className="break-all text-2xl font-black uppercase md:text-3xl">virelity.com/linktree</p>
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-white" />
-                  <div className="relative border-4 border-white bg-black p-8">
-                    <p className="mb-2 text-sm font-black uppercase tracking-[0.3em] text-white/70">Built For</p>
-                    <p className="text-2xl font-black uppercase text-white">Fast Sharing</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+                      <ArrowUpRight className="h-5 w-5 shrink-0 text-black/60" />
+                    </motion.a>
+                  );
+                })}
+              </div>
+            </motion.div>
           </section>
         </main>
-
-        <Footer />
-      </div>
+      </>
     </PageTransition>
   );
 };
