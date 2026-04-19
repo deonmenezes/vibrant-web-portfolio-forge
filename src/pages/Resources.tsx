@@ -44,15 +44,27 @@ const Resources = () => {
                 best of Reddit, GitHub, LinkedIn, and official university
                 sources.
               </p>
-              <a
-                href="https://github.com/deonmenezes/awesome-engineering-resources"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-primary hover:underline"
-              >
-                View the full curated repo on GitHub
-                <ExternalLink className="w-4 h-4" />
-              </a>
+              <div className="flex flex-wrap gap-6 text-sm">
+                <div>
+                  <div className="text-3xl font-bold text-primary">{branches.length}</div>
+                  <div className="text-muted-foreground">disciplines</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary">
+                    {branches.reduce((n, b) => n + b.topics.length, 0)}
+                  </div>
+                  <div className="text-muted-foreground">topics</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary">
+                    {branches.reduce(
+                      (n, b) => n + b.topics.reduce((m, t) => m + t.links.length, 0),
+                      0
+                    )}
+                  </div>
+                  <div className="text-muted-foreground">vetted links</div>
+                </div>
+              </div>
             </motion.div>
           </section>
 
