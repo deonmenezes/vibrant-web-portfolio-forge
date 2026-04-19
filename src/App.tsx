@@ -33,6 +33,8 @@ import { Analytics } from '@vercel/analytics/react';
 import BookPage from "./pages/book";
 import DeonMenezes from "./pages/deonmenezes";
 import Linktree from "./pages/Linktree";
+import Resources from "./pages/Resources";
+import ResourceBranch from "./pages/ResourceBranch";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +57,8 @@ const AppWithAnalytics = () => {
         <Route path="/book" element={<BookPage />} />
         <Route path="/deonmenezes" element={<DeonMenezes />} />
         <Route path="/linktree" element={<Linktree />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />

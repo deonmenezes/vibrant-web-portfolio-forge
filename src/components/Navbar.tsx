@@ -9,6 +9,7 @@ const navItems = [
   { name: "Home", path: "/", title: "Virelity.com Homepage - AI Agents & Digital Solutions" },
   { name: "Services", path: "/services", title: "Our AI & Digital Services - Web Development, Mobile Apps, AI Solutions" },
   { name: "Portfolio", path: "/portfolio", title: "View Our Portfolio - Success Stories & Project Case Studies" },
+  { name: "Resources", path: "/resources", title: "Engineering Study Resources - Curated Courses & Links Across Disciplines" },
   { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
   { name: "Linktree", path: "/linktree", title: "Deon Menezes Linktree - X, Discord, GitHub, LinkedIn, YouTube" },
