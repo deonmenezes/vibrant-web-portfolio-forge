@@ -33,9 +33,6 @@ export interface Branch {
   topics: Topic[];
 }
 
-const img = (seed: string) =>
-  `https://images.unsplash.com/photo-${seed}?auto=format&fit=crop&w=1200&q=70`;
-
 export const branches: Branch[] = [
   {
     slug: "foundations",
@@ -44,14 +41,14 @@ export const branches: Branch[] = [
     tagline: "Math, programming & interview prep every engineer needs",
     description:
       "The shared base layer for every engineering discipline: calculus, linear algebra, probability, problem-solving, programming fundamentals, and interview preparation. Seeded from Reddit's most-upvoted threads in r/learnmath, r/learnprogramming, and r/cscareerquestions.",
-    heroImage: img("1509228468518-180dd4864904"),
+    heroImage: "/resources/branch-foundations.png",
     accent: "from-sky-500 to-indigo-600",
     topics: [
       {
         slug: "math",
         name: "Math & Problem Solving",
         description: "Calculus, linear algebra, differential equations, probability.",
-        image: img("1635070041078-e363dbe005cb"),
+        image: "/resources/topic-foundations-math.png",
         links: [
           { title: "MIT OpenCourseWare", url: "https://ocw.mit.edu/", platform: "MIT OCW", description: "2,500+ courses incl. Gilbert Strang's Linear Algebra (18.06).", difficulty: "Intermediate", free: true },
           { title: "Khan Academy", url: "https://www.khanacademy.org/", platform: "Official", description: "Best remediation for calculus, linear algebra, physics gaps. 180M global users.", difficulty: "Beginner", free: true },
@@ -75,7 +72,7 @@ export const branches: Branch[] = [
         slug: "programming",
         name: "Programming Fundamentals",
         description: "The programming and tooling base every engineer uses.",
-        image: img("1461749280684-dccba630e2f6"),
+        image: "/resources/topic-foundations-programming.png",
         links: [
           { title: "CS50 (Harvard)", url: "https://cs50.harvard.edu/x/", platform: "Official", description: "The best intro to CS on the planet — C, Python, SQL, web.", difficulty: "Beginner", free: true },
           { title: "MIT 6.0001 Python", url: "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/", platform: "MIT OCW", description: "Rigorous Python foundations.", difficulty: "Beginner", free: true },
@@ -103,7 +100,7 @@ export const branches: Branch[] = [
         slug: "interview-career",
         name: "Interview & Career Prep",
         description: "The canonical stack for landing a FAANG+ role — endorsed across r/cscareerquestions.",
-        image: img("1454165804606-c3d57bc86b40"),
+        image: "/resources/topic-foundations-interview-career.png",
         links: [
           { title: "NeetCode", url: "https://neetcode.io/", platform: "Official", description: "Interview prep + structured DSA roadmap. Reddit's #1 DSA path.", difficulty: "Intermediate", free: true },
           { title: "LeetCode", url: "https://leetcode.com/", platform: "Official", description: "The canonical coding-interview platform — Blind 75 lives here.", difficulty: "Intermediate", free: true },
@@ -134,14 +131,14 @@ export const branches: Branch[] = [
     tagline: "Circuits, signals, power, RF, VLSI",
     description:
       "Modern EE spans power systems, signal processing, RF, VLSI, embedded systems, and increasingly ML-on-hardware. Includes top YouTube channels and GitHub frameworks used in industry.",
-    heroImage: img("1581092921461-eab62e97a780"),
+    heroImage: "/resources/branch-electrical.png",
     accent: "from-amber-500 to-red-600",
     topics: [
       {
         slug: "circuits",
         name: "Foundational Circuits",
         description: "Classic circuits theory and analysis.",
-        image: img("1518770660439-4636190af475"),
+        image: "/resources/topic-electrical-circuits.png",
         links: [
           { title: "MIT 6.002 Circuits & Electronics", url: "https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/", platform: "MIT OCW", description: "Classic circuits course.", difficulty: "Intermediate", free: true },
           { title: "MIT 6.01 Intro to EECS", url: "https://ocw.mit.edu/courses/6-01sc-introduction-to-electrical-engineering-and-computer-science-i-spring-2011/", platform: "MIT OCW", description: "Robotics, signals, circuits, programming.", difficulty: "Beginner", free: true },
@@ -163,7 +160,7 @@ export const branches: Branch[] = [
         slug: "signals-power-rf",
         name: "Signals, Power & RF",
         description: "DSP foundations, power systems, and RF analog.",
-        image: img("1518770660439-4636190af475"),
+        image: "/resources/topic-electrical-signals-power-rf.png",
         links: [
           { title: "MIT 6.003 Signals and Systems", url: "https://ocw.mit.edu/courses/6-003-signals-and-systems-fall-2011/", platform: "MIT OCW", description: "DSP foundations.", difficulty: "Intermediate", free: true },
           { title: "Iowa State Electric Power Notes", url: "https://home.engineering.iastate.edu/~jdm/ee303/ee303.htm", platform: "Official", description: "Power systems lecture notes.", difficulty: "Intermediate", free: true },
@@ -182,7 +179,7 @@ export const branches: Branch[] = [
         slug: "embedded-firmware",
         name: "Embedded / Firmware Ecosystems",
         description: "Production-grade vendor SDKs and RTOS stacks (expanded for 2026).",
-        image: img("1550009158-9ebf69173e03"),
+        image: "/resources/topic-electrical-embedded-firmware.png",
         links: [
           { title: "Arduino (core)", url: "https://github.com/arduino/Arduino", platform: "GitHub", description: "The platform every beginner starts on. 14.6k stars.", difficulty: "Beginner", free: true, stars: "14.6k" },
           { title: "ESP-IDF (Espressif)", url: "https://github.com/espressif/esp-idf", platform: "GitHub", description: "Official WiFi/BT MCU framework for ESP32. 17.9k stars.", difficulty: "Intermediate", free: true, stars: "17.9k" },
@@ -210,7 +207,7 @@ export const branches: Branch[] = [
         slug: "simulation-hdl",
         name: "Simulation, PCB & FPGA Tools",
         description: "Simulators, CAD, and HDL tooling used by professional EEs.",
-        image: img("1517373116369-9bdb8cdc9f62"),
+        image: "/resources/topic-electrical-simulation-hdl.png",
         links: [
           { title: "Falstad Circuit Simulator", url: "https://www.falstad.com/circuit/", platform: "Tool", description: "Browser-based — instant intuition for circuits.", difficulty: "Beginner", free: true },
           { title: "LTspice", url: "https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html", platform: "Tool", description: "Industry-standard SPICE simulator.", difficulty: "Intermediate", free: true },
@@ -238,14 +235,14 @@ export const branches: Branch[] = [
     tagline: "Architecture, OS, compilers, systems",
     description:
       "The hardware/software interface: computer architecture, operating systems, digital design, compilers, and systems programming. Includes the most-starred CS/systems repositories on GitHub.",
-    heroImage: img("1518770660439-4636190af475"),
+    heroImage: "/resources/branch-computer.png",
     accent: "from-emerald-500 to-teal-600",
     topics: [
       {
         slug: "architecture-os",
         name: "Architecture & Operating Systems",
         description: "From NAND gates to operating systems.",
-        image: img("1517430816045-df4b7de11d1d"),
+        image: "/resources/topic-computer-architecture-os.png",
         links: [
           { title: "Nand2Tetris", url: "https://www.nand2tetris.org/", platform: "Official", description: "Build a computer from NAND gates to OS running Tetris.", difficulty: "Intermediate", free: true },
           { title: "CMU 15-213 CS:APP", url: "https://www.cs.cmu.edu/~213/", platform: "Official", description: "Hardest and best systems course online.", difficulty: "Advanced", free: true },
@@ -271,7 +268,7 @@ export const branches: Branch[] = [
         slug: "distributed-devops",
         name: "Distributed Systems & DevOps",
         description: "The systems students need to know once they're working at scale.",
-        image: img("1518770660439-4636190af475"),
+        image: "/resources/topic-computer-distributed-devops.png",
         links: [
           { title: "awesome-distributed-systems", url: "https://github.com/theanalyst/awesome-distributed-systems", platform: "GitHub", description: "Key papers, books, talks. 11.8k stars.", difficulty: "Advanced", free: true, stars: "11.8k" },
           { title: "DevOps Exercises", url: "https://github.com/bregman-arie/devops-exercises", platform: "GitHub", description: "Thousands of DevOps/SRE interview Qs. 82.1k stars.", difficulty: "Intermediate", free: true, stars: "82.1k" },
@@ -291,14 +288,14 @@ export const branches: Branch[] = [
     tagline: "Deep learning, LLMs, generative AI",
     description:
       "The fastest-moving field in engineering. Curated across Reddit's 'Super Harsh Guide to ML' and the most-starred ML repos on GitHub.",
-    heroImage: img("1677442136019-21780ecad995"),
+    heroImage: "/resources/branch-ai-ml.png",
     accent: "from-fuchsia-500 to-purple-700",
     topics: [
       {
         slug: "start-here",
         name: "Start Here — Core Courses",
         description: "The canonical ML learning path.",
-        image: img("1620712943543-bcc4688e7485"),
+        image: "/resources/topic-ai-ml-start-here.png",
         links: [
           { title: "Andrew Ng — ML Specialization", url: "https://www.coursera.org/specializations/machine-learning-introduction", platform: "Coursera", description: "The definitive starting point — free audit.", difficulty: "Beginner", free: true },
           { title: "fast.ai Practical Deep Learning", url: "https://course.fast.ai/", platform: "Official", description: "Top-down — build working models first.", difficulty: "Intermediate", free: true },
@@ -327,7 +324,7 @@ export const branches: Branch[] = [
         slug: "llms-genai",
         name: "LLMs & Generative AI",
         description: "The frontier of applied AI.",
-        image: img("1684369176170-8aa0cbe7b2d8"),
+        image: "/resources/topic-ai-ml-llms-genai.png",
         links: [
           { title: "Karpathy — Zero to Hero", url: "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ", platform: "YouTube", description: "Build GPT from scratch — possibly the best free AI content.", difficulty: "Advanced", free: true },
           { title: "nn-zero-to-hero (code)", url: "https://github.com/karpathy/nn-zero-to-hero", platform: "GitHub", description: "Karpathy's video-driven DL course. 21.5k stars.", difficulty: "Intermediate", free: true, stars: "21.5k" },
@@ -356,7 +353,7 @@ export const branches: Branch[] = [
         slug: "practice-frontier",
         name: "Practice, MLOps & Frontier",
         description: "Where to build, train, benchmark, and ship.",
-        image: img("1488590528505-98d2b5aba04b"),
+        image: "/resources/topic-ai-ml-practice-frontier.png",
         links: [
           { title: "Kaggle", url: "https://www.kaggle.com/", platform: "Official", description: "Competitions, datasets, free GPU notebooks.", difficulty: "Intermediate", free: true },
           { title: "Google Colab", url: "https://colab.research.google.com/", platform: "Tool", description: "Free GPU/TPU notebooks.", difficulty: "Beginner", free: true },
@@ -387,14 +384,14 @@ export const branches: Branch[] = [
     tagline: "Kinematics, ROS, simulation, autonomy",
     description:
       "Robotics is an integration discipline — you'll use everything from EE, CS, ME, and AI. Pick one platform; don't spread thin.",
-    heroImage: img("1535378917042-10a22c95931a"),
+    heroImage: "/resources/branch-robotics.png",
     accent: "from-orange-500 to-pink-600",
     topics: [
       {
         slug: "foundations",
         name: "Foundational Courses",
         description: "The core robotics curriculum.",
-        image: img("1581092918056-0c4c3acd3789"),
+        image: "/resources/topic-robotics-foundations.png",
         links: [
           { title: "Modern Robotics (Northwestern)", url: "https://hades.mech.northwestern.edu/index.php/Modern_Robotics", platform: "Official", description: "Textbook + videos + Coursera — the standard curriculum.", difficulty: "Advanced", free: true },
           { title: "Modern Robotics Coursera", url: "https://www.coursera.org/specializations/modernrobotics", platform: "Coursera", description: "Kevin Lynch's specialization — r/robotics FAQ top rec.", difficulty: "Advanced", free: true },
@@ -416,7 +413,7 @@ export const branches: Branch[] = [
         slug: "ros-sim",
         name: "ROS, Simulation & Control",
         description: "The software stack robots actually run.",
-        image: img("1485827404703-89b55fcc595e"),
+        image: "/resources/topic-robotics-ros-sim.png",
         links: [
           { title: "The Construct", url: "https://www.theconstructsim.com/", platform: "Official", description: "Browser-based ROS labs — r/ROS's top link.", difficulty: "Intermediate", free: true },
           { title: "Gazebo Simulator", url: "https://gazebosim.org/", platform: "Tool", description: "Industry-standard robotics simulator.", difficulty: "Intermediate", free: true },
@@ -448,7 +445,7 @@ export const branches: Branch[] = [
         slug: "hardware-drones",
         name: "Hardware & Drones",
         description: "Real robots you can build on + drone autopilots.",
-        image: img("1535378917042-10a22c95931a"),
+        image: "/resources/topic-robotics-hardware-drones.png",
         links: [
           { title: "TurtleBot", url: "https://www.turtlebot.com/", platform: "Official", description: "Standard educational mobile robot.", difficulty: "Intermediate", free: true },
           { title: "ArduPilot", url: "https://github.com/ArduPilot/ardupilot", platform: "GitHub", description: "Open-source autopilot firmware. 14.9k stars.", difficulty: "Advanced", free: true, stars: "14.9k" },
@@ -473,14 +470,14 @@ export const branches: Branch[] = [
     tagline: "Offense, defense, CTFs, pentesting",
     description:
       "Learn by breaking things (legally). Hands-on labs matter more than lectures. Includes the most-starred security tools on GitHub and Reddit's canonical 'How to get started' recommendations.",
-    heroImage: img("1550751827-4bd374c3f58b"),
+    heroImage: "/resources/branch-cybersecurity.png",
     accent: "from-rose-500 to-red-700",
     topics: [
       {
         slug: "foundations",
         name: "Foundations",
         description: "Networking, OS, and security fundamentals.",
-        image: img("1563206767-5b18f218e8de"),
+        image: "/resources/topic-cybersecurity-foundations.png",
         links: [
           { title: "SANS Cyber Aces", url: "https://www.sans.org/cyberaces/", platform: "Official", description: "OS, networking, sysadmin foundations.", difficulty: "Beginner", free: true },
           { title: "Professor Messer", url: "https://www.professormesser.com/", platform: "YouTube", description: "CompTIA Security+/Network+/A+ — Reddit's canonical free path.", difficulty: "Beginner", free: true },
@@ -503,7 +500,7 @@ export const branches: Branch[] = [
         slug: "hands-on-ctf",
         name: "Hands-On & CTFs",
         description: "Gamified CTF + lab platforms where you actually learn.",
-        image: img("1526374965328-7f61d4dc18c5"),
+        image: "/resources/topic-cybersecurity-hands-on-ctf.png",
         links: [
           { title: "TryHackMe", url: "https://tryhackme.com/", platform: "Official", description: "Gamified beginner-friendly labs. Reddit's best start.", difficulty: "Beginner", free: true },
           { title: "Hack The Box", url: "https://www.hackthebox.com/", platform: "Official", description: "More advanced CTF/pentest labs.", difficulty: "Advanced", free: true },
@@ -522,7 +519,7 @@ export const branches: Branch[] = [
         slug: "offensive-tools",
         name: "Offensive Tools & Frameworks",
         description: "The most-starred red-team arsenal on GitHub.",
-        image: img("1510511459019-5dda7724fd87"),
+        image: "/resources/topic-cybersecurity-offensive-tools.png",
         links: [
           { title: "Ghidra (NSA)", url: "https://github.com/NationalSecurityAgency/ghidra", platform: "GitHub", description: "NSA's free RE suite. 67.4k stars.", difficulty: "Advanced", free: true, stars: "67.4k" },
           { title: "ImHex", url: "https://github.com/WerWolv/ImHex", platform: "GitHub", description: "Hex editor for reverse engineers. 53.2k stars.", difficulty: "Intermediate", free: true, stars: "53.2k" },
@@ -553,7 +550,7 @@ export const branches: Branch[] = [
         slug: "defensive-blue",
         name: "Defensive / Blue Team",
         description: "DFIR, SOC, malware analysis, and SIEM work.",
-        image: img("1510511459019-5dda7724fd87"),
+        image: "/resources/topic-cybersecurity-defensive-blue.png",
         links: [
           { title: "Trivy", url: "https://github.com/aquasecurity/trivy", platform: "GitHub", description: "Container + IaC vulnerability scanner. 34.6k stars.", difficulty: "Beginner", free: true, stars: "34.6k" },
           { title: "awesome-malware-analysis", url: "https://github.com/rshipp/awesome-malware-analysis", platform: "GitHub", description: "Malware analysis tools + readings. 13.6k stars.", difficulty: "Intermediate", free: true, stars: "13.6k" },
@@ -576,14 +573,14 @@ export const branches: Branch[] = [
     tagline: "Dynamics, CAD, CFD, manufacturing",
     description:
       "ME is being transformed by simulation-in-the-browser, generative design, and integration with robotics/controls.",
-    heroImage: img("1581091226825-a6a2a5aee158"),
+    heroImage: "/resources/branch-mechanical.png",
     accent: "from-cyan-500 to-blue-700",
     topics: [
       {
         slug: "foundations",
         name: "Foundational Courses",
         description: "Statics, dynamics, thermodynamics, fluids.",
-        image: img("1581092335397-9583eb92d232"),
+        image: "/resources/topic-mechanical-foundations.png",
         links: [
           { title: "MIT ME on OCW", url: "https://ocw.mit.edu/search/?d=Mechanical%20Engineering", platform: "MIT OCW", description: "Full ME curriculum — statics through controls.", difficulty: "Intermediate", free: true },
           { title: "MIT 2.003SC Dynamics and Control", url: "https://ocw.mit.edu/courses/2-003sc-engineering-dynamics-fall-2011/", platform: "MIT OCW", description: "With video lectures.", difficulty: "Intermediate", free: true },
@@ -606,7 +603,7 @@ export const branches: Branch[] = [
         slug: "cad-fea-printing",
         name: "CAD, FEA & 3D Printing",
         description: "Open-source CAD, CFD/FEA, and the entire 3D-printing toolchain.",
-        image: img("1581093458791-9d42e2d66a2d"),
+        image: "/resources/topic-mechanical-cad-fea-printing.png",
         links: [
           { title: "Fusion 360 for Students", url: "https://www.autodesk.com/education/students", platform: "Tool", description: "Free for students — CAD + CAM + simulation.", difficulty: "Beginner", free: true },
           { title: "Onshape for Education", url: "https://www.onshape.com/en/education/", platform: "Tool", description: "Browser-based parametric CAD, free for students.", difficulty: "Beginner", free: true },
@@ -642,7 +639,7 @@ export const branches: Branch[] = [
         slug: "thermo-fluids",
         name: "Thermo, Fluids, Real-World ME",
         description: "Energy systems, heat transfer, and practical making.",
-        image: img("1565043666747-69f6646db940"),
+        image: "/resources/topic-mechanical-thermo-fluids.png",
         links: [
           { title: "LearnChemE", url: "https://www.youtube.com/@LearnChemE", platform: "YouTube", description: "Thermo and transport phenomena.", difficulty: "Intermediate", free: true },
           { title: "NPTEL (IIT Lectures)", url: "https://www.youtube.com/@nptelhrd", platform: "YouTube", description: "IIT semester-length lectures.", difficulty: "Advanced", free: true },
@@ -665,14 +662,14 @@ export const branches: Branch[] = [
     tagline: "Unity, Unreal, WebXR, spatial computing",
     description:
       "XR spans virtual, augmented, mixed reality, and spatial computing — integrating 3D graphics, CV, HCI, and AI.",
-    heroImage: img("1593508512255-86ab42a8e620"),
+    heroImage: "/resources/branch-ar-vr-xr.png",
     accent: "from-violet-500 to-indigo-700",
     topics: [
       {
         slug: "unity-unreal",
         name: "Unity & Unreal Development",
         description: "The two engines powering most production XR.",
-        image: img("1592478411213-6153e4ebc07d"),
+        image: "/resources/topic-ar-vr-xr-unity-unreal.png",
         links: [
           { title: "Unity Learn", url: "https://learn.unity.com/", platform: "Official", description: "Official tutorials + VR dev pathway.", difficulty: "Beginner", free: true },
           { title: "Meta XR Developer Hub", url: "https://developers.meta.com/horizon/learn/", platform: "Official", description: "Meta Quest dev tutorials + samples.", difficulty: "Intermediate", free: true },
@@ -705,7 +702,7 @@ export const branches: Branch[] = [
         slug: "webxr-3d",
         name: "WebXR & 3D Graphics",
         description: "No-install browser XR + the JS 3D stack.",
-        image: img("1633356122544-f134324a6cee"),
+        image: "/resources/topic-ar-vr-xr-webxr-3d.png",
         links: [
           { title: "Three.js", url: "https://github.com/mrdoob/three.js", platform: "GitHub", description: "JS 3D library. 112.1k stars.", difficulty: "Intermediate", free: true, stars: "112.1k" },
           { title: "react-three-fiber", url: "https://github.com/pmndrs/react-three-fiber", platform: "GitHub", description: "React renderer for Three.js. 30.6k stars.", difficulty: "Intermediate", free: true, stars: "30.6k" },
@@ -731,7 +728,7 @@ export const branches: Branch[] = [
         slug: "mobile-ar-spatial",
         name: "Mobile AR & Spatial Computing",
         description: "AR for phones + Vision Pro frontier.",
-        image: img("1581833971358-2c8b550f87b3"),
+        image: "/resources/topic-ar-vr-xr-mobile-ar-spatial.png",
         links: [
           { title: "Google ARCore", url: "https://developers.google.com/ar", platform: "Official", description: "Android AR SDK.", difficulty: "Intermediate", free: true },
           { title: "ARCore Android SDK", url: "https://github.com/google-ar/arcore-android-sdk", platform: "GitHub", description: "Official ARCore SDK source. 5.2k stars.", difficulty: "Intermediate", free: true, stars: "5.2k" },
