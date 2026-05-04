@@ -1,457 +1,769 @@
+import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import {
-  Shield,
-  Bug,
-  Search,
-  Lock,
-  Cloud,
-  Code2,
-  Eye,
-  Terminal,
-  Zap,
-  CheckCircle2,
-  ArrowRight,
-  ArrowUpRight,
-  AlertTriangle,
-  Target,
-  GitBranch,
-  Container,
-  ScanLine,
-  KeyRound,
-  Github,
-} from "lucide-react";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { PageTransition } from "@/components/PageTransition";
+import {
+    Bug,
+    ArrowRight,
+    Target,
+    GitBranch,
+    Eye,
+    CheckCircle2,
+    AlertTriangle,
+    Terminal,
+    Lock,
+    FileText,
+    Award,
+    Search,
+    Rocket,
+} from 'lucide-react';
 
-const accent = {
-  cyan: "#00D4FF",
-  gold: "#D4AF37",
-  electric: "#00FF87",
-  violet: "#A855F7",
-  coral: "#FF6B6B",
+const colors = {
+    gold: "#F59E0B",
+    goldMetallic: "#D4AF37",
+    goldDark: "#B78628",
+    electric: "#00FF87",
+    coral: "#FF6B6B",
+    violet: "#A855F7",
+    cyan: "#00D4FF",
+    lime: "#BFFF00",
 };
 
-const HeroOrbs = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <div
-      className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-30"
-      style={{ background: `radial-gradient(circle, ${accent.cyan} 0%, transparent 70%)` }}
-    />
-    <div
-      className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full blur-3xl opacity-25"
-      style={{ background: `radial-gradient(circle, ${accent.violet} 0%, transparent 70%)` }}
-    />
-    <div
-      className="absolute bottom-0 left-1/3 w-[450px] h-[450px] rounded-full blur-3xl opacity-20"
-      style={{ background: `radial-gradient(circle, ${accent.gold} 0%, transparent 70%)` }}
-    />
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:64px_64px]" />
-  </div>
-);
-
-const TerminalPreview = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6 }}
-    className="relative max-w-4xl mx-auto"
-  >
-    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-500/40 via-violet-500/40 to-yellow-500/40 blur-xl" />
-    <div className="relative rounded-2xl bg-black/80 backdrop-blur border border-white/10 shadow-2xl overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/[0.02]">
-        <span className="w-3 h-3 rounded-full bg-red-500/80" />
-        <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-        <span className="w-3 h-3 rounded-full bg-green-500/80" />
-        <span className="ml-3 text-xs font-mono text-white/50">virelity-scan ~ recon.sh</span>
-      </div>
-      <pre className="p-6 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
-{`$ virelity scan --target acme.com --scope full
-`}
-<span style={{ color: accent.cyan }}>{`[recon]   `}</span>{`enumerating subdomains... 47 found
-`}
-<span style={{ color: accent.cyan }}>{`[crawl]   `}</span>{`mapping endpoints... 2,318 routes
-`}
-<span style={{ color: accent.gold }}>{`[fuzz]    `}</span>{`probing /api/v2/users?id=…
-`}
-<span style={{ color: accent.coral }}>{`[finding] `}</span>
-<span className="text-red-400">{`CRITICAL`}</span>{` IDOR — /api/v2/users/{id}/billing
-`}
-<span style={{ color: accent.coral }}>{`[finding] `}</span>
-<span className="text-orange-400">{`HIGH    `}</span>{` reflected XSS — /search?q=<svg/onload>
-`}
-<span style={{ color: accent.coral }}>{`[finding] `}</span>
-<span className="text-yellow-400">{`MEDIUM  `}</span>{` SSRF on /webhook/test
-`}
-<span style={{ color: accent.electric }}>{`[triage]  `}</span>{`auto-deduped 12 → 9 unique findings
-`}
-<span style={{ color: accent.electric }}>{`[triage]  `}</span>{`PoCs verified · CVSS scored · severity capped
-`}
-<span style={{ color: accent.gold }}>{`[reward]  `}</span>{`bounty payout queued — $4,750 across 3 researchers
-`}<span className="text-white/40">{`✔ report ready in 11m 04s — virelity.com/r/0x9aF12B
-`}</span>
-      </pre>
-    </div>
-  </motion.div>
-);
-
-const StatCard = ({ value, label, accent: color }: { value: string; label: string; accent: string }) => (
-  <div className="relative">
-    <div className="absolute inset-0 rounded-xl opacity-20 blur-xl" style={{ background: color }} />
-    <div className="relative rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur px-6 py-5">
-      <div className="text-3xl md:text-4xl font-bold tracking-tight text-white">{value}</div>
-      <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/50">{label}</div>
-      <div className="mt-3 h-px w-10" style={{ background: color }} />
-    </div>
-  </div>
-);
-
-const CapabilityCard = ({
-  icon: Icon,
-  title,
-  description,
-  tone,
-  index,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-  tone: string;
-  index: number;
-}) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 hover:border-white/20 transition-colors"
-    >
-      <div
-        className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl pointer-events-none"
-        style={{ background: `radial-gradient(circle at 30% 0%, ${tone}33, transparent 70%)` }}
-      />
-      <div className="relative">
-        <div
-          className="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-white/10"
-          style={{ background: `${tone}1a`, color: tone }}
+const Marquee = ({ children, reverse = false, speed = 30 }: { children: React.ReactNode; reverse?: boolean; speed?: number }) => (
+    <div className="overflow-hidden whitespace-nowrap">
+        <motion.div
+            animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
+            transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+            className="inline-flex"
         >
-          <Icon className="w-5 h-5" />
-        </div>
-        <h3 className="mt-5 text-lg font-semibold text-white">{title}</h3>
-        <p className="mt-2 text-sm text-white/60 leading-relaxed">{description}</p>
-        <div className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-white/70 group-hover:text-white transition-colors">
-          Learn more
-          <ArrowUpRight className="w-3.5 h-3.5" />
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-const capabilities = [
-  { icon: Search, title: "Recon & Attack Surface", description: "Continuous external discovery — subdomains, exposed services, leaked secrets across the public attack surface.", tone: accent.cyan },
-  { icon: Bug, title: "Manual Pentesting", description: "OSCP/CRTP-grade researchers chain vulnerabilities humans find but scanners miss — IDOR, SSRF, auth bypass, race conditions.", tone: accent.coral },
-  { icon: Code2, title: "SAST & Code Review", description: "Static analysis tuned for your stack with manual review of auth, crypto, and trust boundaries.", tone: accent.violet },
-  { icon: Cloud, title: "Cloud & IaC Audit", description: "AWS / GCP / Azure misconfig hunting — IAM blast radius, public buckets, exposed metadata, drifted Terraform.", tone: accent.electric },
-  { icon: Container, title: "Container & K8s", description: "Image CVEs, runtime escapes, pod-to-cluster privilege paths, and admission policy review.", tone: accent.gold },
-  { icon: KeyRound, title: "Secrets Hunting", description: "Repo, build log, container layer, and public paste sweeps for tokens, keys, and credentials.", tone: accent.cyan },
-  { icon: Eye, title: "Continuous Monitoring", description: "Real-time alerts on new exposure — fresh subdomains, expired certs, leaked tokens, regression of fixed bugs.", tone: accent.violet },
-  { icon: Shield, title: "Triage & Disclosure", description: "Dedupe, severity-cap, PoC validation, and coordinated disclosure handling so your team only sees signal.", tone: accent.coral },
-];
-
-const workflow = [
-  {
-    step: "01",
-    icon: Target,
-    title: "Scope & onboard",
-    body: "Define targets, exclusions, and reward bands. Connect GitHub, GitLab, AWS, GCP, Slack, Jira in one session.",
-    tone: accent.cyan,
-  },
-  {
-    step: "02",
-    icon: ScanLine,
-    title: "Hunt continuously",
-    body: "Vetted researchers + automated recon work in parallel. Findings are deduped, validated, and severity-capped before they reach you.",
-    tone: accent.gold,
-  },
-  {
-    step: "03",
-    icon: CheckCircle2,
-    title: "Fix & reward",
-    body: "Patch suggestions ship with each report. Rewards are paid on validation. Regressions auto-reopen the original ticket.",
-    tone: accent.electric,
-  },
-];
-
-const integrations = [
-  "GitHub", "GitLab", "Bitbucket", "Jira", "Linear", "Slack", "Teams",
-  "AWS", "GCP", "Azure", "Vercel", "Cloudflare", "Datadog", "Sentry",
-  "PagerDuty", "Okta", "1Password", "HackerOne",
-];
+            {children}
+            {children}
+        </motion.div>
+    </div>
+);
 
 const Bugbounty = () => {
-  return (
-    <PageTransition>
-      <Helmet>
-        <title>Bug Bounty & Offensive Security | Virelity.com</title>
-        <meta
-          name="description"
-          content="Run a continuous bug bounty and offensive-security program with Virelity. Recon, manual pentesting, cloud audits, triage, and rewards in one platform."
-        />
-        <link rel="canonical" href="https://virelity.com/bugbounty" />
-      </Helmet>
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-      <Navbar />
+    useEffect(() => {
+        const lenis = (window as any).lenis;
+        if (lenis && typeof lenis.scrollTo === 'function') {
+            lenis.scrollTo(0, { immediate: true });
+        } else {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
+    }, []);
 
-      <main className="bg-[#070914] text-white antialiased">
-        {/* HERO */}
-        <section className="relative pt-32 pb-24 md:pt-40 md:pb-32">
-          <HeroOrbs />
-          <div className="container relative mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-medium text-white/70"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00FF87] animate-pulse" />
-              Researchers online · auto-triage active
-            </motion.div>
+    const features = [
+        { icon: Search, title: "Recon Agent", description: "Subfinder, httpx, katana, nuclei feed structured surface maps into the FSM.", color: colors.electric },
+        { icon: Target, title: "Parallel Hunters", description: "Wave-based hunters dedupe surfaces and chase IDOR, auth, business logic in parallel.", color: colors.coral },
+        { icon: Eye, title: "3-Round Verifier", description: "Adversarial re-runs replay PoCs with fresh HTTP requests to kill hallucinated findings.", color: colors.cyan },
+        { icon: Award, title: "5-Axis Grader", description: "Independent grader scores severity and issues SUBMIT / HOLD / SKIP — no inflation.", color: colors.violet },
+        { icon: Lock, title: "Scope Guard Hooks", description: "PreToolUse hooks block out-of-scope Bash before a single packet leaves your box.", color: colors.lime },
+        { icon: FileText, title: "Submission-Ready Reports", description: "Markdown reports per platform — HackerOne, Bugcrowd, Intigriti — under 600 words.", color: colors.gold },
+    ];
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="mt-6 text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl"
-            >
-              Find every bug.{" "}
-              <span className="bg-gradient-to-r from-cyan-300 via-violet-300 to-yellow-200 bg-clip-text text-transparent">
-                Reward what matters.
-              </span>
-            </motion.h1>
+    const phases = [
+        { num: "01", title: "Recon", desc: "Subdomain enum, live host probing, JS analysis", color: colors.electric },
+        { num: "02", title: "Auth", desc: "Account provisioning, token capture, A/B setup", color: colors.coral },
+        { num: "03", title: "Hunt", desc: "Parallel waves on assigned surfaces", color: colors.cyan },
+        { num: "04", title: "Chain", desc: "Compose primitives into impactful exploits", color: colors.violet },
+        { num: "05", title: "Verify", desc: "Three skeptical rounds replay every PoC", color: colors.lime },
+        { num: "06", title: "Grade", desc: "5-axis rubric → SUBMIT / HOLD / SKIP", color: colors.gold },
+        { num: "07", title: "Report", desc: "Platform-shaped markdown, ready to paste", color: colors.coral },
+    ];
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.12 }}
-              className="mt-6 max-w-2xl text-lg md:text-xl text-white/70 leading-relaxed"
-            >
-              A continuous bug-bounty and offensive-security program in one place.
-              Vetted researchers, automated recon, deduped findings — and only the signal
-              reaches your engineers.
-            </motion.p>
+    const stats = [
+        { value: "7", label: "Phase FSM" },
+        { value: "10+", label: "Specialized Agents" },
+        { value: "3×", label: "Verification Rounds" },
+        { value: "5", label: "Axis Rubric" },
+    ];
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.18 }}
-              className="mt-9 flex flex-wrap items-center gap-4"
-            >
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-white/90 transition-colors"
-              >
-                Start for free
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/book"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white hover:bg-white/[0.08] transition-colors"
-              >
-                Book a demo
-              </Link>
-              <a
-                href="https://github.com/deonmenezes/bountyhunter"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-5 py-3 text-sm font-semibold text-white/80 hover:text-white hover:border-white/30 transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                View on GitHub
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-              <span className="text-xs text-white/40">No credit card · 14-day pilot</span>
-            </motion.div>
+    const plans = [
+        {
+            name: "Solo",
+            price: "Free",
+            blurb: "MIT-licensed, run it on your own targets",
+            features: ["Full 7-phase FSM", "Local MCP server", "Unlimited targets", "Community support"],
+            cta: "Clone the Repo",
+            href: "https://github.com/deonmenezes/bountyhunter",
+            color: colors.electric,
+            highlighted: false,
+        },
+        {
+            name: "Pro",
+            price: "$49",
+            suffix: "/month",
+            blurb: "For working hunters who ship reports daily",
+            features: ["Cloud session sync", "Premium hunter prompts", "Priority verifier queue", "Slack/Discord alerts", "Email support"],
+            cta: "Start 14-Day Trial",
+            href: "/contact",
+            color: colors.gold,
+            highlighted: true,
+        },
+        {
+            name: "Team",
+            price: "Custom",
+            blurb: "For internal red teams and AppSec orgs",
+            features: ["SSO + audit logs", "Private LLM routing", "On-prem MCP server", "Custom rubrics", "Dedicated slack channel"],
+            cta: "Talk to Us",
+            href: "/contact",
+            color: colors.violet,
+            highlighted: false,
+        },
+    ];
 
-            {/* trust bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.24 }}
-              className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4"
-            >
-              <StatCard value="2,400+" label="Vetted researchers" accent={accent.cyan} />
-              <StatCard value="$1.8M+" label="Bounties paid" accent={accent.gold} />
-              <StatCard value="11 min" label="Median triage" accent={accent.electric} />
-              <StatCard value="99.4%" label="Signal-to-noise" accent={accent.violet} />
-            </motion.div>
-          </div>
-        </section>
+    const trustedTools = ["nuclei", "subfinder", "httpx", "katana", "Claude Code", "MCP", "Foundry"];
 
-        {/* TERMINAL */}
-        <section className="relative py-16 md:py-24">
-          <div className="container mx-auto px-4">
-            <div className="mb-10 max-w-2xl">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-white/50">
-                <Terminal className="w-3.5 h-3.5" /> live recon
-              </div>
-              <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">
-                One pass — recon to reward.
-              </h2>
-              <p className="mt-3 text-white/60">
-                Every scan auto-deduplicates findings, validates PoCs, and queues bounty
-                payouts. Engineers see triaged, ranked vulnerabilities. Nothing else.
-              </p>
-            </div>
-            <TerminalPreview />
-            <div className="mt-8 flex justify-center">
-              <a
-                href="https://github.com/deonmenezes/bountyhunter"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                bountyhunter — open-source recon CLI
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </section>
+    return (
+        <PageTransition>
+            <Helmet>
+                <title>Bug Bounty Agent — Hunt bugs. Ship reports. On autopilot. | Virelity.com</title>
+                <meta
+                    name="description"
+                    content="Bountyhunter is a 7-phase FSM that orchestrates AI agents — recon, parallel hunting, three-round verification, grading, and submission-ready reports. Neo-brutalist landing page, MIT-licensed framework."
+                />
+                <link rel="canonical" href="https://virelity.com/bugbounty" />
+            </Helmet>
 
-        {/* CAPABILITIES */}
-        <section className="relative py-20 md:py-28">
-          <div className="container mx-auto px-4">
-            <div className="mb-12 max-w-2xl">
-              <div className="text-xs uppercase tracking-[0.22em] text-white/50">Capabilities</div>
-              <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">
-                Coverage across code, cloud, and runtime.
-              </h2>
-              <p className="mt-3 text-white/60">
-                Eight modules, one program. Subscribe to the entire spectrum or pick
-                only the surface that matters this quarter.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {capabilities.map((c, i) => (
-                <CapabilityCard key={c.title} {...c} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* WORKFLOW */}
-        <section className="relative py-20 md:py-28">
-          <div className="container mx-auto px-4">
-            <div className="mb-12 max-w-2xl">
-              <div className="text-xs uppercase tracking-[0.22em] text-white/50">Workflow</div>
-              <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">
-                From scope to reward in under a day.
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {workflow.map((w, i) => (
+            <div className="min-h-screen flex flex-col bg-black">
                 <motion.div
-                  key={w.step}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="relative rounded-2xl border border-white/10 bg-white/[0.02] p-7"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs tracking-widest text-white/40">{w.step}</span>
-                    <div
-                      className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center"
-                      style={{ background: `${w.tone}1a`, color: w.tone }}
-                    >
-                      <w.icon className="w-5 h-5" />
+                    className="fixed top-0 left-0 right-0 h-2 bg-vision-gold z-50 origin-left"
+                    style={{ scaleX }}
+                />
+
+                <Navbar />
+
+                {/* HERO */}
+                <section className="pt-32 pb-20 relative overflow-hidden">
+                    <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.06]"
+                        style={{
+                            backgroundImage:
+                                "linear-gradient(#F59E0B 1px, transparent 1px), linear-gradient(90deg, #F59E0B 1px, transparent 1px)",
+                            backgroundSize: "40px 40px",
+                        }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black z-[1]" />
+
+                    <motion.div
+                        animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+                        transition={{ duration: 6, repeat: Infinity }}
+                        className="absolute top-24 right-16 w-32 h-32 border-4 border-vision-gold hidden lg:block z-[2]"
+                    />
+                    <motion.div
+                        animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
+                        transition={{ duration: 8, repeat: Infinity }}
+                        className="absolute bottom-24 left-16 w-24 h-24 hidden lg:block z-[2]"
+                        style={{ backgroundColor: colors.electric }}
+                    />
+
+                    <div className="container relative z-10">
+                        <div className="grid lg:grid-cols-2 gap-12 items-center">
+                            {/* LEFT — copy */}
+                            <div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30, rotate: -3 }}
+                                    animate={{ opacity: 1, y: 0, rotate: -2 }}
+                                    className="inline-block mb-8"
+                                >
+                                    <div className="relative group">
+                                        <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                        <div className="relative bg-black border-4 border-vision-gold px-5 py-2 flex items-center gap-2">
+                                            <Bug className="w-4 h-4 text-vision-gold" />
+                                            <span className="font-black uppercase tracking-widest text-vision-gold text-xs">Bug Bounty Agent · v1</span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                <motion.h1
+                                    initial={{ opacity: 0, y: 50 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 }}
+                                    className="text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] mb-6 tracking-tight"
+                                >
+                                    <span className="text-white block">Hunt bugs.</span>
+                                    <span className="text-white block">Ship reports.</span>
+                                    <span className="text-vision-gold block">On autopilot.</span>
+                                </motion.h1>
+
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                    className="text-lg md:text-xl text-white/70 font-medium max-w-xl mb-10"
+                                >
+                                    A 7-phase finite-state machine that orchestrates specialized AI agents — recon,
+                                    parallel hunting, three-round verification, grading, and submission-ready reports.
+                                    One slash command. Zero hallucinations.
+                                </motion.p>
+
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="flex flex-col sm:flex-row gap-4"
+                                >
+                                    <div className="relative group inline-block">
+                                        <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black border-4 border-vision-gold transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                        <a
+                                            href="https://github.com/deonmenezes/bountyhunter"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="relative bg-vision-gold text-black font-black uppercase tracking-wider px-8 py-4 text-base border-4 border-black inline-flex items-center gap-2"
+                                        >
+                                            Get the Agent
+                                            <ArrowRight className="w-5 h-5" />
+                                        </a>
+                                    </div>
+                                    <div className="relative group inline-block">
+                                        <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                        <Link
+                                            to="/contact"
+                                            className="relative bg-black text-white font-black uppercase tracking-wider px-8 py-4 text-base border-4 border-vision-gold inline-flex items-center gap-2"
+                                        >
+                                            Book a Demo
+                                        </Link>
+                                    </div>
+                                </motion.div>
+
+                                {/* trust badges */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.7 }}
+                                    className="mt-10 flex flex-wrap items-center gap-3"
+                                >
+                                    <span className="text-xs uppercase tracking-widest text-white/40 font-bold">Powered by</span>
+                                    {trustedTools.map((t) => (
+                                        <span
+                                            key={t}
+                                            className="px-3 py-1 bg-black border-2 border-vision-gold/50 text-vision-gold text-xs font-mono"
+                                        >
+                                            {t}
+                                        </span>
+                                    ))}
+                                </motion.div>
+                            </div>
+
+                            {/* RIGHT — dashboard mock */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 50, rotate: 2 }}
+                                animate={{ opacity: 1, x: 0, rotate: 1 }}
+                                transition={{ delay: 0.4, duration: 0.8 }}
+                                className="relative"
+                            >
+                                <div className="absolute inset-0 translate-x-3 translate-y-3 bg-vision-gold" />
+                                <div className="relative bg-[#0A0805] border-4 border-vision-gold p-5">
+                                    {/* mac dots */}
+                                    <div className="flex items-center gap-2 mb-4 pb-3 border-b-2 border-vision-gold/30">
+                                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors.coral }} />
+                                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors.gold }} />
+                                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors.electric }} />
+                                        <div className="ml-3 flex items-center gap-2 text-vision-gold/70 text-xs font-mono">
+                                            <Terminal className="w-3 h-3" />
+                                            bountyagent · target.com
+                                        </div>
+                                    </div>
+
+                                    {/* status row */}
+                                    <div className="grid grid-cols-3 gap-3 mb-4">
+                                        {[
+                                            { label: "Phase", value: "5/7", color: colors.electric },
+                                            { label: "Findings", value: "12", color: colors.gold },
+                                            { label: "Verified", value: "8", color: colors.coral },
+                                        ].map((s) => (
+                                            <div key={s.label} className="border-2 border-vision-gold/40 bg-black p-3">
+                                                <div className="text-[10px] uppercase tracking-widest text-white/50 font-bold">{s.label}</div>
+                                                <div className="text-2xl font-black mt-1" style={{ color: s.color }}>{s.value}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* findings list */}
+                                    <div className="space-y-2 mb-4">
+                                        <div className="text-[10px] uppercase tracking-widest text-vision-gold font-black mb-2">Recent Findings</div>
+                                        {[
+                                            { sev: "CRITICAL", color: colors.coral,  title: "IDOR /api/v2/invoices/{id}", path: "auth-bypass · 9.1" },
+                                            { sev: "HIGH",     color: colors.gold,   title: "Stored XSS profile.bio",      path: "priv-esc · 7.8" },
+                                            { sev: "MEDIUM",   color: colors.cyan,   title: "SSRF /webhooks/test",         path: "ssrf-internal · 6.5" },
+                                            { sev: "LOW",      color: colors.violet, title: "Open redirect /go",            path: "chained · 4.2" },
+                                        ].map((f) => (
+                                            <div key={f.title} className="flex items-center gap-3 bg-black border-2 border-vision-gold/20 px-3 py-2 hover:border-vision-gold transition-colors">
+                                                <span
+                                                    className="text-[9px] font-black tracking-widest border-2 px-2 py-0.5"
+                                                    style={{ color: f.color, borderColor: f.color }}
+                                                >
+                                                    {f.sev}
+                                                </span>
+                                                <span className="text-white text-xs font-mono flex-1 truncate">{f.title}</span>
+                                                <span className="text-white/40 text-[10px] font-mono">{f.path}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* progress bar */}
+                                    <div>
+                                        <div className="flex justify-between text-[10px] uppercase tracking-widest font-bold mb-1">
+                                            <span className="text-white/50">Verification</span>
+                                            <span className="text-vision-gold">round 2 of 3</span>
+                                        </div>
+                                        <div className="h-2 bg-black border-2 border-vision-gold/40 overflow-hidden">
+                                            <motion.div
+                                                className="h-full bg-vision-gold"
+                                                initial={{ width: "0%" }}
+                                                animate={{ width: "66%" }}
+                                                transition={{ delay: 1, duration: 1.5 }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
-                  </div>
-                  <h3 className="mt-5 text-xl font-semibold">{w.title}</h3>
-                  <p className="mt-3 text-sm text-white/60 leading-relaxed">{w.body}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+                </section>
 
-        {/* INTEGRATIONS */}
-        <section className="relative py-16 md:py-20 border-y border-white/5">
-          <div className="container mx-auto px-4">
-            <div className="text-center text-xs uppercase tracking-[0.24em] text-white/40 mb-8">
-              Plugs into the tools you already run
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-2.5">
-              {integrations.map((name) => (
-                <span
-                  key={name}
-                  className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-white/70 hover:bg-white/[0.06] transition-colors"
-                >
-                  {name}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
+                {/* GOLD MARQUEE */}
+                <section className="py-4 bg-vision-gold border-y-4 border-black">
+                    <Marquee speed={28}>
+                        <span className="inline-flex items-center gap-8 px-8 font-black text-2xl md:text-3xl text-black uppercase">
+                            <span>Recon</span>
+                            <span className="w-3 h-3 bg-black rotate-45" />
+                            <span>Hunt</span>
+                            <span className="w-3 h-3 bg-black rotate-45" />
+                            <span>Verify</span>
+                            <span className="w-3 h-3 bg-black rotate-45" />
+                            <span>Grade</span>
+                            <span className="w-3 h-3 bg-black rotate-45" />
+                            <span>Report</span>
+                            <span className="w-3 h-3 bg-black rotate-45" />
+                            <span>Cash Out</span>
+                            <span className="w-3 h-3 bg-black rotate-45" />
+                        </span>
+                    </Marquee>
+                </section>
 
-        {/* CTA */}
-        <section className="relative py-24 md:py-32">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] rounded-full blur-3xl opacity-30"
-              style={{ background: `radial-gradient(ellipse, ${accent.cyan}55 0%, transparent 70%)` }}
-            />
-          </div>
-          <div className="container relative mx-auto px-4">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-10 md:p-16 text-center max-w-4xl mx-auto">
-              <div className="mx-auto inline-flex items-center justify-center w-12 h-12 rounded-xl border border-white/10" style={{ background: `${accent.gold}1a`, color: accent.gold }}>
-                <AlertTriangle className="w-5 h-5" />
-              </div>
-              <h2 className="mt-6 text-3xl md:text-5xl font-bold tracking-tight">
-                Spin up your program in a Slack message.
-              </h2>
-              <p className="mt-4 text-white/60 max-w-2xl mx-auto">
-                Onboarding takes one call. Your first triaged finding lands within 48 hours
-                or the pilot is free.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-white/90 transition-colors"
-                >
-                  Start for free
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <a
-                  href="https://wa.me/918104796542?text=Hi%20Virelity!%20I%27d%20like%20to%20kick%20off%20a%20bug%20bounty%20program."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white hover:bg-white/[0.08] transition-colors"
-                >
-                  Talk to a researcher
-                </a>
-              </div>
-              <div className="mt-8 flex items-center justify-center gap-6 text-xs text-white/40">
-                <span className="inline-flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> SOC 2 ready</span>
-                <span className="inline-flex items-center gap-1.5"><Zap className="w-3.5 h-3.5" /> 48h to first finding</span>
-                <span className="inline-flex items-center gap-1.5"><GitBranch className="w-3.5 h-3.5" /> Patches with PRs</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+                {/* STATS STRIP */}
+                <section className="py-12 bg-black border-b-4 border-vision-gold">
+                    <div className="container">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                            {stats.map((s, i) => (
+                                <motion.div
+                                    key={s.label}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="relative"
+                                >
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                    <div className="relative bg-black border-4 border-white px-6 py-6 text-center">
+                                        <div className="text-4xl md:text-5xl font-black text-vision-gold">{s.value}</div>
+                                        <div className="text-[11px] uppercase tracking-widest text-white/70 font-bold mt-1">{s.label}</div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-      <Footer />
-    </PageTransition>
-  );
+                {/* FEATURES */}
+                <section className="py-20 bg-white border-b-4 border-black">
+                    <div className="container">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-16"
+                        >
+                            <div className="inline-block mb-6">
+                                <div className="relative">
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black" />
+                                    <div className="relative bg-vision-gold border-4 border-black px-6 py-3">
+                                        <span className="font-black uppercase tracking-widest text-black">Platform</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-4 leading-tight">
+                                All-in-one bug bounty <span className="text-vision-gold">orchestration</span>
+                            </h2>
+                            <p className="text-lg text-black/60 max-w-2xl mx-auto font-medium">
+                                Specialized agents, narrow tool whitelists, structured JSON state.
+                                No long-running monolithic prompt — no drift, no invented findings.
+                            </p>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {features.map((feature, index) => {
+                                const Icon = feature.icon;
+                                const rotations = [-2, 1.5, -1, 2, -1.5, 1];
+                                const rotation = rotations[index % rotations.length];
+                                return (
+                                    <motion.div
+                                        key={feature.title}
+                                        initial={{ opacity: 0, y: 30, rotate: rotation }}
+                                        whileInView={{ opacity: 1, y: 0, rotate: rotation }}
+                                        whileHover={{ rotate: 0, scale: 1.03, y: -5 }}
+                                        transition={{ duration: 0.5, delay: index * 0.08 }}
+                                        viewport={{ once: true }}
+                                        className="relative"
+                                    >
+                                        <div className="absolute inset-0 translate-x-3 translate-y-3" style={{ backgroundColor: feature.color }} />
+                                        <div className="relative bg-black border-4 border-black p-6 h-full">
+                                            <div
+                                                className="w-12 h-12 border-4 border-white flex items-center justify-center mb-4"
+                                                style={{ backgroundColor: feature.color }}
+                                            >
+                                                <Icon className="w-6 h-6 text-black" />
+                                            </div>
+                                            <h3 className="text-xl font-black text-white uppercase mb-2 tracking-tight">{feature.title}</h3>
+                                            <p className="text-white/70 text-sm leading-relaxed">{feature.description}</p>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+
+                {/* HOW IT WORKS — 7 PHASES */}
+                <section className="py-20 bg-black border-b-4 border-vision-gold relative overflow-hidden">
+                    <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04]"
+                        style={{
+                            backgroundImage:
+                                "linear-gradient(#F59E0B 1px, transparent 1px), linear-gradient(90deg, #F59E0B 1px, transparent 1px)",
+                            backgroundSize: "32px 32px",
+                        }}
+                    />
+                    <div className="container relative z-10">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-16"
+                        >
+                            <div className="inline-block mb-6">
+                                <div className="relative">
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                    <div className="relative bg-black border-4 border-vision-gold px-6 py-3">
+                                        <span className="font-black uppercase tracking-widest text-vision-gold">How it works</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4 leading-tight">
+                                One command. <span className="text-vision-gold">Seven phases.</span>
+                            </h2>
+                            <p className="text-lg text-white/60 max-w-2xl mx-auto font-medium">
+                                <span className="font-mono bg-vision-gold/10 border border-vision-gold/40 px-2 py-0.5 text-vision-gold">/bountyagent target.com</span>{" "}
+                                kicks off the FSM. Every phase writes structured JSON you can inspect and resume.
+                            </p>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {phases.map((p, i) => (
+                                <motion.div
+                                    key={p.num}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.07 }}
+                                    className="relative"
+                                    whileHover={{ y: -4 }}
+                                >
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                    <div className="relative bg-black border-4 border-vision-gold p-5 h-full">
+                                        <div className="flex items-baseline gap-3 mb-3">
+                                            <span className="text-3xl font-black" style={{ color: p.color }}>{p.num}</span>
+                                            <span className="text-lg font-black text-white uppercase tracking-tight">{p.title}</span>
+                                        </div>
+                                        <p className="text-white/60 text-sm">{p.desc}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* terminal preview */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="mt-12 max-w-3xl mx-auto"
+                        >
+                            <div className="relative">
+                                <div className="absolute inset-0 translate-x-3 translate-y-3 bg-vision-gold" />
+                                <div className="relative bg-black border-4 border-vision-gold p-6 font-mono text-sm">
+                                    <div className="flex items-center gap-2 mb-4 text-white/50 text-xs">
+                                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors.coral }} />
+                                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors.gold }} />
+                                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: colors.electric }} />
+                                        <span className="ml-3">~/bounty-agent-sessions/target.com</span>
+                                    </div>
+                                    <div className="space-y-1 text-white/80">
+                                        <div><span className="text-vision-gold">$</span> /bountyagent target.com</div>
+                                        <div className="text-white/40">→ phase 1 · recon · spawning agents...</div>
+                                        <div className="text-white/40">→ phase 2 · auth · provisioning a, b accounts</div>
+                                        <div className="text-white/40">→ phase 3 · hunt · 4 waves dispatched</div>
+                                        <div style={{ color: colors.electric }}>✓ finding: IDOR /api/v2/invoices/&#123;id&#125; · CVSS 6.5</div>
+                                        <div style={{ color: colors.electric }}>✓ finding: stored XSS profile.bio · CVSS 7.8</div>
+                                        <div className="text-white/40">→ phase 5 · verifying (round 2/3)</div>
+                                        <div style={{ color: colors.gold }}>★ grade: SUBMIT · 8 verified · report.md ready</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+
+                {/* SAFETY RAILS */}
+                <section className="py-20 bg-vision-gold border-b-4 border-black">
+                    <div className="container">
+                        <div className="grid lg:grid-cols-2 gap-12 items-center">
+                            <motion.div
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                            >
+                                <div className="inline-block mb-6">
+                                    <div className="relative">
+                                        <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black" />
+                                        <div className="relative bg-white border-4 border-black px-5 py-2">
+                                            <span className="font-black uppercase tracking-widest text-black text-xs">Safety Rails</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2 className="text-4xl md:text-5xl font-black text-black uppercase mb-6 leading-tight">
+                                    In-scope only. <br />Always.
+                                </h2>
+                                <p className="text-black/80 text-lg font-medium mb-8 max-w-lg">
+                                    PreToolUse hooks intercept every Bash call and check the program's scope file before it runs.
+                                    One out-of-scope packet = one ban. We do not let that happen.
+                                </p>
+
+                                <div className="space-y-3">
+                                    {[
+                                        "Scope-guard hook on every Bash invocation",
+                                        "Per-wave assignment files dedupe surfaces",
+                                        "Three skeptical verification rounds, fresh HTTP each time",
+                                        "5-axis grader rejects inflated severity",
+                                        "Always-rejected list filters informational noise",
+                                    ].map((point) => (
+                                        <div key={point} className="flex items-start gap-3">
+                                            <div className="w-5 h-5 bg-black border-2 border-black flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <CheckCircle2 className="w-3 h-3 text-vision-gold" />
+                                            </div>
+                                            <span className="text-black font-bold">{point}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                className="relative"
+                            >
+                                <div className="absolute inset-0 translate-x-3 translate-y-3 bg-black" />
+                                <div className="relative bg-white border-4 border-black p-6">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <AlertTriangle className="w-5 h-5 text-black" />
+                                        <span className="font-black uppercase tracking-widest text-xs">Always-Rejected List</span>
+                                    </div>
+                                    <div className="space-y-2 font-mono text-sm">
+                                        {[
+                                            "Missing headers (CSP, HSTS)",
+                                            "GraphQL introspection alone",
+                                            "Self-XSS",
+                                            "Open redirect alone",
+                                            "SSRF DNS-only",
+                                            "Logout CSRF",
+                                            "Missing cookie flags alone",
+                                            "Banner / version disclosure",
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-center gap-3 border-b-2 border-black/10 pb-2">
+                                                <span className="font-black" style={{ color: colors.coral }}>✗</span>
+                                                <span className="text-black/80">{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* PRICING */}
+                <section className="py-20 bg-black border-b-4 border-vision-gold">
+                    <div className="container">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-16"
+                        >
+                            <div className="inline-block mb-6">
+                                <div className="relative">
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                                    <div className="relative bg-black border-4 border-vision-gold px-6 py-3">
+                                        <span className="font-black uppercase tracking-widest text-vision-gold">Pricing</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4 leading-tight">
+                                Free for solo. <span className="text-vision-gold">Scales with you.</span>
+                            </h2>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            {plans.map((plan, i) => (
+                                <motion.div
+                                    key={plan.name}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    whileHover={{ y: -8, rotate: 0 }}
+                                    className={`relative ${plan.highlighted ? "lg:-mt-4" : ""}`}
+                                    style={{ rotate: plan.highlighted ? "0deg" : i === 0 ? "-1deg" : "1deg" }}
+                                >
+                                    <div
+                                        className="absolute inset-0 translate-x-3 translate-y-3"
+                                        style={{ backgroundColor: plan.highlighted ? colors.gold : plan.color }}
+                                    />
+                                    <div
+                                        className={`relative h-full p-8 border-4 ${
+                                            plan.highlighted
+                                                ? "bg-vision-gold border-black"
+                                                : "bg-black border-vision-gold"
+                                        }`}
+                                    >
+                                        {plan.highlighted && (
+                                            <div className="absolute -top-3 right-4">
+                                                <div className="relative">
+                                                    <div className="absolute inset-0 translate-x-1 translate-y-1 bg-black" />
+                                                    <div className="relative bg-white border-2 border-black px-3 py-1">
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-black">Most Popular</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <h3 className={`text-2xl font-black uppercase mb-1 ${plan.highlighted ? "text-black" : "text-white"}`}>
+                                            {plan.name}
+                                        </h3>
+                                        <p className={`text-sm mb-6 ${plan.highlighted ? "text-black/70" : "text-white/60"}`}>{plan.blurb}</p>
+
+                                        <div className="mb-6 flex items-baseline gap-1">
+                                            <span className={`text-5xl font-black ${plan.highlighted ? "text-black" : "text-vision-gold"}`}>
+                                                {plan.price}
+                                            </span>
+                                            {plan.suffix && (
+                                                <span className={`text-base font-bold ${plan.highlighted ? "text-black/70" : "text-white/50"}`}>
+                                                    {plan.suffix}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <ul className="space-y-3 mb-8">
+                                            {plan.features.map((f) => (
+                                                <li key={f} className="flex items-start gap-2 text-sm font-medium">
+                                                    <CheckCircle2
+                                                        className={`w-4 h-4 mt-0.5 flex-shrink-0 ${plan.highlighted ? "text-black" : "text-vision-gold"}`}
+                                                    />
+                                                    <span className={plan.highlighted ? "text-black" : "text-white/80"}>{f}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        {plan.href.startsWith("http") ? (
+                                            <a
+                                                href={plan.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`block text-center font-black uppercase tracking-wider py-3 border-4 transition-all ${
+                                                    plan.highlighted
+                                                        ? "bg-black text-vision-gold border-black hover:bg-vision-gold hover:text-black hover:border-black"
+                                                        : "bg-vision-gold text-black border-vision-gold hover:bg-black hover:text-vision-gold"
+                                                }`}
+                                            >
+                                                {plan.cta}
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                to={plan.href}
+                                                className={`block text-center font-black uppercase tracking-wider py-3 border-4 transition-all ${
+                                                    plan.highlighted
+                                                        ? "bg-black text-vision-gold border-black hover:bg-vision-gold hover:text-black hover:border-black"
+                                                        : "bg-vision-gold text-black border-vision-gold hover:bg-black hover:text-vision-gold"
+                                                }`}
+                                            >
+                                                {plan.cta}
+                                            </Link>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* FINAL CTA */}
+                <section className="py-20 bg-vision-gold relative overflow-hidden">
+                    <motion.div
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                        className="absolute -top-20 -right-20 w-80 h-80 border-4 border-black hidden lg:block"
+                    />
+                    <motion.div
+                        animate={{ rotate: [360, 0] }}
+                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                        className="absolute -bottom-20 -left-20 w-64 h-64 border-4 border-black hidden lg:block"
+                    />
+                    <div className="container relative z-10">
+                        <div className="text-center max-w-3xl mx-auto">
+                            <Rocket className="w-12 h-12 text-black mx-auto mb-6" />
+                            <h2 className="text-4xl md:text-6xl font-black text-black uppercase mb-6 leading-tight">
+                                Ready to ship a report tonight?
+                            </h2>
+                            <p className="text-black/80 text-lg font-bold mb-10 max-w-xl mx-auto">
+                                Clone the repo, run install.sh, and fire <span className="font-mono bg-black/10 px-2 py-0.5">/bountyagent</span> at your next program.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <div className="relative group inline-block">
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold border-4 border-black transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                    <a
+                                        href="https://github.com/deonmenezes/bountyhunter"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="relative bg-black text-vision-gold font-black uppercase tracking-wider px-8 py-4 text-base border-4 border-black inline-flex items-center gap-2"
+                                    >
+                                        <GitBranch className="w-5 h-5" />
+                                        Get the Repo
+                                    </a>
+                                </div>
+                                <div className="relative group inline-block">
+                                    <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-all group-hover:translate-x-3 group-hover:translate-y-3" />
+                                    <Link
+                                        to="/contact"
+                                        className="relative bg-white text-black font-black uppercase tracking-wider px-8 py-4 text-base border-4 border-black inline-flex items-center gap-2"
+                                    >
+                                        Talk to Us
+                                        <ArrowRight className="w-5 h-5" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <Footer />
+            </div>
+        </PageTransition>
+    );
 };
 
 export default Bugbounty;
