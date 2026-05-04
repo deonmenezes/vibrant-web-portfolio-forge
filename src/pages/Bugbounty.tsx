@@ -21,6 +21,7 @@ import {
   Container,
   ScanLine,
   KeyRound,
+  Github,
 } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -266,6 +267,16 @@ const Bugbounty = () => {
               >
                 Book a demo
               </Link>
+              <a
+                href="https://github.com/deonmenezes/bountyhunter"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-5 py-3 text-sm font-semibold text-white/80 hover:text-white hover:border-white/30 transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                View on GitHub
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
               <span className="text-xs text-white/40">No credit card · 14-day pilot</span>
             </motion.div>
 
@@ -300,6 +311,18 @@ const Bugbounty = () => {
               </p>
             </div>
             <TerminalPreview />
+            <div className="mt-8 flex justify-center">
+              <a
+                href="https://github.com/deonmenezes/bountyhunter"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                bountyhunter — open-source recon CLI
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </section>
 
