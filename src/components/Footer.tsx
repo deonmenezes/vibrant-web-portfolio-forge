@@ -132,8 +132,9 @@ export const Footer = () => {
 
   const contactInfo = [
     { icon: MapPin, text: "Mumbai, India", href: "https://maps.app.goo.gl/sZanUiqZVm1bJ5rc6" },
-    { icon: Phone, text: "+918104796542", href: "tel:+918104796542" },
-    { icon: Phone, text: "+919167342135", href: "tel:+919167342135" },
+    { icon: Phone, text: "🇮🇳 India: +91 81047 96542", href: "tel:+918104796542" },
+    { icon: Phone, text: "🇦🇪 Dubai: +971 56 643 3640", href: "tel:+971566433640" },
+    { icon: Phone, text: "🇺🇸 USA: +1 (628) 246-6825", href: "tel:+16282466825" },
     { icon: Mail, text: "deon.menezes@virelity.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=deon.menezes@virelity.com" },
     { icon: MessageSquare, text: "WhatsApp Support", href: "https://wa.me/918104796542" },
   ];
