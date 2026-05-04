@@ -196,6 +196,217 @@ const integrations = [
   "PagerDuty", "Okta", "1Password", "HackerOne",
 ];
 
+// ─── Mock product previews ──────────────────────────────────────────────────
+
+const ReconMock = () => {
+  const rows = [
+    { host: "api.acme.com", status: "live", code: 200, tone: accent.electric },
+    { host: "staging.acme.com", status: "live", code: 200, tone: accent.electric },
+    { host: "internal-vpn.acme.com", status: "exposed", code: 401, tone: accent.coral },
+    { host: "old-admin.acme.com", status: "leak", code: 200, tone: accent.gold },
+    { host: "ci.acme.com", status: "redirect", code: 308, tone: accent.cyan },
+    { host: "metrics.acme.com", status: "live", code: 200, tone: accent.electric },
+    { host: "s3-archive.acme.com", status: "expired", code: 410, tone: "#9ca3af" },
+  ];
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/60 backdrop-blur p-5 font-mono text-xs">
+      <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-white/40 mb-4">
+        <span>discovered surface</span>
+        <span>47 hosts · 0:00:11</span>
+      </div>
+      <div className="space-y-1.5">
+        {rows.map((r, i) => (
+          <motion.div
+            key={r.host}
+            initial={{ opacity: 0, x: -8 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: i * 0.06 }}
+            className="flex items-center justify-between rounded-md bg-white/[0.02] border border-white/5 px-3 py-2"
+          >
+            <div className="flex items-center gap-2 text-white/80 truncate">
+              <span className="w-1 h-1 rounded-full" style={{ background: r.tone }} />
+              <span className="truncate">{r.host}</span>
+            </div>
+            <div className="flex items-center gap-3 shrink-0 text-white/50">
+              <span className="text-[10px] uppercase tracking-wider" style={{ color: r.tone }}>{r.status}</span>
+              <span>{r.code}</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const PentestMock = () => (
+  <div className="rounded-2xl border border-white/10 bg-black/60 backdrop-blur p-5">
+    <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-white/40 mb-4">
+      <span>finding · vrl-2451</span>
+      <span style={{ color: accent.coral }}>● critical · cvss 9.1</span>
+    </div>
+    <div className="text-white text-sm font-semibold">IDOR on /api/v2/users/{`{id}`}/billing</div>
+    <div className="mt-1 text-xs text-white/50">CWE-639 · auth-broken-object-level · researcher @0xfaye</div>
+    <div className="mt-4 rounded-lg bg-white/[0.03] border border-white/5 p-3 font-mono text-[11px] leading-relaxed text-white/80">
+      <div><span className="text-white/40">$ curl</span> -H "Auth: $A" \</div>
+      <div className="pl-4">api.acme.com/api/v2/users/<span style={{ color: accent.coral }}>9821</span>/billing</div>
+      <div className="text-white/40 mt-1">{"// returns another tenant's invoices"}</div>
+    </div>
+    <div className="mt-4 flex items-center justify-between text-xs">
+      <span className="text-white/50">patch suggested · PR ready</span>
+      <span className="rounded-full bg-white/[0.05] border border-white/10 px-2.5 py-0.5 text-white/70">$1,200</span>
+    </div>
+  </div>
+);
+
+const CloudMock = () => {
+  const node = "rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white/80 font-mono";
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/60 backdrop-blur p-5">
+      <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-white/40 mb-4">
+        <span>aws · us-east-1</span>
+        <span style={{ color: accent.gold }}>3 misconfigurations</span>
+      </div>
+      <div className="grid grid-cols-3 gap-3 items-center">
+        <div className={node}>VPC<br /><span className="text-white/40">10.0.0.0/16</span></div>
+        <div className="flex items-center justify-center text-white/30 text-xs">→</div>
+        <div className={node + " border-l-2"} style={{ borderLeftColor: accent.coral }}>
+          IGW <span className="text-[10px]" style={{ color: accent.coral }}>open 0.0.0.0/0:22</span>
+        </div>
+        <div className={node}>RDS<br /><span className="text-white/40">prod-db</span></div>
+        <div className="flex items-center justify-center text-white/30 text-xs">↘</div>
+        <div className={node + " border-l-2"} style={{ borderLeftColor: accent.gold }}>
+          IAM <span className="text-[10px]" style={{ color: accent.gold }}>* on s3:*</span>
+        </div>
+        <div className={node}>S3<br /><span className="text-white/40">archive-2024</span></div>
+        <div className="flex items-center justify-center text-white/30 text-xs">→</div>
+        <div className={node + " border-l-2"} style={{ borderLeftColor: accent.coral }}>
+          PUBLIC <span className="text-[10px]" style={{ color: accent.coral }}>list+get</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TriageMock = () => {
+  const rows = [
+    { id: "VRL-2451", title: "IDOR on /billing", sev: "critical", tone: accent.coral, asg: "@deon" },
+    { id: "VRL-2440", title: "Reflected XSS — /search", sev: "high", tone: "#fb923c", asg: "@team" },
+    { id: "VRL-2438", title: "SSRF — /webhook/test", sev: "medium", tone: accent.gold, asg: "@cloud" },
+    { id: "VRL-2433", title: "Stale npm token in CI log", sev: "medium", tone: accent.gold, asg: "@sec" },
+    { id: "VRL-2430", title: "Missing rate-limit on /login", sev: "low", tone: accent.cyan, asg: "@team" },
+  ];
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/60 backdrop-blur p-5">
+      <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-white/40 mb-4">
+        <span>triage queue</span>
+        <span className="flex items-center gap-3">
+          <span style={{ color: accent.coral }}>1c</span>
+          <span style={{ color: "#fb923c" }}>1h</span>
+          <span style={{ color: accent.gold }}>2m</span>
+          <span style={{ color: accent.cyan }}>1l</span>
+        </span>
+      </div>
+      <div className="space-y-1.5">
+        {rows.map((r) => (
+          <div key={r.id} className="flex items-center justify-between rounded-md bg-white/[0.02] border border-white/5 px-3 py-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: r.tone }} />
+              <span className="font-mono text-[11px] text-white/40">{r.id}</span>
+              <span className="text-xs text-white/85 truncate">{r.title}</span>
+            </div>
+            <span className="text-[10px] text-white/40 shrink-0">{r.asg}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex items-center justify-between text-[10px] uppercase tracking-widest text-white/40">
+        <span>auto-deduped 12 → 5</span>
+        <span style={{ color: accent.electric }}>SLA on track</span>
+      </div>
+    </div>
+  );
+};
+
+const modules = [
+  {
+    n: "01",
+    name: "Recon",
+    headline: "Map every door before someone else finds the unlocked one.",
+    body: "Continuous external discovery — subdomains, cloud assets, leaked credentials, rogue dev environments — with provenance you can audit.",
+    bullets: ["Subdomain & ASN sweep", "Cert transparency watch", "Public paste / repo scan", "Stale env detection"],
+    icon: Search,
+    tone: accent.cyan,
+    Mock: ReconMock,
+    flip: false,
+  },
+  {
+    n: "02",
+    name: "Pentest",
+    headline: "Humans break what scanners can't.",
+    body: "Vetted offensive engineers chain logic flaws scanners can't reach — IDOR, SSRF, auth bypass, race conditions, business-logic abuse.",
+    bullets: ["OSCP / CRTP-grade researchers", "PoC + reproduction script", "CVSS-scored, severity-capped", "Fix recommendation per finding"],
+    icon: Bug,
+    tone: accent.coral,
+    Mock: PentestMock,
+    flip: true,
+  },
+  {
+    n: "03",
+    name: "Cloud",
+    headline: "See your real blast radius.",
+    body: "Misconfig hunting across AWS, GCP, Azure, plus IaC drift on Terraform and Pulumi. Find the one IAM star that exposes everything.",
+    bullets: ["IAM blast-radius graph", "Public bucket / endpoint sweep", "K8s RBAC + admission audit", "Drift on every PR"],
+    icon: Cloud,
+    tone: accent.gold,
+    Mock: CloudMock,
+    flip: false,
+  },
+  {
+    n: "04",
+    name: "Triage",
+    headline: "Engineers see signal — never noise.",
+    body: "Every finding is deduped, validated, severity-capped, assigned, and tracked to fix. Regressions auto-reopen the original ticket.",
+    bullets: ["Auto-dedupe + cluster", "PoC validation before dispatch", "Slack / Jira / Linear sync", "Reward on validated patch"],
+    icon: Shield,
+    tone: accent.electric,
+    Mock: TriageMock,
+    flip: true,
+  },
+];
+
+const tiers = [
+  {
+    name: "Pilot",
+    price: "Free",
+    cadence: "14-day trial",
+    blurb: "Run an automated sweep on a single target. No card, no contract.",
+    features: ["1 production target", "Automated recon + SAST", "Email triage", "Findings export (PDF / CSV)"],
+    cta: "Start pilot",
+    href: "/contact",
+    highlight: false,
+  },
+  {
+    name: "Growth",
+    price: "$1,999",
+    cadence: "/ month",
+    blurb: "Vetted researchers + automation working in parallel for fast-moving teams.",
+    features: ["5 targets", "Researcher pool + auto recon", "Shared Slack triage channel", "Jira / Linear sync", "Quarterly red-team day"],
+    cta: "Talk to sales",
+    href: "/contact",
+    highlight: true,
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    cadence: "annual",
+    blurb: "Dedicated team, SLA, compliance evidence — for security-critical orgs.",
+    features: ["Unlimited targets", "Dedicated researcher squad", "On-call SLA + executive reporting", "SOC 2 / ISO / HIPAA bundles", "Bring-your-own researcher option"],
+    cta: "Contact us",
+    href: "/contact",
+    highlight: false,
+  },
+];
+
 const Bugbounty = () => {
   return (
     <PageTransition>
@@ -326,6 +537,77 @@ const Bugbounty = () => {
           </div>
         </section>
 
+        {/* MODULES */}
+        <section className="relative py-20 md:py-28">
+          <div className="container mx-auto px-4">
+            <div className="mb-16 max-w-2xl">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/50">Modules</div>
+              <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                One platform.{" "}
+                <span className="bg-gradient-to-r from-cyan-300 via-violet-300 to-yellow-200 bg-clip-text text-transparent">
+                  Four lenses on your security.
+                </span>
+              </h2>
+              <p className="mt-4 text-white/60 leading-relaxed">
+                Subscribe to one module or stack the whole pipeline — every layer reports
+                into the same triage queue.
+              </p>
+            </div>
+
+            <div className="space-y-20 md:space-y-28">
+              {modules.map((m, i) => {
+                const Mock = m.Mock;
+                return (
+                  <motion.div
+                    key={m.n}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.6 }}
+                    className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center ${m.flip ? "lg:[&>*:first-child]:order-2" : ""}`}
+                  >
+                    {/* copy column */}
+                    <div>
+                      <div className="flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-white/50">
+                        <span className="font-mono">{m.n}</span>
+                        <span className="h-px w-8 bg-white/15" />
+                        <span style={{ color: m.tone }}>{m.name}</span>
+                      </div>
+                      <h3 className="mt-4 text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight max-w-xl">
+                        {m.headline}
+                      </h3>
+                      <p className="mt-4 text-white/65 leading-relaxed max-w-lg">{m.body}</p>
+                      <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-lg">
+                        {m.bullets.map((b) => (
+                          <li key={b} className="flex items-start gap-2 text-sm text-white/75">
+                            <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: m.tone }} />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-7 inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white transition-colors group cursor-default">
+                        Learn more about {m.name}
+                        <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                    </div>
+
+                    {/* mock column */}
+                    <div className="relative">
+                      <div
+                        className="absolute -inset-2 rounded-3xl blur-2xl opacity-40 pointer-events-none"
+                        style={{ background: `radial-gradient(circle at 30% 0%, ${m.tone}66, transparent 70%)` }}
+                      />
+                      <div className="relative">
+                        <Mock />
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* CAPABILITIES */}
         <section className="relative py-20 md:py-28">
           <div className="container mx-auto px-4">
@@ -380,6 +662,75 @@ const Bugbounty = () => {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* PRICING */}
+        <section className="relative py-20 md:py-28">
+          <div className="container mx-auto px-4">
+            <div className="mb-12 text-center max-w-2xl mx-auto">
+              <div className="text-xs uppercase tracking-[0.22em] text-white/50">Pricing</div>
+              <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                Pay only when a bug is real.
+              </h2>
+              <p className="mt-4 text-white/60">
+                No retainer for unread reports. Every plan caps your spend at the reward
+                bands you set.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-6xl mx-auto">
+              {tiers.map((t, i) => (
+                <motion.div
+                  key={t.name}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.06 }}
+                  className={`relative rounded-2xl p-7 ${
+                    t.highlight
+                      ? "bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/20"
+                      : "bg-white/[0.02] border border-white/10"
+                  }`}
+                >
+                  {t.highlight && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-black">
+                      Most picked
+                    </div>
+                  )}
+                  <div className="text-sm font-semibold text-white">{t.name}</div>
+                  <div className="mt-4 flex items-baseline gap-1.5">
+                    <span className="text-4xl md:text-5xl font-bold tracking-tight text-white">{t.price}</span>
+                    <span className="text-sm text-white/50">{t.cadence}</span>
+                  </div>
+                  <p className="mt-3 text-sm text-white/60 leading-relaxed">{t.blurb}</p>
+                  <ul className="mt-6 space-y-2.5">
+                    {t.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-white/80">
+                        <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: t.highlight ? accent.cyan : "rgba(255,255,255,0.6)" }} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to={t.href}
+                    className={`mt-7 w-full inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+                      t.highlight
+                        ? "bg-white text-black hover:bg-white/90"
+                        : "border border-white/20 bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                    }`}
+                  >
+                    {t.cta}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            <p className="mt-8 text-center text-xs text-white/40">
+              All plans include SOC 2-ready evidence pack · researcher payouts handled by Virelity ·
+              cancel anytime.
+            </p>
           </div>
         </section>
 
