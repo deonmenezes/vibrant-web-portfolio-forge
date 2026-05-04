@@ -8,7 +8,13 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "verify": "node scripts/parallel.mjs lint=\"npm run lint\" tsc=\"npm run typecheck\" build=\"npm run build\"",
+    "verify:fast": "node scripts/parallel.mjs lint=\"npm run lint\" tsc=\"npm run typecheck\"",
+    "analyze": "ANALYZE=1 vite build",
+    "clean": "rm -rf dist node_modules/.vite",
+    "scaffold:page": "node scripts/scaffold-page.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

@@ -11,18 +11,32 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === "development" && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      // Provide a local mock for Next's `next/navigation` so packages that
-      // import it (like @vercel/speed-insights) don't break in a non-Next
-      // Vite environment. We alias both with and without the `.js` extension
-      // because some packages import `next/navigation.js` explicitly.
       "next/navigation": path.resolve(__dirname, "./src/vite-mocks/next-navigation.ts"),
       "next/navigation.js": path.resolve(__dirname, "./src/vite-mocks/next-navigation.ts"),
+    },
+  },
+  build: {
+    target: "es2020",
+    cssCodeSplit: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 1024,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("three") || id.includes("@react-three") || id.includes("@splinetool")) return "three";
+          if (id.includes("framer-motion") || id.includes("lenis")) return "motion";
+          if (id.includes("@radix-ui")) return "radix";
+          if (id.includes("recharts") || id.includes("d3-")) return "charts";
+          if (id.includes("react-router") || id.includes("react-dom") || id.includes("/react/")) return "react";
+          return "vendor";
+        },
+      },
     },
   },
 }));
