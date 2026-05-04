@@ -35,6 +35,7 @@ import DeonMenezes from "./pages/deonmenezes";
 import Linktree from "./pages/Linktree";
 import Resources from "./pages/Resources";
 import ResourceBranch from "./pages/ResourceBranch";
+import Bugbounty from "./pages/Bugbounty";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ const AppWithAnalytics = () => {
         <Route path="/linktree" element={<Linktree />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
+        <Route path="/bugbounty" element={<Bugbounty />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />
