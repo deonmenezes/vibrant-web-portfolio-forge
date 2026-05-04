@@ -60,6 +60,24 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Agent / build harness
+
+This repo ships an OMC-inspired multi-agent harness. See [`CLAUDE.md`](./CLAUDE.md) for the project map and [`.claude/README.md`](./.claude/README.md) for agent and slash-command details.
+
+Key commands:
+
+```sh
+npm run verify        # lint ‖ typecheck ‖ build, in parallel
+npm run verify:fast   # lint ‖ typecheck (skip build)
+npm run typecheck     # tsc -b --noEmit
+npm run scaffold:page -- MyPage [--service]
+npm run analyze       # build with bundle visualizer
+```
+
+Slash commands (in Claude Code): `/ship`, `/audit`, `/new-page`.
+
+CI runs `lint`, `typecheck`, and `build` as a parallel matrix in `.github/workflows/ci.yml`.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/4162ba58-7f8c-4564-8553-30d7ee5f5d58) and click on Share -> Publish.
