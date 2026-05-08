@@ -17,11 +17,11 @@ type Post = {
 const posts: Post[] = [
   {
     slug: "gpt-5-5-party",
-    title: "GPT-5.5 Party: A Reel from Sam Altman's OpenAI Developers Night",
+    title: "GPT-5.5 Party: Inside Sam Altman's OpenAI Developers Night",
     excerpt:
-      "First-person clip from the GPT-5.5 launch crowd — what people are calling Sam Altman's party and the OpenAI developers party.",
-    date: "2026-05-07",
-    dateLabel: "May 7, 2026",
+      "I went to Sam Altman's GPT-5.5 party with a brand-new MacBook and walked out with his signature on it. Full reel + breakdown of the OpenAI developers night.",
+    date: "2026-05-08",
+    dateLabel: "May 8, 2026",
     category: "OpenAI",
   },
 ];
