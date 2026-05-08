@@ -36,6 +36,8 @@ import Linktree from "./pages/Linktree";
 import Resources from "./pages/Resources";
 import ResourceBranch from "./pages/ResourceBranch";
 import Bugbounty from "./pages/Bugbounty";
+import Blog from "./pages/Blog";
+import Gpt55Party from "./pages/blog/Gpt55Party";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +63,8 @@ const AppWithAnalytics = () => {
         <Route path="/resources" element={<Resources />} />
         <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
         <Route path="/bugbounty" element={<Bugbounty />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/gpt-5-5-party" element={<Gpt55Party />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />
