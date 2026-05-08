@@ -12,8 +12,7 @@ const REEL_EMBED = `https://www.instagram.com/reel/${REEL_SHORTCODE}/embed`;
 const PUBLISHED = "2026-05-08";
 const EVENT_DATE = "2026-05-06";
 
-const TITLE =
-  "GPT-5.5 Party: Inside Sam Altman's OpenAI Developers Night (My MacBook Got Signed) | Virelity";
+const TITLE = "OpenAI GPT-5.5 Party | Virelity";
 const DESCRIPTION =
   "I went to Sam Altman's GPT-5.5 party — tight security, bubble tea and steak, an OpenAI image-gen photo booth, and Sam signed my MacBook. Full reel + breakdown of the OpenAI developers night.";
 const KEYWORDS = [
@@ -34,7 +33,7 @@ const KEYWORDS = [
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "GPT-5.5 Party: Inside Sam Altman's OpenAI Developers Night",
+  headline: "OpenAI GPT-5.5 Party",
   description: DESCRIPTION,
   author: {
     "@type": "Person",
@@ -138,7 +137,7 @@ const Gpt55Party = () => {
         <link rel="canonical" href={POST_URL} />
 
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="GPT-5.5 Party — Inside Sam Altman's OpenAI Developers Night (Sam signed my MacBook)" />
+        <meta property="og:title" content="OpenAI GPT-5.5 Party" />
         <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:url" content={POST_URL} />
         <meta property="og:image" content="https://virelity.com/logo.jpeg" />
@@ -155,7 +154,7 @@ const Gpt55Party = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@virelity" />
         <meta name="twitter:creator" content="@DeonMen" />
-        <meta name="twitter:title" content="GPT-5.5 Party — Sam Altman signed my MacBook (full reel)" />
+        <meta name="twitter:title" content="OpenAI GPT-5.5 Party" />
         <meta name="twitter:description" content={DESCRIPTION} />
         <meta name="twitter:image" content="https://virelity.com/logo.jpeg" />
 
@@ -189,7 +188,7 @@ const Gpt55Party = () => {
                   OpenAI · Live from the room
                 </span>
                 <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                  GPT-5.5 Party: Inside Sam Altman's OpenAI Developers Night
+                  OpenAI GPT-5.5 Party
                 </h1>
                 <p className="text-lg text-muted-foreground">
                   I went to Sam Altman's GPT-5.5 party — bought a brand-new
