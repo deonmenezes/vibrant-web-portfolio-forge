@@ -273,12 +273,12 @@ const Gpt55Party = () => {
                 </h2>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://www.instagram.com/deonmenezes/"
+                    href="https://www.instagram.com/deon_tech/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
                   >
-                    <Instagram className="w-4 h-4" /> Instagram
+                    <Instagram className="w-4 h-4" /> @deon_tech
                   </a>
                   <a
                     href="https://x.com/DeonMen"
