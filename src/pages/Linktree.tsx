@@ -1,1 +1,126 @@
-aW1wb3J0IHsgUGFnZVRyYW5zaXRpb24gfSBmcm9tICJAL2NvbXBvbmVudHMvUGFnZVRyYW5zaXRpb24iOwppbXBvcnQgeyBtb3Rpb24gfSBmcm9tICJmcmFtZXItbW90aW9uIjsKaW1wb3J0IHsgSGVsbWV0IH0gZnJvbSAicmVhY3QtaGVsbWV0LWFzeW5jIjsKaW1wb3J0IHsgQXJyb3dVcFJpZ2h0LCBHaXRodWIsIExpbmtlZGluLCBNZXNzYWdlQ2lyY2xlLCBUd2l0dGVyLCBZb3V0dWJlIH0gZnJvbSAibHVjaWRlLXJlYWN0IjsKCmNvbnN0IGxpbmtzID0gWwogIHsKICAgIG5hbWU6ICJYIiwKICAgIHN1YnRpdGxlOiAiQERlb25NZW4iLAogICAgaHJlZjogImh0dHBzOi8veC5jb20vRGVvbk1lbiIsCiAgICBpY29uOiBUd2l0dGVyLAogIH0sCiAgewogICAgbmFtZTogIkRpc2NvcmQiLAogICAgc3VidGl0bGU6ICJKb2luIHRoZSBzZXJ2ZXIiLAogICAgaHJlZjogImh0dHBzOi8vZGlzY29yZC5nZy95N2JldjNGeG0iLAogICAgaWNvbjogTWVzc2FnZUNpcmNsZSwKICB9LAogIHsKICAgIG5hbWU6ICJHaXRIdWIiLAogICAgc3VidGl0bGU6ICJkZW9ubWVuZXplcyIsCiAgICBocmVmOiAiaHR0cHM6Ly9naXRodWIuY29tL2Rlb25tZW5lemVzIiwKICAgIGljb246IEdpdGh1YiwKICB9LAogIHsKICAgIG5hbWU6ICJMaW5rZWRJbiIsCiAgICBzdWJ0aXRsZTogIkRlb24gTWVuZXplcyIsCiAgICBocmVmOiAiaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2luL2Rlb24tbWVuZXplcy1hODI1NTIyNTQvIiwKICAgIGljb246IExpbmtlZGluLAogIH0sCiAgewogICAgbmFtZTogIllvdVR1YmUiLAogICAgc3VidGl0bGU6ICJARGVvbk1lbmV6ZXMiLAogICAgaHJlZjogImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL0BEZW9uTWVuZXplcyIsCiAgICBpY29uOiBZb3V0dWJlLAogIH0sCl07Cgpjb25zdCBMaW5rdHJlZSA9ICgpID0+IHsKICByZXR1cm4gKAogICAgPFBhZ2VUcmFuc2l0aW9uPgogICAgICA8PgogICAgICAgIDxIZWxtZXQ+CiAgICAgICAgICA8dGl0bGU+RGVvbiBNZW5lemVzIExpbmt0cmVlIHwgWCwgRGlzY29yZCwgR2l0SHViLCBMaW5rZWRJbiwgWW91VHViZTwvdGl0bGU+CiAgICAgICAgICA8bWV0YQogICAgICAgICAgICBuYW1lPSJkZXNjcmlwdGlvbiIKICAgICAgICAgICAgY29udGVudD0iT25lIHNpbXBsZSBwYWdlIHRvIGZpbmQgRGVvbiBNZW5lemVzIG9uIFgsIERpc2NvcmQsIEdpdEh1YiwgTGlua2VkSW4sIGFuZCBZb3VUdWJlLiIKICAgICAgICAgIC8+CiAgICAgICAgICA8bGluayByZWw9ImNhbm9uaWNhbCIgaHJlZj0iaHR0cHM6Ly92aXJlbGl0eS5jb20vbGlua3RyZWUiIC8+CiAgICAgICAgICA8bWV0YSBwcm9wZXJ0eT0ib2c6dGl0bGUiIGNvbnRlbnQ9IkRlb24gTWVuZXplcyBMaW5rdHJlZSIgLz4KICAgICAgICAgIDxtZXRhCiAgICAgICAgICAgIHByb3BlcnR5PSJvZzpkZXNjcmlwdGlvbiIKICAgICAgICAgICAgY29udGVudD0iT25lIHNpbXBsZSBwYWdlIHRvIGZpbmQgRGVvbiBNZW5lemVzIG9uIFgsIERpc2NvcmQsIEdpdEh1YiwgTGlua2VkSW4sIGFuZCBZb3VUdWJlLiIKICAgICAgICAgIC8+CiAgICAgICAgICA8bWV0YSBwcm9wZXJ0eT0ib2c6dXJsIiBjb250ZW50PSJodHRwczovL3ZpcmVsaXR5LmNvbS9saW5rdHJlZSIgLz4KICAgICAgICAgIDxtZXRhIHByb3BlcnR5PSJvZzp0eXBlIiBjb250ZW50PSJ3ZWJzaXRlIiAvPgogICAgICAgIDwvSGVsbWV0PgoKICAgICAgICA8bWFpbiBjbGFzc05hbWU9InJlbGF0aXZlIGZsZXggbWluLWgtc2NyZWVuIGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBvdmVyZmxvdy1oaWRkZW4gYmctWyMxMjEyMTJdIHB4LTQgcHktNiB0ZXh0LXdoaXRlIj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJhYnNvbHV0ZSBpbnNldC0wIGJnLVtyYWRpYWwtZ3JhZGllbnQoY2lyY2xlX2F0X3RvcCwjMmYyZjJmLHRyYW5zcGFyZW50XzQwJSksbGluZWFyLWdyYWRpZW50KDE4MGRlZywjMWExYTFhXzAlLCMxMDEwMTBfMTAwJSldIiAvPgogICAgICAgICAgPG1vdGlvbi5kaXYKICAgICAgICAgICAgYW5pbWF0ZT17eyBzY2FsZTogWzEsIDEuMDgsIDFdLCBvcGFjaXR5OiBbMC4xOCwgMC4yOCwgMC4xOF0gfX0KICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogOCwgcmVwZWF0OiBJbmZpbml0eSwgZWFzZTogImVhc2VJbk91dCIgfX0KICAgICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSBsZWZ0LTEvMiB0b3TopMTYgaC01NiB3LTU2IC10cmFuc2xhdGUteC0xLzIgcm91bmRlZC1mdWxsIGJnLVsjZDRhZjM3XSBibHVyLTN4bCIKICAgICAgICAgIC8+CgogICAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPSJyZWxhdGl2ZSB6LTEwIHctZnVsbCBtYXgtdy1tZCI+CiAgICAgICAgICAgIDxtb3Rpb24uZGl2CiAgICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB5OiAyNCB9fQogICAgICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fQogICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNSB9fQogICAgICAgICAgICAgIGNsYXNzTmFtZT0icm91bmRlZC1bMnJlbV0gYm9yZGVyIGJvcmRlci13aGl0ZS8xMCBiZy13aGl0ZS81IHAtNSBzaGFkb3ctWzBfMjBweF84MHB4X3JnYmEoMCwwLDAsMC40NSldIGJhY2tkcm9wLWJsdXItbWQiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibWItNSB0ZXh0LWNlbnRlciI+CiAgICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICAgIHNyYz0iL2Rlb25tZW5lemVzLnBuZyIKICAgICAgICAgICAgICAgICAgYWx0PSJEZW9uIE1lbmV6ZXMiCiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0ibXgtYXV0byBtYi00IGgtMjQgdy0yNCByb3VuZGVkLWZ1bGwgYm9yZGVyLTQgYm9yZGVyLXdoaXRlIG9iamVjdC1jb3ZlciBzaGFkb3ctbGciCiAgICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgICAgPGgxIGNsYXNzTmFtZT0idGV4dC1yeGwgZm9udC1ibGFjayB0cmFja2luZy10aWdodCB0ZXh0LXdoaXRlIj5EZW9uIE1lbmV6ZXM8L2gxPgogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJtdC0xIHRleHQtc20gZm9udC1tZWRpdW0gdGV4dC13aGl0ZS83MCI+CiAgICAgICAgICAgICAgICAgIEZvdW5kZXIsIGJ1aWxkZXIsIGNyZWF0b3IuIFBpY2sgYSBwbGF0Zm9ybSBiZWxvdy4KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InNwYWNlLXktMyI+CiAgICAgICAgICAgICAgICB7bGlua3MubWFwKChsaW5rLCBpbmRleCkgPT4gewogICAgICAgICAgICAgICAgICBjb25zdCBJY29uID0gbGluay5pY29uOwoKICAgICAgICAgICAgICAgICAgcmV0dXJuICgKICAgICAgICAgICAgICAgICAgICA8bW90aW9uLmEKICAgICAgICAgICAgICAgICAgICAgIGtleT17bGluay5uYW1lfQogICAgICAgICAgICAgICAgICAgICAgaHJlZj17bGluay5ocmVmfQogICAgICAgICAgICAgICAgICAgICAgdGFyZ2V0PSJfYmxhbmsiCiAgICAgICAgICAgICAgICAgICAgICByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiCiAgICAgICAgICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHk6IDEyIH19CiAgICAgICAgICAgICAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX0KICAgICAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZGVsYXk6IDAuMDggKiBpbmRleCwgZHVyYXRpb246IDAuMzUgfX0KICAgICAgICAgICAgICAgICAgICAgIHdoaWxlSG92ZXI9e3sgeTogLTIsIHNjYWxlOiAxLjAxIH19CiAgICAgICAgICAgICAgICAgICAgICB3aGlsZVRhcD17eyBzY2FsZTogMC45OCB9fQogICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gcm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xMCBiZy13aGl0ZSBweC00IHB5LTQgdGV4dC1ibGFjayBzaGFkb3ctWzBfMTBweF8zMHB4X3JnYmEoMCwwLDAsMC4xNSldIHRyYW5zaXRpb24tY29sb3JzIGhvdmVyOmJnLVsjZjRmMWU4XSIKICAgICAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTQiPgogICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBoLTEyIHctMTIgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHJvdW5kZWQtZnVsbCBiZy1bIzEyMTIxMl0gdGV4dC13aGl0ZSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgPEljb24gY2xhc3NOYW1lPSJoLTUgdy01IiAvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQtbGVmdCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQtYmFzZSBmb250LWJsYWNrIj57bGluay5uYW1lfTwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtYmxhY2svNjAiPntsaW5rLnN1YnRpdGxlfTwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgICAgICAgICAgICAgIDxBcnJvd1VwUmlnaHQgY2xhc3NOYW1lPSJoLTUgdy01IHNocmluay0wIHRleHQtYmxhY2svNjAiIC8+CiAgICAgICAgICAgICAgICAgICAgPC9tb3Rpb24uYT4KICAgICAgICAgICAgICAgICAgKTsKICAgICAgICAgICAgICAgIH0pfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L21vdGlvbi5kaXY+CiAgICAgICAgICA8L3NlY3Rpb24+CiAgICAgICAgPC9tYWluPgogICAgICA8Lz4KICAgIDwvUGFnZVRyYW5zaXRpb24+CiAgKTsKfTsKCmV4cG9ydCBkZWZhdWx0IExpbmt0cmVlOwo=
+import { PageTransition } from "@/components/PageTransition";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import { ArrowUpRight, Github, Linkedin, MessageCircle, Twitter, Youtube } from "lucide-react";
+
+const links = [
+  {
+    name: "X",
+    subtitle: "@DeonMen",
+    href: "https://x.com/DeonMen",
+    icon: Twitter,
+  },
+  {
+    name: "Discord",
+    subtitle: "Join the server",
+    href: "https://discord.gg/Sz6VMY5Jm",
+    icon: MessageCircle,
+  },
+  {
+    name: "GitHub",
+    subtitle: "deonmenezes",
+    href: "https://github.com/deonmenezes",
+    icon: Github,
+  },
+  {
+    name: "LinkedIn",
+    subtitle: "Deon Menezes",
+    href: "https://www.linkedin.com/in/deon-menezes-a82552254/",
+    icon: Linkedin,
+  },
+  {
+    name: "YouTube",
+    subtitle: "@DeonMenezes",
+    href: "https://www.youtube.com/@DeonMenezes",
+    icon: Youtube,
+  },
+];
+
+const Linktree = () => {
+  return (
+    <PageTransition>
+      <>
+        <Helmet>
+          <title>Deon Menezes Linktree | X, Discord, GitHub, LinkedIn, YouTube</title>
+          <meta
+            name="description"
+            content="One simple page to find Deon Menezes on X, Discord, GitHub, LinkedIn, and YouTube."
+          />
+          <link rel="canonical" href="https://virelity.com/linktree" />
+          <meta property="og:title" content="Deon Menezes Linktree" />
+          <meta
+            property="og:description"
+            content="One simple page to find Deon Menezes on X, Discord, GitHub, LinkedIn, and YouTube."
+          />
+          <meta property="og:url" content="https://virelity.com/linktree" />
+          <meta property="og:type" content="website" />
+        </Helmet>
+
+        <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#121212] px-4 py-6 text-white">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#2f2f2f,transparent_40%),linear-gradient(180deg,#1a1a1a_0%,#101010_100%)]" />
+          <motion.div
+            animate={{ scale: [1, 1.08, 1], opacity: [0.18, 0.28, 0.18] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-1/2 top-16 h-56 w-56 -translate-x-1/2 rounded-full bg-[#d4af37] blur-3xl"
+          />
+
+          <section className="relative z-10 w-full max-w-md">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-md"
+            >
+              <div className="mb-5 text-center">
+                <img
+                  src="/deonmenezes.png"
+                  alt="Deon Menezes"
+                  className="mx-auto mb-4 h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg"
+                />
+                <h1 className="text-2xl font-black tracking-tight text-white">Deon Menezes</h1>
+                <p className="mt-1 text-sm font-medium text-white/70">
+                  Founder, builder, creator. Pick a platform below.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {links.map((link, index) => {
+                  const Icon = link.icon;
+
+                  return (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.08 * index, duration: 0.35 }}
+                      whileHover={{ y: -2, scale: 1.01 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-center justify-between rounded-2xl border border-white/10 bg-white px-4 py-4 text-black shadow-[0_10px_30px_rgba(0,0,0,0.15)] transition-colors hover:bg-[#f4f1e8]"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#121212] text-white">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-base font-black">{link.name}</div>
+                          <div className="text-sm font-medium text-black/60">{link.subtitle}</div>
+                        </div>
+                      </div>
+
+                      <ArrowUpRight className="h-5 w-5 shrink-0 text-black/60" />
+                    </motion.a>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </section>
+        </main>
+      </>
+    </PageTransition>
+  );
+};
+
+export default Linktree;
