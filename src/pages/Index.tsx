@@ -587,6 +587,16 @@ const NeoProjectCard = ({ project, index }: { project: any; index: number }) => 
   );
 };
 
+// Client Companies
+const clientCompanies = [
+  { name: "Callbook.ai", url: "https://www.callbook.ai/", domain: "callbook.ai" },
+  { name: "RentAHuman", url: "https://rentahuman.ai/", domain: "rentahuman.ai" },
+  { name: "Tenkara", url: "https://app.tenkara.ai/", domain: "tenkara.ai" },
+  { name: "SecureNetMe", url: "https://securenetme.com/", domain: "securenetme.com" },
+  { name: "Naytive", url: "https://naytive.com/", domain: "naytive.com" },
+  { name: "Arqio", url: "https://www.arqio.ai/", domain: "arqio.ai" },
+];
+
 // Testimonials Data
 const testimonialsData = [
   {
@@ -594,12 +604,6 @@ const testimonialsData = [
     name: "Suraj Jamani",
     designation: "Producer",
     src: "/suraj.png",
-  },
-  {
-    quote: "I wanted to reimagine how people shop online, and CASA made that vision real. The swipe-to-shop experience feels fresh, fun, and effortless!",
-    name: "Steve Vora",
-    designation: "Founder",
-    src: "/steve_logo.png",
   },
   {
     quote: "Their team delivered beyond expectations. From concept to launch, the communication and execution were flawless—our KPIs lifted within weeks.",
@@ -951,7 +955,7 @@ const Index = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-3">
-                    {["/suraj.png", "/steve_logo.png", "/francis.jpg"].map((src, i) => (
+                    {["/suraj.png", "/francis.jpg"].map((src, i) => (
                       <div key={i} className="relative">
                         <div className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-vision-gold" />
                         <img
@@ -998,6 +1002,50 @@ const Index = () => {
             </span>
           </Marquee>
         </section>
+
+        {/* TRUSTED BY SECTION */}
+        <section className="py-16 bg-black overflow-hidden">
+          <div className="container">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center font-black uppercase tracking-widest text-white/50 text-xs sm:text-sm mb-10"
+            >
+              Trusted by teams at
+            </motion.p>
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+              {clientCompanies.map((company, i) => (
+                <motion.a
+                  key={company.name}
+                  href={company.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  whileHover={{ y: -4 }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 translate-x-1 translate-y-1 bg-vision-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative flex items-center gap-3 bg-black border-2 border-white/20 group-hover:border-white px-4 py-3 transition-colors">
+                    <img
+                      src={`https://www.google.com/s2/favicons?domain=${company.domain}&sz=128`}
+                      alt={company.name}
+                      loading="lazy"
+                      className="w-7 h-7 bg-white/10 p-0.5"
+                    />
+                    <span className="text-white font-black text-base md:text-lg whitespace-nowrap">
+                      {company.name}
+                    </span>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* service section */}
         <section ref={servicesRef} className="py-32 bg-black border-y-4 border-white overflow-hidden">
           <div className="container mb-16 pt-8">
