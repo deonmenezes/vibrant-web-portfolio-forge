@@ -2,7 +2,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PageTransition } from "@/components/PageTransition";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Award, BookOpen, Linkedin, Twitter, Mail, Instagram, Youtube, ArrowRight, Zap, Play } from "lucide-react";
+import { Award, BookOpen, Linkedin, Twitter, Mail, Instagram, Youtube, ArrowRight, Zap, Play, Globe } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -140,7 +140,8 @@ const DeonMenezes = () => {
                 {/* Social Links - Neobrutalist */}
                 <div className="flex gap-4">
                   {[
-                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/deonmenezes", color: colors.coral },
+                    { icon: <Globe className="w-5 h-5" />, href: "https://deonmenezes.com", color: colors.gold },
+                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/deon_tech", color: colors.coral },
                     { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/DeonMen", color: colors.cyan },
                     { icon: <Youtube className="w-5 h-5" />, href: "https://youtube.com/@deonmenezes", color: colors.coral },
                     { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/in/deon-menezes-a82552254/", color: colors.electric },
@@ -162,6 +163,21 @@ const DeonMenezes = () => {
                     </motion.a>
                   ))}
                 </div>
+
+                {/* Full personal portfolio */}
+                <motion.a
+                  href="https://deonmenezes.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative group inline-block mt-6"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <div className="absolute inset-0 translate-x-1 translate-y-1" style={{ backgroundColor: colors.gold }} />
+                  <div className="relative bg-black border-2 border-white px-6 py-3 text-white font-black uppercase tracking-wider text-sm flex items-center gap-2 group-hover:text-vision-gold transition-colors">
+                    Full portfolio · deonmenezes.com <ArrowRight className="w-4 h-4" />
+                  </div>
+                </motion.a>
               </motion.div>
 
               {/* Video Side */}
