@@ -12,6 +12,7 @@ const navItems = [
   { name: "Resources", path: "/resources", title: "Engineering Study Resources - Curated Courses & Links Across Disciplines" },
   { name: "Utility", path: "/utility", title: "Utility Tools - AI Watermark Remover, BackDrop & More" },
   { name: "About", path: "/about", title: "About Virelity.com - Our Story, Mission & Expert Team" },
+  { name: "Founder", path: "/deonmenezes", title: "Deon Menezes - Founder & CEO of Virelity" },
   { name: "Linktree", path: "/linktree", title: "Deon Menezes Linktree - X, Discord, GitHub, LinkedIn, YouTube" },
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
   { name: "Book", path: "/book", title: "Business in the Age of AI - Book by Deon Menezes", isBook: true },
