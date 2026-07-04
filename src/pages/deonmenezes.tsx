@@ -140,7 +140,7 @@ const DeonMenezes = () => {
                 {/* Social Links - Neobrutalist */}
                 <div className="flex gap-4">
                   {[
-                    { icon: <Globe className="w-5 h-5" />, href: "https://deonmenezes.com", color: colors.gold },
+                    { icon: <Globe className="w-5 h-5" />, href: "/deon", color: colors.gold },
                     { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/deon_tech", color: colors.coral },
                     { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/DeonMen", color: colors.cyan },
                     { icon: <Youtube className="w-5 h-5" />, href: "https://youtube.com/@deonmenezes", color: colors.coral },
@@ -166,7 +166,7 @@ const DeonMenezes = () => {
 
                 {/* Full personal portfolio */}
                 <motion.a
-                  href="https://deonmenezes.com"
+                  href="/deon"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative group inline-block mt-6"
@@ -175,7 +175,7 @@ const DeonMenezes = () => {
                 >
                   <div className="absolute inset-0 translate-x-1 translate-y-1" style={{ backgroundColor: colors.gold }} />
                   <div className="relative bg-black border-2 border-white px-6 py-3 text-white font-black uppercase tracking-wider text-sm flex items-center gap-2 group-hover:text-vision-gold transition-colors">
-                    Full portfolio · deonmenezes.com <ArrowRight className="w-4 h-4" />
+                    Full portfolio · virelity.com/deon <ArrowRight className="w-4 h-4" />
                   </div>
                 </motion.a>
               </motion.div>

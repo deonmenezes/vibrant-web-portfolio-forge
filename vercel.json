@@ -1,7 +1,16 @@
 {
   "rewrites": [
-    { "source": "/((?!.*\\..*).*)", "destination": "/index.html" }
+    {
+      "source": "/deon",
+      "destination": "https://deonmenezes-portfolio.vercel.app/deon"
+    },
+    {
+      "source": "/deon/:path*",
+      "destination": "https://deonmenezes-portfolio.vercel.app/deon/:path*"
+    },
+    {
+      "source": "/((?!.*\\..*).*)",
+      "destination": "/index.html"
+    }
   ]
 }
-
-
