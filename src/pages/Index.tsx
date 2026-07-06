@@ -263,6 +263,8 @@ const NeoServiceCard = ({ service, index }: { service: any; index: number }) => 
           {/* Image */}
           <div className="relative h-48 overflow-hidden">
             <motion.img
+              loading="lazy"
+              decoding="async"
               src={service.image}
               alt={service.title}
               className="w-full h-full object-cover"
@@ -399,6 +401,8 @@ const NeoProjectCard = ({ project, index }: { project: any; index: number }) => 
         <div className="relative bg-black border-4 border-white overflow-hidden">
           <div className="relative h-56 overflow-hidden">
             <motion.img
+              loading="lazy"
+              decoding="async"
               src={project.image}
               alt={project.title}
               className="w-full h-full object-cover"

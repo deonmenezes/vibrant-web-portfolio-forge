@@ -15,10 +15,14 @@ export const GA_MEASUREMENT_ID =
   (import.meta as any).env?.VITE_GA_MEASUREMENT_ID || 'G-0P150KVE0V';
 
 // Initialize Google Analytics
+let gaArmed = false;
 export const initGA = () => {
-  // Defer until the page has fully loaded so analytics stays off the critical path
-  if (document.readyState !== 'complete') {
-    window.addEventListener('load', () => setTimeout(initGA, 3500), { once: true });
+  // Defer until well after load so analytics never competes with app boot
+  if (!gaArmed) {
+    gaArmed = true;
+    const arm = () => setTimeout(initGA, 3500);
+    if (document.readyState === 'complete') arm();
+    else window.addEventListener('load', arm, { once: true });
     return;
   }
 
