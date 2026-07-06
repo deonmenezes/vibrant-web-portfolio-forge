@@ -1,7 +1,7 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PageTransition } from "@/components/PageTransition";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Shield, Lock, Eye, FileText, Mail, Sparkles } from "lucide-react";
 
 const Privacy = () => {

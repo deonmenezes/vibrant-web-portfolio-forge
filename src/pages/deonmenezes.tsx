@@ -1,7 +1,7 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PageTransition } from "@/components/PageTransition";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { m as motion, useScroll, useSpring } from "framer-motion";
 import { Award, BookOpen, Linkedin, Twitter, Mail, Instagram, Youtube, ArrowRight, Zap, Play, Globe } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";

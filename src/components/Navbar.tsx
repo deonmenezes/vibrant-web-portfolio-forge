@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Menu, Calendar, BookOpen, X, Zap } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
 const navItems = [
@@ -236,7 +236,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
               <div className="md:hidden relative">
                 <div className="absolute inset-0 translate-x-1 translate-y-1 bg-vision-gold" />
                 <div className="relative border-2 border-white p-1 bg-black">
-                  <img src="/virelity_favicon.png" alt="Virelity.com" className="h-10 w-10" width="40" height="40" />
+                  <img src="/virelity_favicon.png" alt="Virelity.com" className="h-10 w-10 object-contain" width="40" height="40" />
                 </div>
               </div>
 
@@ -253,7 +253,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                   onMouseLeave={() => setHoveredItem(null)}
                 >
                   {/* <Zap className="w-5 h-5 text-vision-gold" /> */}
-                  <img src="/vireality_navbar.png" alt="Virelity.com" className="h-8" width="auto" height="32" />
+                  <img src="/vireality_navbar.png" alt="Virelity.com" className="h-8 w-auto object-contain" height="32" />
                 </div>
               </div>
             </motion.div>

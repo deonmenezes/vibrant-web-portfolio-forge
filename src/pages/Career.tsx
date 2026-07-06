@@ -2,7 +2,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { PageTransition } from "@/components/PageTransition";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import {
   Dialog,

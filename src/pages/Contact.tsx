@@ -3,7 +3,7 @@ import { Footer } from "../components/Footer";
 import { ContactForm } from "@/components/ContactForm";
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send, Sparkles, Zap, Target, Users, ArrowUpRight } from "lucide-react";
 import { PageTransition } from "@/components/PageTransition";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 // Neobrutalist colors

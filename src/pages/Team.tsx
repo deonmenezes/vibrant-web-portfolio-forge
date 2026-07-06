@@ -4,7 +4,7 @@ import { TeamMemberCard } from "@/components/TeamMemberCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PageTransition } from "@/components/PageTransition";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 
 const Team = () => {
   const teamMembers = [

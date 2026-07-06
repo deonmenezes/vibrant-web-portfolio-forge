@@ -2,7 +2,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   Code,

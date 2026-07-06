@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { m as motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import {
   TrendingUp, Clock, Activity, Cpu, Brain, Layers, ShoppingCart
 } from "lucide-react";

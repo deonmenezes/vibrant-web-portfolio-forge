@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, AnimatePresence, useInView, useTransform, useSpring } from "framer-motion";
+import { m as motion, useScroll, AnimatePresence, useInView, useTransform, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
@@ -12,6 +12,23 @@ import { useBooking } from "@/contexts/BookingContext";
 
 // Lazy load heavy components
 const SplineScene = React.lazy(() => import("@/components/ui/splite").then(m => ({ default: m.SplineScene })));
+
+// renders children (and loads their code) only once scrolled near the viewport
+function NearView({ children, placeholder, className }: { children: React.ReactNode; placeholder?: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) { setShow(true); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { setShow(true); io.disconnect(); }
+    }, { rootMargin: "600px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <div ref={ref} className={className}>{show ? children : placeholder}</div>;
+}
 
 // Infinite scrolling row for services
 const InfiniteScrollRow = ({ services, direction }: { services: any[]; direction: "left" | "right" }) => {
@@ -603,13 +620,13 @@ const testimonialsData = [
     quote: "Partnering with Virelity has been a game-changer! Their strategy and creativity helped me shape my brand in a way that feels authentic and powerful.",
     name: "Suraj Jamani",
     designation: "Producer",
-    src: "/suraj.png",
+    src: "/suraj.jpg",
   },
   {
     quote: "Their team delivered beyond expectations. From concept to launch, the communication and execution were flawless—our KPIs lifted within weeks.",
     name: "Viren Ahuja",
     designation: "Founder",
-    src: "https://media.licdn.com/dms/image/v2/C5103AQHeV2RrANrIOg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1571848243919?e=2147483647&v=beta&t=HUQFymA0JAghCn24ja3cb2l1LXuQVUuZsgRJz-vb3lM",
+    src: "/placeholder.svg",
   },
   {
     quote: "We needed a reliable partner to scale quickly. The solution shipped on time, looked amazing, and performed even better—highly recommended.",
@@ -621,13 +638,13 @@ const testimonialsData = [
     quote: "The attention to detail and user experience thinking really stood out. Our customers love the new interface and conversion is up.",
     name: "Amar Patni",
     designation: "Entrepreneur",
-    src: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+    src: "/placeholder.svg",
   },
   {
     quote: "From day one the process was smooth and collaborative. The final delivery exceeded expectations and helped us move faster.",
     name: "Divya",
     designation: "Marketing Head",
-    src: "https://static.vecteezy.com/system/resources/previews/042/332/098/non_2x/default-avatar-profile-icon-grey-photo-placeholder-female-no-photo-images-for-unfilled-user-profile-greyscale-illustration-for-socail-media-web-vector.jpg",
+    src: "/placeholder.svg",
   },
 ];
 
@@ -637,7 +654,17 @@ const Index = () => {
   const { trackButtonClick } = useAnalyticsEvents();
   const { openBookingDialog } = useBooking();
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [heroVideoOn, setHeroVideoOn] = useState(false);
   const containerRef = useRef(null);
+
+  // fetch the hero video only after the page has finished loading
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout>;
+    const start = () => { t = setTimeout(() => setHeroVideoOn(true), 2500); };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => { clearTimeout(t); window.removeEventListener("load", start); };
+  }, []);
 
   // Refs for sections
   const heroRef = useRef<HTMLDivElement>(null);
@@ -748,7 +775,7 @@ const Index = () => {
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes with adaptive learning paths.",
-      image: "/quizitt.png",
+      image: "/quizitt.jpg",
       tags: ["AI", "EdTech", "React"],
       url: "https://quizitt.com/",
     },
@@ -800,11 +827,11 @@ const Index = () => {
               muted
               loop
               playsInline
+              preload="none"
               className="absolute inset-0 w-full h-full object-cover opacity-60"
-              poster="/virelity_navbar.png"
-            >
-              <source src="/videos/homepage.mp4" type="video/mp4" />
-            </video>
+              poster="/homepage-poster.jpg"
+              src={heroVideoOn ? "/videos/homepage.mp4" : undefined}
+            />
             <div className="absolute inset-0 bg-black/40" />
           </div>
 
@@ -853,8 +880,8 @@ const Index = () => {
 
               {/* Main Headline - Neobrutalist */}
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ y: 50 }}
+                animate={{ y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none mb-6">
@@ -896,14 +923,11 @@ const Index = () => {
               </motion.div>
 
               {/* Description */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7 }}
+              <p
                 className="text-xl md:text-2xl text-white/80 font-medium max-w-2xl mb-10"
               >
                 We build intelligent AI agents, stunning websites, and mobile apps that transform businesses.
-              </motion.p>
+              </p>
 
               {/* CTA Buttons - Neobrutalist */}
               <motion.div
@@ -955,7 +979,7 @@ const Index = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-3">
-                    {["/suraj.png", "/francis.jpg"].map((src, i) => (
+                    {["/suraj.jpg", "/francis.jpg"].map((src, i) => (
                       <div key={i} className="relative">
                         <div className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-vision-gold" />
                         <img
@@ -1221,7 +1245,7 @@ const Index = () => {
                 <div className="relative">
                   <div className="absolute inset-0 translate-x-4 translate-y-4 bg-vision-gold" />
                   <div className="relative border-4 border-white bg-black">
-                    <Suspense fallback={
+                    <NearView className="w-80 h-80 lg:w-[400px] lg:h-[400px]" placeholder={
                       <div className="w-80 h-80 lg:w-[400px] lg:h-[400px] bg-black flex items-center justify-center">
                         <div className="text-center">
                           <motion.div
@@ -1233,11 +1257,13 @@ const Index = () => {
                         </div>
                       </div>
                     }>
-                      <SplineScene
-                        className="w-80 h-80 lg:w-[400px] lg:h-[400px]"
-                        scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                      />
-                    </Suspense>
+                      <Suspense fallback={<div className="w-80 h-80 lg:w-[400px] lg:h-[400px] bg-black" />}>
+                        <SplineScene
+                          className="w-80 h-80 lg:w-[400px] lg:h-[400px]"
+                          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                        />
+                      </Suspense>
+                    </NearView>
                   </div>
                 </div>
               </motion.div>

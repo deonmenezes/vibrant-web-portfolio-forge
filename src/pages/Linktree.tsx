@@ -1,5 +1,5 @@
 import { PageTransition } from "@/components/PageTransition";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { ArrowUpRight, Github, Linkedin, MessageCircle, Twitter, Youtube } from "lucide-react";
 

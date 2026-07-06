@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PageTransition } from "@/components/PageTransition";
 import Example from "../components/image-gallery";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Users,

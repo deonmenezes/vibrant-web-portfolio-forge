@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from "react-helmet-async";
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { m as motion, useScroll, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';

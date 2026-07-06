@@ -16,8 +16,9 @@ export const GA_MEASUREMENT_ID =
 
 // Initialize Google Analytics
 export const initGA = () => {
-  // Check if gtag is already loaded
-  if (typeof window.gtag === 'function') {
+  // Defer until the page has fully loaded so analytics stays off the critical path
+  if (document.readyState !== 'complete') {
+    window.addEventListener('load', () => setTimeout(initGA, 3500), { once: true });
     return;
   }
 

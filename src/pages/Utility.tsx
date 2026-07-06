@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";

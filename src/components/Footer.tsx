@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, Home, Info, Briefcase, MessageSquare, Calendar, Instagram, Linkedin, ArrowRight, ArrowUpRight, Zap, MapPin } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import { m as motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 // Neobrutalist colors

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PageTransition } from "@/components/PageTransition";
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Sparkles, Zap, Globe, Smartphone, Palette, Box } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -274,7 +274,7 @@ const Portfolio = () => {
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes on any topic with adaptive learning paths.",
-      image: "/quizitt.png",
+      image: "/quizitt.jpg",
       tags: ["AI", "EdTech", "React"],
       category: "web",
       url: "https://quizitt.com",

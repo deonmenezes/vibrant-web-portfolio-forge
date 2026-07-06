@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Link } from "react-router-dom"; // ✅ Make sure you're using React Router
 
 interface ServiceCardProps {
