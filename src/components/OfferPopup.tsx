@@ -19,25 +19,11 @@ export const OfferPopup = ({ open, onOpenChange, videoSrc = "/videos/offer-demo.
   const [showPlayButton, setShowPlayButton] = useState(false);
 
   const handleBookDemo = () => {
-    // Track Meta Pixel event
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'Lead', {
-        content_name: 'Website Development Offer',
-        content_category: 'Offer Popup'
-      });
-    }
     onOpenChange(false);
     openBookingDialog();
   };
 
   const handleClaimOffer = () => {
-    // Track Meta Pixel event
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'Lead', {
-        content_name: 'Website Development $20 Offer',
-        content_category: 'Offer Popup - Claim'
-      });
-    }
     onOpenChange(false);
     openBookingDialog();
   };

@@ -90,7 +90,7 @@
     
     <meta name="theme-color" content="#d4af37">
 
-    <!-- Analytics (GTM + GA + Meta Pixel), deferred until after page load to keep the critical path clean -->
+    <!-- Analytics (GTM + GA), deferred until after page load to keep the critical path clean -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -109,16 +109,6 @@
           document.head.appendChild(g);
           gtag('js', new Date());
           gtag('config', 'G-0P150KVE0V');
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1351532439716267');
-          fbq('track', 'PageView');
         }
         function arm() { setTimeout(loadAnalytics, 3500); }
         if (document.readyState === 'complete') arm();
@@ -137,11 +127,6 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
-    <!-- Meta Pixel Code (noscript) -->
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1351532439716267&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code (noscript) -->
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
