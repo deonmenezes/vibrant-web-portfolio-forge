@@ -162,7 +162,7 @@ const NeoToolCard = ({ title, description, image, tags, url, color, index }: {
 const FilterButton = ({ active, onClick, icon: Icon, label, color }: {
   active: boolean;
   onClick: () => void;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   label: string;
   color: string;
 }) => {

@@ -93,7 +93,7 @@ const SocialConnect = () => {
        
       </div>
       
-      <style jsx>{`
+      <style>{`
         .social-icon {
           display: flex;
           flex-direction: column;

@@ -93,7 +93,7 @@ const NeoStatBlock = ({ value, label, color, index }: { value: string; label: st
 };
 
 // Neobrutalist value card
-const NeoValueCard = ({ title, description, icon: Icon, color, index }: { title: string; description: string; icon: any; color: string; index: number }) => {
+const NeoValueCard = ({ title, description, icon: Icon, color, index }: { title: string; description: string; icon: React.ComponentType<{ className?: string }>; color: string; index: number }) => {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });

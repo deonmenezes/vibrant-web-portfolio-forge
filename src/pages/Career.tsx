@@ -37,9 +37,16 @@ import {
   Sparkles
 } from "lucide-react";
 
+interface Position {
+  title: string;
+  location: string;
+  type?: string;
+  description?: string;
+}
+
 const Career = () => {
   const positionsRef = useRef<HTMLDivElement>(null);
-  const [selectedPosition, setSelectedPosition] = useState<any>(null);
+  const [selectedPosition, setSelectedPosition] = useState<Position | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -58,7 +65,7 @@ const Career = () => {
     });
   };
 
-  const handleShare = (position: any) => {
+  const handleShare = (position: Position) => {
     const shareText = `Check out this job opportunity at Virelity.com: ${position.title} - ${position.location}`;
     const shareUrl = window.location.href;
     
@@ -75,7 +82,7 @@ const Career = () => {
     }
   };
 
-  const handleApply = (position: any) => {
+  const handleApply = (position: Position) => {
     setSelectedPosition(position);
     setFormData(prev => ({
       ...prev,

@@ -26,7 +26,7 @@ const ARVRMarketingService = () => {
     
     // Scroll to top on mount
     useEffect(() => {
-        const lenis = (window as any).lenis;
+        const lenis = window.lenis;
         if (lenis && typeof lenis.scrollTo === 'function') {
             lenis.scrollTo(0, { immediate: true });
         } else {
@@ -168,41 +168,44 @@ const ARVRMarketingService = () => {
             description: "Interactive AR experience allowing customers to visualize products in their space",
             video: "/videos/ar-smart-home-demo.gif",
             iconBg: "bg-green-500",
+            icon: "🎯",
         },
         {
             title: "Virtual Showroom",
             description: "Immersive VR showroom for luxury brands to showcase their collections",
             video: "/videos/arservice.mp4",
             iconBg: "bg-purple-500",
+            icon: "🏪",
         },
         {
             title: "Interactive Brand Experience",
             description: "Gamified AR experience that tells brand story through interactive elements",
             video: "/videos/AR.gif",
             iconBg: "bg-blue-500",
+            icon: "✨",
         },
         // XR/AR/VR Experience items merged from xrServices
         
-    { title: "Phygital ARcade", description: "XR/AR/VR Experience", video: "https://github.com/kgediya/ARcade-Racer/raw/main/Preview%20Files/preview1.gif", iconBg: "bg-orange-500" },
-    { title: "3D Product Showcase", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image26.gif", iconBg: "bg-orange-500" },
-    { title: "Festive Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image29.gif", iconBg: "bg-orange-500" },
-    { title: "Branded Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image30.gif", iconBg: "bg-orange-500" },
-    { title: "Rewards Reveal", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image32.gif", iconBg: "bg-orange-500" },
-    { title: "Location Based", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image50.gif", iconBg: "bg-orange-500" },
-    { title: "Product Features Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image41.gif", iconBg: "bg-orange-500" },
-    { title: "Themed Product Showcases", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image43.gif", iconBg: "bg-orange-500" },
-    { title: "Gamified Promotions", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image44.gif", iconBg: "bg-orange-500" },
-    { title: "2 Player Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image45.gif", iconBg: "bg-orange-500" },
-    { title: "Fiction To Reality", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image47.gif", iconBg: "bg-orange-500" },
-    { title: "Launch 360 Zones", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image48.gif", iconBg: "bg-orange-500" },
-    { title: "Educational", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image49.gif", iconBg: "bg-orange-500" },
-    { title: "Try On Engagement", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image51.gif", iconBg: "bg-orange-500" },
-    { title: "Sky Segmentation", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image10.gif", iconBg: "bg-orange-500" },
-    { title: "Novelty Fashion", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image20.gif", iconBg: "bg-orange-500" },
-    { title: "Custom Try On", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image46.gif", iconBg: "bg-orange-500" },
-    { title: "Brand Engagement", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image40.gif", iconBg: "bg-orange-500" },
-    { title: "Themed Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image37.gif", iconBg: "bg-orange-500" },
-    { title: "Product Showcase", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image36.gif", iconBg: "bg-orange-500" },
+    { title: "Phygital ARcade", description: "XR/AR/VR Experience", video: "https://github.com/kgediya/ARcade-Racer/raw/main/Preview%20Files/preview1.gif", iconBg: "bg-orange-500", icon: "🎮" },
+    { title: "3D Product Showcase", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image26.gif", iconBg: "bg-orange-500", icon: "🎁" },
+    { title: "Festive Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image29.gif", iconBg: "bg-orange-500", icon: "🎉" },
+    { title: "Branded Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image30.gif", iconBg: "bg-orange-500", icon: "🎮" },
+    { title: "Rewards Reveal", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image32.gif", iconBg: "bg-orange-500", icon: "🎁" },
+    { title: "Location Based", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image50.gif", iconBg: "bg-orange-500", icon: "📍" },
+    { title: "Product Features Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image41.gif", iconBg: "bg-orange-500", icon: "⭐" },
+    { title: "Themed Product Showcases", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image43.gif", iconBg: "bg-orange-500", icon: "🎨" },
+    { title: "Gamified Promotions", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image44.gif", iconBg: "bg-orange-500", icon: "🏷️" },
+    { title: "2 Player Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image45.gif", iconBg: "bg-orange-500", icon: "👥" },
+    { title: "Fiction To Reality", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image47.gif", iconBg: "bg-orange-500", icon: "🪄" },
+    { title: "Launch 360 Zones", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image48.gif", iconBg: "bg-orange-500", icon: "🌐" },
+    { title: "Educational", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image49.gif", iconBg: "bg-orange-500", icon: "📚" },
+    { title: "Try On Engagement", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image51.gif", iconBg: "bg-orange-500", icon: "👕" },
+    { title: "Sky Segmentation", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image10.gif", iconBg: "bg-orange-500", icon: "☁️" },
+    { title: "Novelty Fashion", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image20.gif", iconBg: "bg-orange-500", icon: "👗" },
+    { title: "Custom Try On", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image46.gif", iconBg: "bg-orange-500", icon: "🧥" },
+    { title: "Brand Engagement", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image40.gif", iconBg: "bg-orange-500", icon: "🤝" },
+    { title: "Themed Games", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image37.gif", iconBg: "bg-orange-500", icon: "🎲" },
+    { title: "Product Showcase", description: "XR/AR/VR Experience", video: "https://www.krazyykrunal.com/assets/workgifs/image36.gif", iconBg: "bg-orange-500", icon: "📦" },
         
     ];
 

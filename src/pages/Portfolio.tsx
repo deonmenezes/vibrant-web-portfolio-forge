@@ -2,11 +2,23 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { PageTransition } from "@/components/PageTransition";
-import { useState, useRef } from "react";
+import { useState, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Sparkles, Zap, Globe, Smartphone, Palette, Box } from "lucide-react";
 import { Link } from "react-router-dom";
+
+interface PortfolioProject {
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+  image?: string;
+  video?: string;
+  tags?: string[];
+  icon?: ReactNode;
+  iconBg?: string;
+}
 
 // Neobrutalist color palette extending gold/black
 const colors = {
@@ -33,7 +45,7 @@ const Marquee = ({ children, reverse = false, speed = 30 }: { children: React.Re
 );
 
 // Neobrutalist Project Card with heavy animations
-const NeoBrutalCard = ({ project, index }: { project: any; index: number }) => {
+const NeoBrutalCard = ({ project, index }: { project: PortfolioProject; index: number }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-100px" });
   const [isHovered, setIsHovered] = useState(false);
@@ -157,7 +169,7 @@ const NeoBrutalCard = ({ project, index }: { project: any; index: number }) => {
 };
 
 // Video Project Card for AR/VR with neobrutalist style
-const NeoVideoCard = ({ project, index }: { project: any; index: number }) => {
+const NeoVideoCard = ({ project, index }: { project: PortfolioProject; index: number }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
   const [isHovered, setIsHovered] = useState(false);
@@ -219,7 +231,7 @@ const NeoVideoCard = ({ project, index }: { project: any; index: number }) => {
 };
 
 // Filter button with neobrutalist style
-const FilterButton = ({ active, onClick, children, color }: any) => (
+const FilterButton = ({ active, onClick, children, color }: { active: boolean; onClick: () => void; children: ReactNode; color?: string }) => (
   <motion.button
     onClick={onClick}
     whileHover={{ scale: 1.05, rotate: active ? 0 : [-1, 1, 0] }}

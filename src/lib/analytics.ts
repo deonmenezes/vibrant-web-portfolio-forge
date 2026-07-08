@@ -1,18 +1,9 @@
 // Google Analytics utility functions
-declare global {
-  interface Window {
-    gtag: (
-      command: 'config' | 'event' | 'js' | 'set',
-      targetId: string | Date,
-      config?: Record<string, unknown>
-    ) => void;
-    dataLayer: unknown[];
-  }
-}
+// Window.gtag and Window.dataLayer are declared in src/vite-env.d.ts
 
 // Prefer env var if provided, fall back to default
 export const GA_MEASUREMENT_ID =
-  (import.meta as any).env?.VITE_GA_MEASUREMENT_ID || 'G-0P150KVE0V';
+  import.meta.env?.VITE_GA_MEASUREMENT_ID || 'G-0P150KVE0V';
 
 // Initialize Google Analytics
 let gaArmed = false;

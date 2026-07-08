@@ -60,14 +60,24 @@ const Services = () => {
       document.head.appendChild(script);
     }
     window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
+    function gtag(...args: unknown[]) {
+      window.dataLayer?.push(args);
     }
     gtag('js', new Date());
     gtag('config', 'G-T8DLRPD9T2');
   }, []);
 
-  const services = [
+  interface Service {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    link: string;
+    bgImage: string;
+    bgVideo?: string;
+    accentColor: string;
+  }
+
+  const services: Service[] = [
     {
       title: "AI Solutions",
       description: "Intelligent automation & AI agents that transform your business operations.",
@@ -161,7 +171,7 @@ const Services = () => {
   ];
 
   // Neobrutalist Service Card
-  const ServiceCard = ({ service, index }: { service: any; index: number }) => {
+  const ServiceCard = ({ service, index }: { service: Service; index: number }) => {
     const cardRef = useRef(null);
     const isInView = useInView(cardRef, { once: true, margin: "-50px" });
     const [isHovered, setIsHovered] = useState(false);

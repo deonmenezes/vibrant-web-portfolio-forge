@@ -40,12 +40,31 @@ const FooterMarquee = () => (
 const NeoLink = ({ href, children, external = false, color = colors.gold }: { href: string; children: React.ReactNode; external?: boolean; color?: string }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const linkProps = external
-    ? { href, target: "_blank", rel: "noopener noreferrer" }
-    : {};
+  const linkContent = (
+    <>
+      <motion.span
+        animate={{ x: isHovered ? 5 : 0 }}
+        transition={{ duration: 0.2 }}
+        className="flex items-center gap-2"
+      >
+        {children}
+      </motion.span>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
+        transition={{ duration: 0.2 }}
+      >
+        <ArrowRight className="w-4 h-4 text-vision-gold" />
+      </motion.div>
+    </>
+  );
 
-  const Wrapper = external ? "a" : Link;
-  const wrapperProps = external ? linkProps : { to: href };
+  const linkClassName = "relative flex items-center gap-2 text-white font-medium hover:text-vision-gold transition-colors py-1";
+  const linkOnClick = () => {
+    if (!external) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
     <motion.div
@@ -53,30 +72,25 @@ const NeoLink = ({ href, children, external = false, color = colors.gold }: { hr
       onHoverEnd={() => setIsHovered(false)}
       className="relative group"
     >
-      <Wrapper
-        {...(wrapperProps as any)}
-        className="relative flex items-center gap-2 text-white font-medium hover:text-vision-gold transition-colors py-1"
-        onClick={() => {
-          if (!external) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }}
-      >
-        <motion.span
-          animate={{ x: isHovered ? 5 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="flex items-center gap-2"
+      {external ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClassName}
+          onClick={linkOnClick}
         >
-          {children}
-        </motion.span>
-        <motion.div
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
-          transition={{ duration: 0.2 }}
+          {linkContent}
+        </a>
+      ) : (
+        <Link
+          to={href}
+          className={linkClassName}
+          onClick={linkOnClick}
         >
-          <ArrowRight className="w-4 h-4 text-vision-gold" />
-        </motion.div>
-      </Wrapper>
+          {linkContent}
+        </Link>
+      )}
       <motion.div
         className="absolute bottom-0 left-0 h-0.5 bg-vision-gold"
         initial={{ width: 0 }}
@@ -88,7 +102,7 @@ const NeoLink = ({ href, children, external = false, color = colors.gold }: { hr
 };
 
 // Social button
-const SocialButton = ({ href, icon: Icon, label, color }: { href: string; icon: any; label: string; color: string }) => {
+const SocialButton = ({ href, icon: Icon, label, color }: { href: string; icon: React.ComponentType<{ className?: string }>; label: string; color: string }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (

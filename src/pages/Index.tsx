@@ -9,6 +9,23 @@ import { useAnalyticsEvents } from "@/hooks/use-analytics";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import React, { useRef, useEffect, useState, Suspense } from "react";
 import { useBooking } from "@/contexts/BookingContext";
+interface ServiceItem {
+  title: string;
+  description: string;
+  icon: React.ReactElement<{ className?: string }>;
+  link: string;
+  image: string;
+  accentColor: string;
+}
+
+interface ProjectItem {
+  title: string;
+  url: string;
+  image: string;
+  description: string;
+  category: string;
+  tags?: string[];
+}
 
 // Lazy load heavy components
 const SplineScene = React.lazy(() => import("@/components/ui/splite").then(m => ({ default: m.SplineScene })));
@@ -31,7 +48,7 @@ function NearView({ children, placeholder, className }: { children: React.ReactN
 }
 
 // Infinite scrolling row for services
-const InfiniteScrollRow = ({ services, direction }: { services: any[]; direction: "left" | "right" }) => {
+const InfiniteScrollRow = ({ services, direction }: { services: ServiceItem[]; direction: "left" | "right" }) => {
   return (
     <div className="overflow-visible">
       <motion.div
@@ -122,7 +139,7 @@ const ScrollIndicator = ({ show }: { show: boolean }) => (
 );
 
 // Neobrutalist animated counter
-const AnimatedCounter = ({ end, duration = 2, suffix = "", prefix = "" }: any) => {
+const AnimatedCounter = ({ end, duration = 2, suffix = "", prefix = "" }: { end: number; duration?: number; suffix?: string; prefix?: string }) => {
   const [count, setCount] = useState(0);
   const counterRef = useRef(null);
   const isInView = useInView(counterRef, { once: true, margin: "-50px" });
@@ -217,7 +234,7 @@ const StatBlock = ({ value, label, color, index }: { value: string; label: strin
 };
 
 // Neobrutalist Service Card
-const NeoServiceCard = ({ service, index }: { service: any; index: number }) => {
+const NeoServiceCard = ({ service, index }: { service: ServiceItem; index: number }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-100px" });
   const [isHovered, setIsHovered] = useState(false);
@@ -340,7 +357,7 @@ const NeoServiceCard = ({ service, index }: { service: any; index: number }) => 
 };
 
 // Neobrutalist Project Card with CRAZY animations
-const NeoProjectCard = ({ project, index }: { project: any; index: number }) => {
+const NeoProjectCard = ({ project, index }: { project: ProjectItem; index: number }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
   const [isHovered, setIsHovered] = useState(false);
@@ -775,13 +792,14 @@ const Index = () => {
     },
   ];
 
-  const featuredProjects = [
+  const featuredProjects: ProjectItem[] = [
     {
       title: "Quizitt",
       description: "AI-powered quiz platform generating personalized quizzes with adaptive learning paths.",
       image: "/quizitt.jpg",
       tags: ["AI", "EdTech", "React"],
       url: "https://quizitt.com/",
+      category: "web",
     },
     {
       title: "CatchPhish",
@@ -789,6 +807,7 @@ const Index = () => {
       image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1000",
       tags: ["Security", "ML"],
       url: "https://catchphish.vercel.app/HomePage",
+      category: "security",
     },
     {
       title: "Casa Shop",
@@ -796,6 +815,7 @@ const Index = () => {
       image: "/casa_logo.png",
       tags: ["E-commerce", "Fashion"],
       url: "https://casashop.in/",
+      category: "e-commerce",
     },
   ];
 

@@ -4,8 +4,13 @@ import { useEffect, useRef } from "react";
  * Global Lenis smooth scroll integration for the whole app.
  * This component should be rendered once at the root (e.g., in App.tsx).
  */
+type LenisInstance = {
+  raf: (time: number) => void;
+  destroy: () => void;
+};
+
 const LenisSmoothScroll = () => {
-  const lenisRef = useRef<any>(null);
+  const lenisRef = useRef<LenisInstance | null>(null);
 
   useEffect(() => {
     let animationFrame: number;
