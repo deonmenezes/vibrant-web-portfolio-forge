@@ -50,7 +50,7 @@ const Bugbounty = () => {
     const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
     useEffect(() => {
-        const lenis = (window as any).lenis;
+        const lenis = window.lenis;
         if (lenis && typeof lenis.scrollTo === 'function') {
             lenis.scrollTo(0, { immediate: true });
         } else {

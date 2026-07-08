@@ -40,7 +40,7 @@ const ContactMarquee = ({ reverse = false }: { reverse?: boolean }) => (
 
 // Neobrutalist contact card
 const NeoContactCard = ({ icon: Icon, title, details, description, color, href, index }: {
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   title: string;
   details: string;
   description: string;
@@ -116,7 +116,7 @@ const NeoContactCard = ({ icon: Icon, title, details, description, color, href, 
 const NeoFAQCard = ({ q, a, icon: Icon, color, index }: {
   q: string;
   a: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   color: string;
   index: number;
 }) => {

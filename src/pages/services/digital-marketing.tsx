@@ -45,7 +45,7 @@ const DigitalMarketingService = () => {
 
     // Scroll to top on mount
     useEffect(() => {
-        const lenis = (window as any).lenis;
+        const lenis = window.lenis;
         if (lenis && typeof lenis.scrollTo === 'function') {
             lenis.scrollTo(0, { immediate: true });
         } else {

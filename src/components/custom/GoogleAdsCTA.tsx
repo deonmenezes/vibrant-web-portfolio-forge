@@ -111,15 +111,15 @@ export const GoogleAdsCTA = () => {
 
   const handleCTAClick = () => {
     // Track conversion for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'conversion', {
         'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
       });
     }
 
     // Track with dataLayer for GTM
-    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({
         'event': 'cta_click',
         'cta_location': 'new_year_sale_banner',
         'cta_text': 'Book Free Strategy Call'
