@@ -187,7 +187,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Visit Us",
-      details: "Mumbai, India",
+      details: "San Francisco Bay Area & Mumbai",
       description: "Get in touch for our exact location",
       color: colors.violet,
       href: "https://maps.app.goo.gl/wHLjQ1UsfPixzmSPA",
@@ -435,8 +435,8 @@ const Contact = () => {
                       <MapPin className="w-7 h-7 text-black" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-black text-white uppercase">Our Location</h3>
-                      <p className="text-white/60 font-medium">Mumbai, India</p>
+                      <h3 className="text-2xl font-black text-white uppercase">Our Locations</h3>
+                      <p className="text-white/60 font-medium">San Francisco Bay Area, USA & Mumbai, India</p>
                     </div>
                   </div>
 

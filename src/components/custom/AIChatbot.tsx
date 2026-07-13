@@ -40,7 +40,7 @@ export const AIChatbot = () => {
       const promptContext = `
         You are an AI assistant for a web development and digital services company called Virelity.com.
         We provide services like web development, mobile app development, UI/UX design, and digital marketing.
-        We're located in Mumbai, India.
+        We're based in the San Francisco Bay Area, USA, with a team in Mumbai, India.
         Our contact email is deonmenezescodes@gmail.com and phone number is +918104796542.
         If someone asks to contact us, provide these details or suggest they use our contact form.
         Always be helpful, professional, and concise in your responses.

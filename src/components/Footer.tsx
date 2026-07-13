@@ -145,6 +145,7 @@ export const Footer = () => {
   ];
 
   const contactInfo = [
+    { icon: MapPin, text: "San Francisco Bay Area, USA", href: "https://www.google.com/maps/place/San+Francisco+Bay+Area" },
     { icon: MapPin, text: "Mumbai, India", href: "https://maps.app.goo.gl/sZanUiqZVm1bJ5rc6" },
     { icon: Phone, text: "+918104796542", href: "tel:+918104796542" },
     { icon: Phone, text: "+919167342135", href: "tel:+919167342135" },

@@ -160,12 +160,20 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
     "url": "https://virelity.com",
     "logo": "https://virelity.com/favicon.png",
     "description": "We build AI Agents that transform businesses",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Mumbai",
-      "addressRegion": "Maharashtra",
-      "addressCountry": "India"
-    },
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "addressLocality": "San Francisco",
+        "addressRegion": "California",
+        "addressCountry": "US"
+      },
+      {
+        "@type": "PostalAddress",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "addressCountry": "India"
+      }
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+918104796542",

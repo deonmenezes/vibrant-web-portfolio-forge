@@ -396,7 +396,7 @@ const Privacy = () => {
                 <div className="space-y-2 text-gray-300">
                   <p><strong className="text-primary">Email:</strong> <a href="mailto:deon.menezes@virelity.com" className="hover:text-primary transition-colors">deon.menezes@virelity.com</a></p>
                   <p><strong className="text-primary">Phone:</strong> +918104796542</p>
-                  <p><strong className="text-primary">Address:</strong> Mumbai, India</p>
+                  <p><strong className="text-primary">Address:</strong> San Francisco Bay Area, USA & Mumbai, India</p>
                 </div>
               </div>
             </motion.div>
