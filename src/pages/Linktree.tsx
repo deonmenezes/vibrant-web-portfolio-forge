@@ -1,7 +1,7 @@
 import { PageTransition } from "@/components/PageTransition";
 import { m as motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { ArrowUpRight, Github, Linkedin, MessageCircle, Twitter, Youtube } from "lucide-react";
+import { ArrowUpRight, Calendar, Github, Linkedin, MessageCircle, Twitter, Youtube } from "lucide-react";
 
 const links = [
   {
@@ -33,6 +33,12 @@ const links = [
     subtitle: "@DeonMenezes",
     href: "https://www.youtube.com/@DeonMenezes",
     icon: Youtube,
+  },
+  {
+    name: "GoElite Webinar",
+    subtitle: "Register now",
+    href: "https://na2.hubs.ly/H06Ld5Q0",
+    icon: Calendar,
   },
 ];
 
