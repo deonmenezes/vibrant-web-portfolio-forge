@@ -37,6 +37,7 @@ const Linktree = lazy(() => import("./pages/Linktree"));
 const Resources = lazy(() => import("./pages/Resources"));
 const PhotoSearchPrompts = lazy(() => import("./pages/PhotoSearchPrompts"));
 const HumanizerPrompts = lazy(() => import("./pages/HumanizerPrompts"));
+const BuildYourOwn = lazy(() => import("./pages/BuildYourOwn"));
 const ResourceBranch = lazy(() => import("./pages/ResourceBranch"));
 const Bugbounty = lazy(() => import("./pages/Bugbounty"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -67,6 +68,7 @@ const AppWithAnalytics = () => {
         <Route path="/resources" element={<Resources />} />
         <Route path="/resources/reverse-image" element={<PhotoSearchPrompts />} />
         <Route path="/resources/humanizer" element={<HumanizerPrompts />} />
+        <Route path="/resources/build-your-own" element={<BuildYourOwn />} />
         <Route path="/reseources" element={<PhotoSearchPrompts />} />
         <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
         <Route path="/bugbounty" element={<Bugbounty />} />
