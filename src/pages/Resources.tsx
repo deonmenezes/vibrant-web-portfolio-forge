@@ -72,6 +72,46 @@ const Resources = () => {
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.22 }}
+            >
+              <Link
+                to="/resources/humanizer"
+                className="group grid overflow-hidden rounded-2xl border border-primary/40 bg-card shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background md:grid-cols-[minmax(320px,0.9fr)_minmax(0,1.1fr)]"
+              >
+                <div className="relative min-h-64 overflow-hidden md:min-h-full">
+                  <img
+                    src="/humanizer-prompts-og.png"
+                    alt="Preview of the AI writing humanizer prompt guide"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent md:bg-gradient-to-r" />
+                </div>
+                <div className="flex flex-col justify-center p-6 md:p-10">
+                  <span className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                    <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                    New creator resource
+                  </span>
+                  <h2 className="mb-4 text-3xl font-bold leading-tight md:text-4xl">
+                    Make AI writing sound more like you
+                  </h2>
+                  <p className="mb-6 max-w-2xl text-muted-foreground">
+                    Seven copyable prompts for natural captions, emails, voice
+                    matching, concise rewrites, and a strong final edit.
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-semibold text-primary transition-all group-hover:gap-3">
+                    Open the humanizer toolkit
+                    <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
+          </section>
+
+          <section className="container mx-auto px-4 mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
             >
               <Link
