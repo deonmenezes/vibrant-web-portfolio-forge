@@ -64,6 +64,7 @@ const AppWithAnalytics = () => {
         <Route path="/deonmenezes" element={<DeonMenezes />} />
         <Route path="/linktree" element={<Linktree />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/resources/reverse-image" element={<PhotoSearchPrompts />} />
         <Route path="/reseources" element={<PhotoSearchPrompts />} />
         <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
         <Route path="/bugbounty" element={<Bugbounty />} />

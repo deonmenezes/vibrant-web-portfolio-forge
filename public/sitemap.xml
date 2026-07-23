@@ -68,6 +68,14 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Resources -->
+  <url>
+    <loc>https://virelity.com/resources/reverse-image</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Service Pages -->
   <url>
     <loc>https://virelity.com/services/ai-solutions</loc>

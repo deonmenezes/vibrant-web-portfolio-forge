@@ -119,14 +119,14 @@ const PhotoSearchPrompts = () => (
         name="description"
         content="Copy five human-sounding ChatGPT prompts to search for possible photos of you online, verify results, request removal, and track follow-ups."
       />
-      <link rel="canonical" href="https://virelity.com/reseources" />
+      <link rel="canonical" href="https://virelity.com/resources/reverse-image" />
       <meta property="og:type" content="website" />
       <meta property="og:title" content="5 ChatGPT Prompts to Find Photos of You Online" />
       <meta
         property="og:description"
         content="A simple, privacy-conscious workflow to find possible photos, verify matches, and request removal."
       />
-      <meta property="og:url" content="https://virelity.com/reseources" />
+      <meta property="og:url" content="https://virelity.com/resources/reverse-image" />
       <meta property="og:image" content="https://virelity.com/photo-search-prompts-og.png" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="5 ChatGPT Prompts to Find Photos of You Online" />
