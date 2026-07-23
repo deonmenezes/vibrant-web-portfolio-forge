@@ -1,4 +1,28 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "deonmenezes.com"
+        }
+      ],
+      "destination": "/deon",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.deonmenezes.com"
+        }
+      ],
+      "destination": "/deon",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/deon",

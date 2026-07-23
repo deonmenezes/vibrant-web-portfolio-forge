@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Menu, Calendar, BookOpen, X, Zap } from "lucide-react";
+import { Menu, Calendar, BookOpen, ChevronDown, X } from "lucide-react";
 import { m as motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
@@ -17,6 +17,14 @@ const navItems = [
   { name: "Contact", path: "/contact", title: "Contact Us - Get in Touch for Free Consultation" },
   { name: "Book", path: "/book", title: "Business in the Age of AI - Book by Deon Menezes", isBook: true },
 ];
+
+const desktopPrimaryItems = navItems.filter(({ name }) =>
+  ["Home", "Services", "Portfolio", "Resources", "About", "Contact"].includes(name)
+);
+
+const desktopMoreItems = navItems.filter(({ name }) =>
+  ["Utility", "Founder", "Linktree", "Book"].includes(name)
+);
 
 type NavbarProps = {
   title?: string;
@@ -227,7 +235,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
         )}
         role="banner"
       >
-        <nav className="container flex items-center justify-between py-3 md:py-4" role="navigation" aria-label="Main Navigation">
+        <nav className="container flex items-center justify-between py-3 md:py-4 lg:py-2.5" role="navigation" aria-label="Main Navigation">
           {/* Logo - Neobrutalist style */}
           <Link
             to="/"
@@ -268,73 +276,82 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
           </Link>
 
           {/* Desktop Navigation - Neobrutalist */}
-          <ul className="hidden lg:flex items-center gap-2" role="menubar">
-            {navItems.map((item, index) => (
-              <li key={item.name} role="none">
-                {item.isBook ? (
+          <ul className="hidden items-center gap-1.5 lg:flex">
+            {desktopPrimaryItems.map((item, index) => (
+              <li key={item.name}>
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  onMouseEnter={() => setHoveredItem(item.name)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className="relative"
+                >
                   <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
-                    whileTap={{ scale: 0.95 }}
-                    className="relative group"
+                    className="absolute inset-0 bg-vision-gold"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: hoveredItem === item.name || location.pathname === item.path ? 1 : 0,
+                      x: hoveredItem === item.name ? 2 : 1,
+                      y: hoveredItem === item.name ? 2 : 1,
+                    }}
+                    transition={{ duration: 0.15 }}
+                  />
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      "relative block border-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 xl:px-4 xl:text-sm",
+                      location.pathname === item.path
+                        ? "border-black bg-vision-gold text-black"
+                        : "border-transparent bg-black text-white hover:border-white"
+                    )}
+                    title={item.title}
+                    aria-current={location.pathname === item.path ? "page" : undefined}
                   >
-                    <div className="absolute inset-0 translate-x-1 translate-y-1 bg-amber-400 transition-all group-hover:translate-x-2 group-hover:translate-y-2" />
-                    <Link
-                      to={item.path}
-                      className={cn(
-                        "relative flex items-center gap-2 px-4 py-2 font-bold uppercase tracking-wider text-sm border-2 border-black bg-black text-amber-400 transition-colors",
-                        location.pathname === item.path && "bg-amber-400 text-black"
-                      )}
-                      role="menuitem"
-                      title={item.title}
-                      aria-current={location.pathname === item.path ? "page" : undefined}
-                    >
-                      <BookOpen className="h-4 w-4" />
-                      <span>Book</span>
-                      <span className="px-2 py-0.5 text-[10px] bg-amber-500 text-black font-black animate-pulse">
-                        NEW
-                      </span>
-                    </Link>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    onMouseEnter={() => setHoveredItem(item.name)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                    className="relative"
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-vision-gold"
-                      initial={{ opacity: 0 }}
-                      animate={{
-                        opacity: hoveredItem === item.name || location.pathname === item.path ? 1 : 0,
-                        x: hoveredItem === item.name ? 2 : 1,
-                        y: hoveredItem === item.name ? 2 : 1,
-                      }}
-                      transition={{ duration: 0.15 }}
-                    />
-                    <Link
-                      to={item.path}
-                      className={cn(
-                        "relative block px-4 py-2 font-bold uppercase tracking-wider text-sm border-2 transition-all duration-200",
-                        location.pathname === item.path
-                          ? "bg-vision-gold text-black border-black"
-                          : "bg-black text-white border-transparent hover:border-white"
-                      )}
-                      role="menuitem"
-                      title={item.title}
-                      aria-current={location.pathname === item.path ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                )}
+                    {item.name}
+                  </Link>
+                </motion.div>
               </li>
             ))}
+            <li>
+              <details
+                key={location.pathname}
+                className="group relative"
+              >
+                <summary
+                  className={cn(
+                    "flex cursor-pointer list-none items-center gap-1 border-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vision-gold [&::-webkit-details-marker]:hidden xl:px-4 xl:text-sm",
+                    desktopMoreItems.some(({ path }) => location.pathname === path)
+                      ? "border-black bg-vision-gold text-black"
+                      : "border-transparent bg-black"
+                  )}
+                >
+                  More
+                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <div className="absolute right-0 top-[calc(100%+0.65rem)] w-52">
+                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
+                  <ul className="relative border-2 border-white bg-black p-2">
+                    {desktopMoreItems.map((item) => (
+                      <li key={item.name}>
+                        <Link
+                          to={item.path}
+                          title={item.title}
+                          aria-current={location.pathname === item.path ? "page" : undefined}
+                          className={cn(
+                            "flex items-center gap-2 px-3 py-2.5 text-sm font-bold uppercase tracking-wider transition-colors hover:bg-vision-gold hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-vision-gold",
+                            location.pathname === item.path ? "bg-vision-gold text-black" : "text-white"
+                          )}
+                        >
+                          {item.isBook ? <BookOpen className="h-4 w-4" aria-hidden="true" /> : null}
+                          {item.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
+            </li>
           </ul>
 
           {/* Desktop CTA Button - Neobrutalist */}
@@ -349,7 +366,7 @@ export const Navbar = ({ title = "Virelity.com - AI Agents that transform busine
                 href="https://wa.me/918104796542?text=Hi%20Virelity!%20%F0%9F%91%8B%0A%0AI'm%20interested%20in%20your%20services%20and%20would%20like%20to%20book%20a%20free%20consultation%20call.%0A%0ALooking%20forward%20to%20hearing%20from%20you!"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative bg-vision-gold hover:bg-vision-gold text-black font-black uppercase tracking-wider px-6 py-5 border-2 border-black rounded-none flex items-center gap-2"
+                className="relative flex items-center gap-2 rounded-none border-2 border-black bg-vision-gold px-4 py-3 text-sm font-black uppercase tracking-wider text-black hover:bg-vision-gold xl:px-5"
                 aria-label="Book a free consultation call via WhatsApp"
               >
                 <Calendar className="h-5 w-5" aria-hidden="true" />
