@@ -35,6 +35,7 @@ const BookPage = lazy(() => import("./pages/book"));
 const DeonMenezes = lazy(() => import("./pages/deonmenezes"));
 const Linktree = lazy(() => import("./pages/Linktree"));
 const Resources = lazy(() => import("./pages/Resources"));
+const PhotoSearchPrompts = lazy(() => import("./pages/PhotoSearchPrompts"));
 const ResourceBranch = lazy(() => import("./pages/ResourceBranch"));
 const Bugbounty = lazy(() => import("./pages/Bugbounty"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -63,6 +64,7 @@ const AppWithAnalytics = () => {
         <Route path="/deonmenezes" element={<DeonMenezes />} />
         <Route path="/linktree" element={<Linktree />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/reseources" element={<PhotoSearchPrompts />} />
         <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
         <Route path="/bugbounty" element={<Bugbounty />} />
         <Route path="/blog" element={<Blog />} />
