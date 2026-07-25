@@ -71,6 +71,7 @@ const AppWithAnalytics = () => {
         <Route path="/resources/humanizer" element={<HumanizerPrompts />} />
         <Route path="/resources/build-your-own" element={<BuildYourOwn />} />
         <Route path="/resources/security" element={<SecurityResources />} />
+        <Route path="/security-resources" element={<SecurityResources />} />
         <Route path="/reseources" element={<PhotoSearchPrompts />} />
         <Route path="/resources/:branchSlug" element={<ResourceBranch />} />
         <Route path="/bugbounty" element={<Bugbounty />} />
