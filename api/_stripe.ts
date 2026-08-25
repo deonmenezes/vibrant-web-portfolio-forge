@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import type { VercelRequest } from "@vercel/node";
-import { SITE_URL } from "../src/data/catalog";
+import { SITE_URL } from "../src/data/catalog.js";
 
 let client: Stripe | undefined;
 

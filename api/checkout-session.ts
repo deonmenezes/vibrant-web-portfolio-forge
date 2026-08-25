@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { errorMessage, getStripe } from "./_stripe";
+import { errorMessage, getStripe } from "./_stripe.js";
 
 /**
  * GET /api/checkout-session?session_id=cs_...

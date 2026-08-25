@@ -8,8 +8,8 @@ import {
   findPackage,
   findService,
   formatUsd,
-} from "../src/data/catalog";
-import { clean, errorMessage, getStripe, isEmail, resolveOrigin } from "./_stripe";
+} from "../src/data/catalog.js";
+import { clean, errorMessage, getStripe, isEmail, resolveOrigin } from "./_stripe.js";
 
 /**
  * POST /api/checkout

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type Stripe from "stripe";
-import { formatUsd } from "../src/data/catalog";
-import { errorMessage, getStripe } from "./_stripe";
+import { formatUsd } from "../src/data/catalog.js";
+import { errorMessage, getStripe } from "./_stripe.js";
 
 /**
  * Stripe needs the exact raw bytes to verify the signature. @vercel/node
