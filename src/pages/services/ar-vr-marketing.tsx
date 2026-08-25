@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { m as motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { CheckoutButton } from '@/components/CheckoutButton';
 import { useBooking } from '@/contexts/BookingContext';
 import {
     Megaphone,
@@ -492,12 +493,17 @@ const ARVRMarketingService = () => {
                                     ))}
                                 </ul>
 
-                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <CheckoutButton
+                                    service="ar-vr-marketing"
+                                    packageName={pkg.name}
+                                    onFallback={openBookingDialog}
+                                    className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                     ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white'
                                     : 'border border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white'
-                                    }`}>
+                                    }`}
+                                >
                                     Get Started
-                                </button>
+                                </CheckoutButton>
                             </motion.div>
                         ))}
                     </div>

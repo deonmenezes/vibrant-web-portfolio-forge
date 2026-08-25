@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { m as motion, useScroll, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { CheckoutButton } from '@/components/CheckoutButton';
 import { Footer } from '@/components/Footer';
 import {
     TrendingUp,
@@ -544,17 +545,17 @@ const DigitalMarketingService = () => {
                                         ))}
                                     </ul>
 
-                                    <a
-                                        href="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20the%20Digital%20Marketing%20package.%20Can%20we%20discuss?"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <CheckoutButton
+                                        service="digital-marketing"
+                                        packageName={pkg.name}
+                                        fallbackHref="https://wa.me/918104796542?text=Hi%20Virelity!%20I'm%20interested%20in%20the%20Digital%20Marketing%20package.%20Can%20we%20discuss?"
                                         className={`w-full px-6 py-4 font-black uppercase text-center border-4 border-black inline-block transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_#000] ${pkg.highlighted
                                             ? 'bg-vision-gold text-black'
                                             : 'bg-black text-white'
                                             }`}
                                     >
                                         Get Started
-                                    </a>
+                                    </CheckoutButton>
                                 </div>
                             </motion.div>
                         ))}

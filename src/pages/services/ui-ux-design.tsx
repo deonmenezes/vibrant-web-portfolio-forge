@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { m as motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
+import { CheckoutButton } from '@/components/CheckoutButton';
 import { useBooking } from '@/contexts/BookingContext';
 import {
     Palette,
@@ -435,12 +436,17 @@ const UIUXDesignService = () => {
                                     ))}
                                 </ul>
 
-                                <button onClick={openBookingDialog} className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
+                                <CheckoutButton
+                                    service="ui-ux-design"
+                                    packageName={pkg.name}
+                                    onFallback={openBookingDialog}
+                                    className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${pkg.highlighted
                                         ? 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white'
                                         : 'border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white'
-                                    }`}>
+                                    }`}
+                                >
                                     Get Started
-                                </button>
+                                </CheckoutButton>
                             </motion.div>
                         ))}
                     </div>

@@ -43,6 +43,8 @@ const ResourceBranch = lazy(() => import("./pages/ResourceBranch"));
 const Bugbounty = lazy(() => import("./pages/Bugbounty"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Gpt55Party = lazy(() => import("./pages/blog/Gpt55Party"));
+const Pay = lazy(() => import("./pages/Pay"));
+const PayResult = lazy(() => import("./pages/PayResult"));
 
 const queryClient = new QueryClient();
 
@@ -78,6 +80,9 @@ const AppWithAnalytics = () => {
         <Route path="/bugbounty" element={<Bugbounty />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/gpt-5-5-party" element={<Gpt55Party />} />
+        <Route path="/pay" element={<Pay />} />
+        <Route path="/pay/success" element={<PayResult />} />
+        <Route path="/pay/cancelled" element={<PayResult />} />
         
         {/* Service Routes */}
         <Route path="/services/web-development" element={<WebDevelopment />} />

@@ -322,6 +322,16 @@ export const Footer = () => {
             {/* Legal Links */}
             <div className="flex flex-wrap justify-center gap-4">
               <motion.div whileHover={{ scale: 1.05 }} className="relative group">
+                <div className="absolute inset-0 translate-x-1 translate-y-1 bg-vision-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Link
+                  to="/pay"
+                  className="relative block px-4 py-2 text-white/70 hover:text-white font-medium text-sm border border-white/20 hover:border-white transition-colors"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                  Pay Invoice
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} className="relative group">
                 <div className="absolute inset-0 translate-x-1 translate-y-1 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Link
                   to="/privacy"
