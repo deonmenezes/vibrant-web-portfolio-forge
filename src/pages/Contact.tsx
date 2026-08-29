@@ -179,8 +179,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Call Us",
-      details: "+918104796542",
-      description: "Mon-Fri from 9am to 6pm",
+      details: "🇮🇳 +91 81047 96542",
+      description: "🇦🇪 +971 56 643 3640 · 🇺🇸 +1 (628) 246-6825",
       color: colors.electric,
       href: "tel:+918104796542",
     },
