@@ -1,6 +1,17 @@
 {
   "redirects": [
     {
+      "source": "/:path((?!api/).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.virelity.com"
+        }
+      ],
+      "destination": "https://virelity.com/:path",
+      "permanent": true
+    },
+    {
       "source": "/",
       "has": [
         {

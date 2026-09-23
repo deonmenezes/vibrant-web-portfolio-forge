@@ -1,0 +1,245 @@
+{
+  "site": {
+    "url": "https://virelity.com",
+    "name": "Virelity",
+    "defaultImage": "https://virelity.com/logo.jpeg",
+    "twitter": "@virelity"
+  },
+  "routes": {
+    "/": {
+      "title": "Virelity | AI Agent Development & Automation Agency",
+      "description": "Virelity builds custom AI agents, chatbots and workflow automation, plus web and mobile apps, for startups and businesses. San Francisco and Mumbai. Book a free call.",
+      "keywords": "AI agent development company, AI automation agency, custom AI agents, AI chatbot development, business process automation, AI consulting, web development agency, mobile app development company, AI agency San Francisco, AI development company Mumbai",
+      "priority": 1.0,
+      "changefreq": "weekly"
+    },
+    "/services": {
+      "title": "AI, Web & Mobile App Development Services | Virelity",
+      "description": "AI agents and chatbots, web development, iOS and Android apps, UI/UX design, VR/AR, 3D, video and digital marketing. Fixed-price packages, pay online.",
+      "keywords": "software development services, AI development services, web and app development agency, custom software company, full service digital agency",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    "/services/ai-solutions": {
+      "title": "AI Agent & Chatbot Development Company | Virelity",
+      "description": "Hire Virelity to build custom AI agents, GPT and Claude chatbots, RAG knowledge bases and workflow automation that cut manual work. Packages from $5,000.",
+      "keywords": "AI agent development company, custom AI agents, AI chatbot development, hire AI developers, LLM integration, RAG development, AI workflow automation, GPT integration services, AI automation agency, generative AI consulting",
+      "service": "AI Agent Development",
+      "priority": 0.9,
+      "changefreq": "monthly"
+    },
+    "/services/web-development": {
+      "title": "Custom Web Development Company | React & Next.js | Virelity",
+      "description": "Fast, SEO-ready websites, e-commerce stores and custom web apps built with React and Next.js. Business websites from $3,500, e-commerce from $8,500.",
+      "keywords": "web development company, custom website development, React development agency, Next.js developers, e-commerce website development, web app development, SaaS development, hire web developers",
+      "service": "Web Development",
+      "priority": 0.9,
+      "changefreq": "monthly"
+    },
+    "/services/mobile-apps": {
+      "title": "iOS & Android App Development Company | Virelity",
+      "description": "Native and cross-platform mobile apps built with SwiftUI, React Native and Flutter, from MVP to App Store launch, subscriptions and AI features included.",
+      "keywords": "mobile app development company, iOS app development, Android app development, React Native developers, Flutter app development, MVP app development, hire app developers, app development agency",
+      "service": "Mobile App Development",
+      "priority": 0.9,
+      "changefreq": "monthly"
+    },
+    "/services/ui-ux-design": {
+      "title": "UI/UX Design Agency for Apps & SaaS | Virelity",
+      "description": "UI/UX design for web apps, SaaS and mobile: research, wireframes, Figma prototypes and design systems that turn visitors into customers.",
+      "keywords": "UI UX design agency, product design services, SaaS UI design, mobile app UI design, Figma design services, website redesign, UX audit",
+      "service": "UI/UX Design",
+      "priority": 0.8,
+      "changefreq": "monthly"
+    },
+    "/services/digital-marketing": {
+      "title": "Digital Marketing Agency: SEO, Ads & Social | Virelity",
+      "description": "SEO, Google Ads, Meta ads, social media and content marketing that grow leads and sales, with AI-driven reporting and creative.",
+      "keywords": "digital marketing agency, SEO services, Google Ads management, PPC agency, social media marketing agency, content marketing, lead generation services",
+      "service": "Digital Marketing",
+      "priority": 0.8,
+      "changefreq": "monthly"
+    },
+    "/services/vr-ar-development": {
+      "title": "VR & AR App Development Company | Virelity",
+      "description": "Virtual and augmented reality apps for Quest, Vision Pro, mobile and WebXR: training simulations, product demos and immersive experiences.",
+      "keywords": "VR development company, AR app development, augmented reality developers, virtual reality app development, WebXR development, Apple Vision Pro app development, Meta Quest development",
+      "service": "VR/AR Development",
+      "priority": 0.8,
+      "changefreq": "monthly"
+    },
+    "/services/ar-vr-marketing": {
+      "title": "AR & VR Marketing Experiences | Virelity",
+      "description": "AR filters, virtual try-ons and immersive VR campaigns that make your brand memorable and shareable.",
+      "keywords": "AR marketing agency, AR filters for brands, virtual try on, immersive marketing, VR marketing campaigns, experiential marketing",
+      "service": "AR/VR Marketing",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/services/3d-development": {
+      "title": "3D Modeling, Animation & WebGL Development | Virelity",
+      "description": "3D modeling, product visualization, animation and interactive Three.js / WebGL experiences for websites, apps and ads.",
+      "keywords": "3D modeling services, 3D product visualization, 3D animation studio, Three.js development, WebGL developers, 3D website design, product rendering",
+      "service": "3D Development",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/services/video-editing": {
+      "title": "Video Editing & Reels Production Services | Virelity",
+      "description": "Short-form reels, YouTube edits, motion graphics and promo videos edited for retention and growth.",
+      "keywords": "video editing services, reels editing, YouTube video editor, short form video editing, motion graphics, promotional video production",
+      "service": "Video Editing",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/services/design-services": {
+      "title": "Logo, Branding & Graphic Design Services | Virelity",
+      "description": "Logo design, brand identity, pitch decks and marketing graphics for startups and growing businesses.",
+      "keywords": "logo design services, branding agency, brand identity design, graphic design services, pitch deck design, startup branding",
+      "service": "Graphic Design & Branding",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/portfolio": {
+      "title": "Portfolio: AI, Web & App Projects | Virelity",
+      "description": "Case studies of AI agents, websites, mobile apps and 3D/VR work Virelity has shipped for startups and brands.",
+      "keywords": "AI projects portfolio, web development portfolio, app development case studies, software agency portfolio",
+      "priority": 0.8,
+      "changefreq": "monthly"
+    },
+    "/about": {
+      "title": "About Virelity | AI & Software Agency, SF and Mumbai",
+      "description": "Virelity is an AI-first software agency founded by Deon Menezes, building AI agents, apps and websites from San Francisco and Mumbai.",
+      "keywords": "about Virelity, AI software agency, Deon Menezes, AI company San Francisco, software company Mumbai",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/team": {
+      "title": "Our Team | Virelity",
+      "description": "Meet the engineers, designers and creators behind Virelity.",
+      "keywords": "Virelity team, AI engineers, software developers, designers",
+      "priority": 0.5,
+      "changefreq": "monthly"
+    },
+    "/contact": {
+      "title": "Contact Virelity | Free AI & Software Consultation",
+      "description": "Tell us about your project and book a free 15-minute call about AI agents, apps or websites. Email, WhatsApp or booking form.",
+      "keywords": "contact Virelity, free AI consultation, hire AI agency, software project quote, app development quote",
+      "priority": 0.8,
+      "changefreq": "monthly"
+    },
+    "/career": {
+      "title": "Careers at Virelity | AI, Software & Design Jobs",
+      "description": "Join Virelity to build AI agents, apps and immersive experiences. Remote-friendly roles in engineering, design and content.",
+      "keywords": "AI jobs, software developer jobs, remote developer jobs, design jobs, internships Mumbai, AI startup careers",
+      "priority": 0.5,
+      "changefreq": "monthly"
+    },
+    "/utility": {
+      "title": "Free AI Tools: Watermark Remover & Text Effects | Virelity",
+      "description": "Free online tools from Virelity, including an AI watermark remover and BackDrop text-behind-image effects.",
+      "keywords": "free AI tools, AI watermark remover, text behind image, backdrop text effect, free online image tools",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    },
+    "/book": {
+      "title": "Business in the Age of AI | Book by Deon Menezes",
+      "description": "Get 'Business in the Age of AI' by Deon Menezes, a practical guide to using AI agents and automation to grow a business.",
+      "keywords": "AI business book, Business in the Age of AI, Deon Menezes book, AI for business guide, AI transformation",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    },
+    "/deonmenezes": {
+      "title": "Deon Menezes | Founder & CEO of Virelity",
+      "description": "Deon Menezes is the founder and CEO of Virelity, creator of MantisHack and an AI builder and creator based in San Francisco.",
+      "keywords": "Deon Menezes, Virelity founder, Virelity CEO, MantisHack creator, deon_tech",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    },
+    "/linktree": {
+      "title": "Deon Menezes Links | X, GitHub, LinkedIn, YouTube",
+      "description": "Find Deon Menezes on X, Discord, GitHub, LinkedIn and YouTube from one page.",
+      "keywords": "Deon Menezes, linktree, social links",
+      "priority": 0.3,
+      "changefreq": "monthly"
+    },
+    "/privacy": {
+      "title": "Privacy Policy | Virelity",
+      "description": "How Virelity collects, uses and protects your information.",
+      "keywords": "Virelity privacy policy",
+      "priority": 0.3,
+      "changefreq": "yearly"
+    },
+    "/pay": {
+      "title": "Pay Virelity | Secure Invoice & Project Payments",
+      "description": "Pay a Virelity invoice, deposit or project milestone securely with card, Apple Pay or Google Pay via Stripe.",
+      "keywords": "pay Virelity invoice",
+      "priority": 0.3,
+      "changefreq": "yearly"
+    },
+    "/pay/success": { "title": "Payment received | Virelity", "description": "Thanks for your payment to Virelity.", "noindex": true },
+    "/pay/cancelled": { "title": "Payment cancelled | Virelity", "description": "Your Virelity payment was cancelled.", "noindex": true },
+    "/resources": {
+      "title": "Free Engineering Resources: Curated Study Hub | Virelity",
+      "description": "Curated engineering study resources across CS, EE, ME, AI/ML, Robotics, Cybersecurity, and XR, sourced from MIT OCW, Stanford, Reddit, GitHub, LinkedIn and more.",
+      "keywords": "free engineering resources, best free courses for engineers, MIT OCW courses, learn AI ML free, cybersecurity learning resources, robotics courses",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    "/resources/reverse-image": {
+      "title": "Find Photos of You Online: 5 ChatGPT Prompts | Deon Menezes",
+      "description": "Copy five human-sounding ChatGPT prompts to search for possible photos of you online, verify results, request removal, and track follow-ups.",
+      "keywords": "find photos of me online, reverse image search yourself, ChatGPT prompts, remove photos from internet",
+      "image": "https://virelity.com/photo-search-prompts-og.png",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/resources/humanizer": {
+      "title": "7 AI Humanizer Prompts That Sound Like You | Deon Menezes",
+      "description": "Copy seven practical prompts to make AI-assisted writing clearer, more natural, and more like your own voice, without inventing facts.",
+      "keywords": "AI humanizer prompts, make AI writing sound human, ChatGPT humanize prompt, humanize AI text",
+      "image": "https://virelity.com/humanizer-prompts-og.png",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/resources/build-your-own": {
+      "title": "Build Your Own X: Learn by Recreating Technology | Virelity",
+      "description": "Hundreds of free tutorials for building databases, operating systems, programming languages, games, AI systems, and more from scratch.",
+      "keywords": "build your own x, build your own database, build your own operating system, programming projects from scratch",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/resources/security-resources": {
+      "title": "Best AI Security Harnesses & Bug Bounty Resources | Virelity",
+      "description": "Explore Strix, MantisHack, Shannon, CAI, PentestGPT, Raptor, defensive scanners, hands-on labs, and responsible vulnerability disclosure resources.",
+      "keywords": "AI pentesting tools, AI security tools, bug bounty resources, PentestGPT alternatives, MantisHack, AI hacking agents",
+      "priority": 0.7,
+      "changefreq": "monthly"
+    },
+    "/resources/security": { "alias": "/resources/security-resources" },
+    "/security-resources": { "alias": "/resources/security-resources" },
+    "/reseources": { "alias": "/resources/reverse-image" },
+    "/bugbounty": {
+      "title": "Bug Bounty Agent: AI Bug Hunting on Autopilot | Virelity",
+      "description": "Bountyhunter is a 7-phase FSM that orchestrates AI agents: recon, parallel hunting, three-round verification, grading, and submission-ready reports. MIT-licensed.",
+      "keywords": "AI bug bounty agent, automated bug hunting, AI pentest agent, bug bounty automation",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    },
+    "/blog": {
+      "title": "Blog | Virelity, Notes from Deon Menezes",
+      "description": "Field notes, launch reels, and developer-room dispatches from Deon Menezes, covering OpenAI, GPT-5.5, AI agents, and the engineering behind shipping them.",
+      "keywords": "AI blog, AI agents blog, Deon Menezes blog, OpenAI events",
+      "priority": 0.7,
+      "changefreq": "weekly"
+    },
+    "/blog/gpt-5-5-party": {
+      "title": "OpenAI GPT-5.5 Party | Virelity",
+      "description": "I went to Sam Altman's GPT-5.5 party: tight security, bubble tea and steak, an OpenAI image-gen photo booth, and Sam signed my MacBook. Full reel and breakdown.",
+      "keywords": "GPT 5.5 party, GPT-5.5 party, OpenAI party, Sam Altman party, OpenAI developers night",
+      "type": "article",
+      "priority": 0.6,
+      "changefreq": "monthly"
+    }
+  }
+}

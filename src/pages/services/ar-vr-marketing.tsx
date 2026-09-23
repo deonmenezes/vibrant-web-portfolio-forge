@@ -215,10 +215,7 @@ const ARVRMarketingService = () => {
     return (
         <div className="min-h-screen bg-background">
             {/* Navbar */}
-            <Navbar
-                title="AR/VR Marketing Services - Virelity.com"
-                description="Revolutionary AR and VR marketing solutions that transform customer engagement and drive conversions through immersive brand experiences."
-            />
+            <Navbar />
 
             {/* Hero Section */}
             <section className="h-screen min-h-[500px] bg-gradient-to-br from-orange-600/10 to-red-600/10 relative overflow-hidden flex items-center justify-center">

@@ -68,7 +68,7 @@ const Pay = () => {
           name="description"
           content="Pay a Virelity invoice, deposit or project milestone securely with card, Apple Pay or Google Pay via Stripe."
         />
-        <link rel="canonical" href="https://www.virelity.com/pay" />
+        <link rel="canonical" href="https://virelity.com/pay" />
       </Helmet>
 
       <Navbar />

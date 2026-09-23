@@ -14,7 +14,7 @@ const EVENT_DATE = "2026-05-06";
 
 const TITLE = "OpenAI GPT-5.5 Party | Virelity";
 const DESCRIPTION =
-  "I went to Sam Altman's GPT-5.5 party — tight security, bubble tea and steak, an OpenAI image-gen photo booth, and Sam signed my MacBook. Full reel + breakdown of the OpenAI developers night.";
+  "I went to Sam Altman's GPT-5.5 party: tight security, bubble tea and steak, an OpenAI image-gen photo booth, and Sam signed my MacBook. Full reel and breakdown.";
 const KEYWORDS = [
   "GPT 5.5 party",
   "GPT-5.5 party",

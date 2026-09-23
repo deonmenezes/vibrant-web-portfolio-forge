@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { m as motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const NotFound = () => {
   const location = useLocation();
@@ -31,6 +32,11 @@ const NotFound = () => {
   const errorText = "404";
   
   return (
+    <>
+      <Helmet>
+        <title>Page not found | Virelity</title>
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
     <div className="min-h-screen flex items-center justify-center bg-black/90 backdrop-blur-3xl overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/5 bg-[size:60px_60px] opacity-20" />
@@ -89,6 +95,7 @@ const NotFound = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

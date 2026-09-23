@@ -10,7 +10,7 @@
  * metadata.slug = <service slug>; they only exist for dashboard reporting.
  */
 
-export const SITE_URL = "https://www.virelity.com";
+export const SITE_URL = "https://virelity.com";
 export const CURRENCY = "usd";
 
 /** Custom / invoice payments must fall inside this range (USD cents). */

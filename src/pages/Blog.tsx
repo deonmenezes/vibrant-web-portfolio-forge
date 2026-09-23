@@ -30,13 +30,13 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog | Virelity — Notes from Deon Menezes</title>
+        <title>Blog | Virelity, Notes from Deon Menezes</title>
         <meta
           name="description"
-          content="Field notes, launch reels, and developer-room dispatches from Deon Menezes — covering OpenAI, GPT-5.5, AI agents, and the engineering behind shipping them."
+          content="Field notes, launch reels, and developer-room dispatches from Deon Menezes, covering OpenAI, GPT-5.5, AI agents, and the engineering behind shipping them."
         />
         <link rel="canonical" href="https://virelity.com/blog" />
-        <meta property="og:title" content="Blog | Virelity — Notes from Deon Menezes" />
+        <meta property="og:title" content="Blog | Virelity, Notes from Deon Menezes" />
         <meta
           property="og:description"
           content="Field notes, launch reels, and developer-room dispatches from Deon Menezes."

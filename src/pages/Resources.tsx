@@ -10,10 +10,10 @@ const Resources = () => {
   return (
     <>
       <Helmet>
-        <title>Engineering Resources — Curated Study Hub | Virelity</title>
+        <title>Free Engineering Resources: Curated Study Hub | Virelity</title>
         <meta
           name="description"
-          content="Curated engineering study resources across CS, EE, ME, AI/ML, Robotics, Cybersecurity, and XR — sourced from MIT OCW, Stanford, Reddit, GitHub, LinkedIn and more."
+          content="Curated engineering study resources across CS, EE, ME, AI/ML, Robotics, Cybersecurity, and XR, sourced from MIT OCW, Stanford, Reddit, GitHub, LinkedIn and more."
         />
       </Helmet>
 

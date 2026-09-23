@@ -57,7 +57,7 @@ const ResourceBranch = () => {
   return (
     <>
       <Helmet>
-        <title>{branch.name} Resources | Virelity Engineering Hub</title>
+        <title>{`Free ${branch.name} Resources & Courses | Virelity`}</title>
         <meta
           name="description"
           content={`${branch.name} study resources: ${branch.tagline}. ${totalLinks}+ curated links across ${branch.topics.length} topics.`}

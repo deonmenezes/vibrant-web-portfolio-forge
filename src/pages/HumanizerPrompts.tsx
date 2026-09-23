@@ -195,7 +195,7 @@ const HumanizerPrompts = () => (
   <main className="min-h-screen bg-[#f7f0e5] font-sans text-[#17211d] selection:bg-[#ffd05b]">
     <Helmet>
       <title>7 AI Humanizer Prompts That Sound Like You | Deon Menezes</title>
-      <meta name="description" content="Copy seven practical prompts to make AI-assisted writing clearer, more natural, and more like your own voice—without inventing facts." />
+      <meta name="description" content="Copy seven practical prompts to make AI-assisted writing clearer, more natural, and more like your own voice, without inventing facts." />
       <link rel="canonical" href="https://virelity.com/resources/humanizer" />
       <meta property="og:type" content="website" />
       <meta property="og:title" content="7 AI Humanizer Prompts That Actually Sound Human" />

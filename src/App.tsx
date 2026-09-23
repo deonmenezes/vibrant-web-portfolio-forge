@@ -27,6 +27,7 @@ const UIUXDesign = lazy(() => import("./pages/services/ui-ux-design"));
 const AISolutions = lazy(() => import("./pages/services/ai-solutions"));
 import LenisSmoothScroll from "./components/LenisSmoothScroll";
 import ScrollToTop from "./components/ScrollToTop";
+import { RouteSEO } from "./components/RouteSEO";
 import { useGoogleAnalytics } from "./hooks/use-analytics";
 import { BookingProvider } from "./contexts/BookingContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -107,6 +108,7 @@ const AppContent = () => {
   return (
     <>
       <ScrollToTop />
+      <RouteSEO />
       <AppWithAnalytics />
       <SpeedInsights></SpeedInsights>
       <Analytics />

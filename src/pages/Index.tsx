@@ -897,7 +897,7 @@ const Index = () => {
                   <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold transition-transform group-hover:translate-x-3 group-hover:translate-y-3" />
                   <div className="relative bg-black border-4 border-white px-6 py-3 flex items-center gap-2">
                     {/* <Zap className="w-5 h-5 text-vision-gold" /> */}
-                    <span className="font-black uppercase tracking-widest text-white text-sm">AI-Powered Agency</span>
+                    <span className="font-black uppercase tracking-widest text-white text-sm">AI Agent Development Agency</span>
                   </div>
                 </div>
               </motion.div>
@@ -950,7 +950,7 @@ const Index = () => {
               <p
                 className="text-xl md:text-2xl text-white/80 font-medium max-w-2xl mb-10"
               >
-                We build intelligent AI agents, stunning websites, and mobile apps that transform businesses.
+                We build custom AI agents, chatbots and automation, plus fast websites and iOS and Android apps, for startups and businesses worldwide.
               </p>
 
               {/* CTA Buttons - Neobrutalist */}

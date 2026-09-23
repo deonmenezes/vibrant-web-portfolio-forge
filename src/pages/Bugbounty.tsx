@@ -123,10 +123,10 @@ const Bugbounty = () => {
     return (
         <PageTransition>
             <Helmet>
-                <title>Bug Bounty Agent — Hunt bugs. Ship reports. On autopilot. | Virelity.com</title>
+                <title>Bug Bounty Agent: AI Bug Hunting on Autopilot | Virelity</title>
                 <meta
                     name="description"
-                    content="Bountyhunter is a 7-phase FSM that orchestrates AI agents — recon, parallel hunting, three-round verification, grading, and submission-ready reports. Neo-brutalist landing page, MIT-licensed framework."
+                    content="Bountyhunter is a 7-phase FSM that orchestrates AI agents: recon, parallel hunting, three-round verification, grading, and submission-ready reports. MIT-licensed."
                 />
                 <link rel="canonical" href="https://virelity.com/bugbounty" />
             </Helmet>
