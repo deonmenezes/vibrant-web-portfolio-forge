@@ -36,6 +36,30 @@
   ],
   "rewrites": [
     {
+      "source": "/viral",
+      "destination": "https://viral-89458c.vercel.app/viral"
+    },
+    {
+      "source": "/viral.css",
+      "destination": "https://viral-89458c.vercel.app/viral.css"
+    },
+    {
+      "source": "/viral.js",
+      "destination": "https://viral-89458c.vercel.app/viral.js"
+    },
+    {
+      "source": "/viral-:file",
+      "destination": "https://viral-89458c.vercel.app/viral-:file"
+    },
+    {
+      "source": "/api/viral",
+      "destination": "https://viral-89458c.vercel.app/api/viral"
+    },
+    {
+      "source": "/api/viral/:path*",
+      "destination": "https://viral-89458c.vercel.app/api/viral/:path*"
+    },
+    {
       "source": "/deon",
       "destination": "https://deonmenezes-portfolio.vercel.app/deon"
     },

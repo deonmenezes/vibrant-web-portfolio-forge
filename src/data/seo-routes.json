@@ -7,9 +7,9 @@
   },
   "routes": {
     "/": {
-      "title": "Virelity | AI Agent Development & Automation Agency",
-      "description": "Virelity builds custom AI agents, chatbots and workflow automation, plus web and mobile apps, for startups and businesses. San Francisco and Mumbai. Book a free call.",
-      "keywords": "AI agent development company, AI automation agency, custom AI agents, AI chatbot development, business process automation, AI consulting, web development agency, mobile app development company, AI agency San Francisco, AI development company Mumbai",
+      "title": "Virelity | AI Transformation Company",
+      "description": "Virelity is an AI transformation company. We find where AI saves your business time and money, build AI agents and automation into your tools, and train your team to use them. Book a free call.",
+      "keywords": "AI transformation company, AI transformation consulting, AI consulting, AI strategy, AI automation agency, custom AI agents, business process automation, AI adoption, AI training for teams",
       "priority": 1.0,
       "changefreq": "weekly"
     },
