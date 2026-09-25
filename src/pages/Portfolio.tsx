@@ -1,767 +1,412 @@
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { Button } from "@/components/ui/button";
-import { PageTransition } from "@/components/PageTransition";
-import { useState, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ArrowUpRight, FileText } from "lucide-react";
+import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
+import { SEOBreadcrumbs } from "@/components/SEOBreadcrumbs";
+import { useAnalyticsEvents } from "@/hooks/use-analytics";
+import { BOOK_CALL_URL } from "@/lib/contact";
 import { cn } from "@/lib/utils";
-import { m as motion, useScroll, useSpring, useInView } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Sparkles, Zap, Globe, Smartphone, Palette, Box } from "lucide-react";
-import { Link } from "react-router-dom";
 
-interface PortfolioProject {
+type Category = "ai" | "web" | "mobile" | "immersive" | "brand";
+
+interface Project {
   title: string;
+  kind: string;
   description: string;
-  category: string;
-  url: string;
+  categories: Category[];
+  tags: string[];
+  url?: string;
   image?: string;
   video?: string;
-  tags?: string[];
-  icon?: ReactNode;
-  iconBg?: string;
 }
 
-// Neobrutalist color palette extending gold/black
-const colors = {
-  gold: "#D4AF37",
-  electric: "#00FF87",
-  coral: "#FF6B6B",
-  violet: "#A855F7",
-  cyan: "#00D4FF",
-  lime: "#BFFF00",
-};
+const featured: Project[] = [
+  {
+    title: "Quizitt",
+    kind: "AI product · Web + mobile",
+    description:
+      "An AI quiz platform that writes personalised quizzes on any topic and adapts the learning path to each student. Shipped on the web and as a React Native app.",
+    categories: ["ai", "web", "mobile"],
+    tags: ["AI", "EdTech", "React Native"],
+    url: "https://quizitt.com",
+    image: "/quizitt.jpg",
+  },
+  {
+    title: "CatchPhish",
+    kind: "AI security tool",
+    description:
+      "Uses AI to check whether a website is a phishing page before you hand it your login.",
+    categories: ["ai", "web"],
+    tags: ["ML", "Security", "React"],
+    url: "https://catchphish.vercel.app/HomePage",
+  },
+];
 
-// Marquee component for infinite scrolling text
-const Marquee = ({ children, reverse = false, speed = 30 }: { children: React.ReactNode; reverse?: boolean; speed?: number }) => (
-  <div className="overflow-hidden whitespace-nowrap">
-    <motion.div
-      animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
-      transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
-      className="inline-flex"
-    >
-      {children}
-      {children}
-    </motion.div>
-  </div>
-);
+const projects: Project[] = [
+  {
+    title: "PetroGo",
+    kind: "Operations platform · Web + mobile",
+    description: "Runs a petrol pump with no paperwork and no Excel, with real-time tracking and analytics.",
+    categories: ["web", "mobile"],
+    tags: ["Automation", "React Native"],
+    image: "/petrol_logo.png",
+  },
+  {
+    title: "Casa",
+    kind: "E-commerce",
+    description: "A fashion store with a Tinder-style swipe for discovering clothes you love.",
+    categories: ["web"],
+    tags: ["E-commerce", "Fashion"],
+    url: "https://casashop.in/",
+    image: "/casa_logo.png",
+  },
+  {
+    title: "Zecurity",
+    kind: "On-demand app",
+    description: "Uber for bodyguards: on-demand personal security from your phone.",
+    categories: ["mobile"],
+    tags: ["Marketplace", "Mobile"],
+    image: "/zec.png",
+  },
+  {
+    title: "6am Mart",
+    kind: "Delivery marketplace",
+    description: "One multi-vendor platform for food, groceries, pharmacy and parcel delivery.",
+    categories: ["web"],
+    tags: ["Marketplace", "Delivery"],
+    image: "/6am.png",
+  },
+  {
+    title: "InnerMech",
+    kind: "Client portal",
+    description: "Project tracking and document handover for a mechanical engineering firm.",
+    categories: ["web"],
+    tags: ["B2B", "TypeScript"],
+    url: "https://clientinermech.vercel.app/",
+    image: "/inermech.png",
+  },
+  {
+    title: "GlobeOx",
+    kind: "Analytics dashboard",
+    description: "Custom dashboards and real-time charts over a client's operational data.",
+    categories: ["web"],
+    tags: ["Data viz", "React"],
+    url: "https://globeox-navinsir.vercel.app/",
+  },
+  {
+    title: "Smooth Tradings",
+    kind: "Trading platform",
+    description: "Account system with social sign-in and secure user management.",
+    categories: ["web"],
+    tags: ["Auth", "Next.js"],
+    url: "https://www.smoothtradings.com/",
+  },
+  {
+    title: "SharePoint Migration",
+    kind: "Enterprise IT",
+    description: "Moved a company's on-premises file server to SharePoint Online.",
+    categories: ["web"],
+    tags: ["Cloud", "Migration"],
+  },
+  {
+    title: "Shopify builds",
+    kind: "E-commerce",
+    description: "Custom Shopify stores with SEO, marketing tools and third-party integrations.",
+    categories: ["web"],
+    tags: ["Shopify", "SEO"],
+  },
+  {
+    title: "Walk The Plank",
+    kind: "VR experience",
+    description: "Walk a plank on the 200th floor of a skyscraper.",
+    categories: ["immersive"],
+    tags: ["VR"],
+    video: "/videos/walkThePlank.mp4",
+  },
+  {
+    title: "Tower Crane Sim",
+    kind: "VR training",
+    description: "Industrial crane-operator training in a safe virtual site.",
+    categories: ["immersive"],
+    tags: ["VR", "Training"],
+    video: "/videos/craneSimulator.mp4",
+  },
+  {
+    title: "Roller Coaster",
+    kind: "VR experience",
+    description: "A full coaster ride from your living room.",
+    categories: ["immersive"],
+    tags: ["VR"],
+    video: "/videos/roller.mp4",
+  },
+  {
+    title: "Suraj Jamani",
+    kind: "Personal brand",
+    description: "Positioning, content plan and storytelling for a founder's LinkedIn and Instagram.",
+    categories: ["brand"],
+    tags: ["Branding", "Strategy"],
+    url: "/suraj-branding.pdf",
+    image: "/suraj.png",
+  },
+];
 
-// Neobrutalist Project Card with heavy animations
-const NeoBrutalCard = ({ project, index }: { project: PortfolioProject; index: number }) => {
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-100px" });
-  const [isHovered, setIsHovered] = useState(false);
+const filters: { id: "all" | Category; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "ai", label: "AI" },
+  { id: "web", label: "Web" },
+  { id: "mobile", label: "Mobile" },
+  { id: "immersive", label: "VR" },
+  { id: "brand", label: "Brand" },
+];
 
-  // Rotation based on index for visual variety
-  const rotations = [-2, 1, -1, 2, -1.5, 1.5, -0.5, 0.5];
-  const rotation = rotations[index % rotations.length];
+const allProjects = [...featured, ...projects];
 
-  // Color accents based on category
-  const categoryColors: Record<string, string> = {
-    web: colors.electric,
-    mobile: colors.coral,
-    branding: colors.violet,
-    "ar-vr": colors.cyan,
-  };
-  const accentColor = categoryColors[project.category] || colors.gold;
+const isPdf = (url?: string) => url?.endsWith(".pdf");
 
-  return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 100, rotate: rotation * 2 }}
-      animate={isInView ? { opacity: 1, y: 0, rotate: rotation } : {}}
-      transition={{
-        duration: 0.8,
-        delay: index * 0.1,
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }}
-      whileHover={{
-        rotate: 0,
-        scale: 1.02,
-        y: -10,
-        transition: { duration: 0.3 }
-      }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className="relative group cursor-pointer"
-    >
-      {/* Shadow layer - neobrutalist offset shadow */}
-      <div
-        className="absolute inset-0 rounded-none translate-x-3 translate-y-3 transition-all duration-300 group-hover:translate-x-4 group-hover:translate-y-4"
-        style={{ backgroundColor: accentColor }}
-      />
+// Plays only while on screen, so a page of VR clips doesn't decode all at once.
+const InViewVideo = ({ src, title }: { src: string; title: string }) => {
+  const ref = useRef<HTMLVideoElement>(null);
 
-      {/* Main card */}
-      <div className="relative bg-black border-4 border-white overflow-hidden">
-        {/* Image container */}
-        <div className="relative h-64 overflow-hidden">
-          {project.video ? (
-            <video
-              src={project.video}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          ) : (
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          )}
-
-          {/* Overlay on hover */}
-          <motion.div
-            className="absolute inset-0 bg-black/60"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-
-          {/* Category badge - neobrutalist style */}
-          <div
-            className="absolute top-4 left-4 px-4 py-2 font-black text-sm uppercase tracking-wider border-2 border-black"
-            style={{ backgroundColor: accentColor, color: "black" }}
-          >
-            {project.category === "ar-vr" ? "AR/VR" : project.category}
-          </div>
-
-          {/* Hover arrow */}
-          <motion.div
-            className="absolute bottom-4 right-4 w-14 h-14 bg-vision-gold flex items-center justify-center border-2 border-black"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{
-              scale: isHovered ? 1 : 0,
-              rotate: isHovered ? 0 : -180
-            }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            <ArrowUpRight className="w-7 h-7 text-black" />
-          </motion.div>
-        </div>
-
-        {/* Content */}
-        <div className="p-6 bg-white text-black">
-          <h3 className="text-2xl font-black uppercase tracking-tight mb-2 leading-tight">
-            {project.title}
-          </h3>
-          <p className="text-gray-700 font-medium leading-relaxed line-clamp-2">
-            {project.description}
-          </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {project.tags?.slice(0, 3).map((tag: string, i: number) => (
-              <span
-                key={i}
-                className="px-3 py-1 text-xs font-bold uppercase bg-black text-white"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-// Video Project Card for AR/VR with neobrutalist style
-const NeoVideoCard = ({ project, index }: { project: PortfolioProject; index: number }) => {
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-50px" });
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100, rotate: index % 2 === 0 ? -5 : 5 }}
-      animate={isInView ? { opacity: 1, x: 0, rotate: 0 } : {}}
-      transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
-      whileHover={{ scale: 1.02 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className="relative group cursor-pointer"
-    >
-      {/* Offset shadow */}
-      <div className="absolute inset-0 translate-x-4 translate-y-4 bg-cyan-400 transition-all duration-300 group-hover:translate-x-5 group-hover:translate-y-5" />
-
-      {/* Main card */}
-      <div className="relative border-4 border-white overflow-hidden aspect-video">
-        <video
-          src={project.video}
-          className="w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-
-        {/* Icon badge */}
-        <div className={`absolute top-4 left-4 w-12 h-12 flex items-center justify-center border-2 border-black ${project.iconBg}`}>
-          {project.icon}
-        </div>
-
-        {/* Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-6">
-          <h3 className="text-3xl font-black text-white uppercase tracking-tight">
-            {project.title}
-          </h3>
-          <p className="text-white/80 font-medium mt-2">
-            {project.description}
-          </p>
-
-          {/* CTA */}
-          <motion.div
-            className="flex items-center gap-2 mt-4 text-vision-gold font-bold"
-            animate={{ x: isHovered ? 10 : 0 }}
-          >
-            <span>EXPERIENCE NOW</span>
-            <ArrowRight className="w-5 h-5" />
-          </motion.div>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-// Filter button with neobrutalist style
-const FilterButton = ({ active, onClick, children, color }: { active: boolean; onClick: () => void; children: ReactNode; color?: string }) => (
-  <motion.button
-    onClick={onClick}
-    whileHover={{ scale: 1.05, rotate: active ? 0 : [-1, 1, 0] }}
-    whileTap={{ scale: 0.95 }}
-    className={cn(
-      "relative px-6 py-3 font-black uppercase tracking-wider text-sm transition-all duration-300 border-4",
-      active
-        ? "bg-vision-gold text-black border-black translate-x-1 translate-y-1"
-        : "bg-white text-black border-black hover:bg-gray-100"
-    )}
-    style={{
-      boxShadow: active ? "none" : `4px 4px 0 ${color || colors.gold}`
-    }}
-  >
-    {children}
-  </motion.button>
-);
-
-// Animated stats counter
-const StatBlock = ({ value, label, color }: { value: string; label: string; color: string }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
+    <video
       ref={ref}
-      initial={{ opacity: 0, y: 50, rotate: -5 }}
-      animate={isInView ? { opacity: 1, y: 0, rotate: 0 } : {}}
-      whileHover={{ rotate: 3, scale: 1.05 }}
-      className="relative group"
-    >
-      <div
-        className="absolute inset-0 translate-x-2 translate-y-2 transition-transform group-hover:translate-x-3 group-hover:translate-y-3"
-        style={{ backgroundColor: color }}
-      />
-      <div className="relative bg-black border-4 border-white p-8 text-center">
-        <div className="text-5xl md:text-6xl font-black text-vision-gold">{value}</div>
-        <div className="text-white font-bold uppercase tracking-wider mt-2">{label}</div>
-      </div>
-    </motion.div>
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label={`${title} preview`}
+      className="h-full w-full object-cover"
+    />
   );
 };
+
+const initials = (title: string) =>
+  title
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("");
+
+const gridPanel =
+  "flex h-full w-full items-center justify-center bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:32px_32px]";
+
+// Logos sit on a white tile inside a dark panel; projects without one get outlined initials, never a stock photo.
+const Media = ({ project, large = false }: { project: Project; large?: boolean }) => {
+  if (project.video) return <InViewVideo src={project.video} title={project.title} />;
+
+  if (project.image) {
+    return (
+      <div className={cn(gridPanel, "p-8")}>
+        <div className="flex h-full max-h-40 w-full max-w-72 items-center justify-center border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#F59E0B] transition-transform duration-300 group-hover:-translate-y-1 md:max-h-56 md:max-w-md">
+          <img
+            src={project.image}
+            alt={`${project.title} logo`}
+            loading="lazy"
+            className="max-h-full max-w-full object-contain"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={gridPanel} aria-hidden="true">
+      <span
+        className={cn(
+          "font-black uppercase leading-none tracking-tight text-transparent transition-colors [-webkit-text-stroke:2px_rgba(255,255,255,0.35)] group-hover:[-webkit-text-stroke:2px_#F59E0B]",
+          large ? "text-[9rem] md:text-[12rem]" : "text-8xl",
+        )}
+      >
+        {initials(project.title)}
+      </span>
+    </div>
+  );
+};
+
+const ProjectLink = ({ project }: { project: Project }) => {
+  if (!project.url) return null;
+  const Icon = isPdf(project.url) ? FileText : ArrowUpRight;
+  return (
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-vision-gold after:absolute after:inset-0 hover:underline"
+    >
+      {isPdf(project.url) ? "Read case study" : "Visit live"} <Icon className="h-4 w-4" aria-hidden="true" />
+    </a>
+  );
+};
+
+const Tags = ({ tags }: { tags: string[] }) => (
+  <ul className="flex flex-wrap gap-2">
+    {tags.map((tag) => (
+      <li key={tag} className="border border-white/15 px-2 py-0.5 text-xs font-semibold text-white/55">
+        {tag}
+      </li>
+    ))}
+  </ul>
+);
+
+const FeaturedCard = ({ project, index }: { project: Project; index: number }) => (
+  <article className="group relative grid border-2 border-white/15 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-white hover:shadow-[8px_8px_0_0_#F59E0B] md:grid-cols-2">
+    <div className={cn("aspect-[16/10] overflow-hidden border-b-2 border-white/15 md:aspect-auto md:min-h-[360px] md:border-b-0", index % 2 ? "md:order-2 md:border-l-2" : "md:border-r-2")}>
+      <Media project={project} large />
+    </div>
+    <div className="flex flex-col justify-center gap-5 p-8 md:p-12">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-vision-gold">{project.kind}</p>
+      <h3 className="text-4xl font-black uppercase leading-none md:text-5xl">{project.title}</h3>
+      <p className="text-lg leading-relaxed text-white/65">{project.description}</p>
+      <Tags tags={project.tags} />
+      {project.url && (
+        <div className="pt-2">
+          <ProjectLink project={project} />
+        </div>
+      )}
+    </div>
+  </article>
+);
+
+const ProjectCard = ({ project }: { project: Project }) => (
+  <article className="group relative flex flex-col border-2 border-white/15 bg-white/[0.02] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-white hover:shadow-[6px_6px_0_0_#F59E0B]">
+    <div className="aspect-[16/10] overflow-hidden border-b-2 border-white/15">
+      <Media project={project} />
+    </div>
+    <div className="flex flex-1 flex-col gap-4 p-6">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/40">{project.kind}</p>
+      <h3 className="text-2xl font-black uppercase leading-none">{project.title}</h3>
+      <p className="flex-1 leading-relaxed text-white/65">{project.description}</p>
+      <Tags tags={project.tags} />
+      {project.url && (
+        <div className="pt-1">
+          <ProjectLink project={project} />
+        </div>
+      )}
+    </div>
+  </article>
+);
 
 const Portfolio = () => {
-  const [filter, setFilter] = useState("all");
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+  const { trackButtonClick } = useAnalyticsEvents();
+  const [filter, setFilter] = useState<(typeof filters)[number]["id"]>("all");
 
-  const projects = [
-    // --- Web Projects ---
-    {
-      title: "Quizitt",
-      description: "AI-powered quiz platform generating personalized quizzes on any topic with adaptive learning paths.",
-      image: "/quizitt.jpg",
-      tags: ["AI", "EdTech", "React"],
-      category: "web",
-      url: "https://quizitt.com",
-    },
-    {
-      title: "Casa",
-      description: "E-commerce fashion platform with Tinder-like swipe experience for discovering clothes you love.",
-      image: "/casa_logo.png",
-      tags: ["E-commerce", "Web", "Fashion"],
-      category: "web",
-      url: "https://casashop.in/",
-    },
-    {
-      title: "PetroGo",
-      description: "The smarter way to manage petrol pumps—no paperwork, no Excel. Complete automation.",
-      image: "/petrol_logo.png",
-      tags: ["Web", "React", "Automation"],
-      category: "web",
-      url: "#",
-    },
-    {
-      title: "CatchPhish",
-      description: "Cybersecurity tool helping users identify phishing websites through AI analysis.",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1000",
-      tags: ["Security", "React", "ML"],
-      category: "web",
-      url: "https://catchphish.vercel.app/HomePage",
-    },
-    {
-      title: "Smooth Tradings",
-      description: "Modern authentication system with seamless social logins and secure user management.",
-      image: "https://www.smoothtradings.com/_next/image?url=%2FclientAntim_logo.png&w=1920&q=75",
-      tags: ["Auth", "React", "NextJS"],
-      category: "web",
-      url: "https://www.smoothtradings.com/",
-    },
-    {
-      title: "InnerMech",
-      description: "Client portal for mechanical engineering firm with project tracking and document management.",
-      image: "/inermech.png",
-      tags: ["B2B", "React", "TypeScript"],
-      category: "web",
-      url: "https://clientinermech.vercel.app/",
-    },
-    {
-      title: "Instagram Clone",
-      description: "Full-featured social media platform replicating Instagram's core functionalities.",
-      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1000",
-      tags: ["Social Media", "NextJS", "Tailwind"],
-      category: "web",
-      url: "https://instagram-internship.vercel.app/Login",
-    },
-    {
-      title: "GlobeOx",
-      description: "Interactive data visualization platform with customizable dashboards and real-time analytics.",
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1000",
-      tags: ["Data Viz", "Analytics", "React"],
-      category: "web",
-      url: "https://globeox-navinsir.vercel.app/",
-    },
-    {
-      title: "Sharepoint Migration",
-      description: "Enterprise data migration from on-premises to modern SharePoint Online environment.",
-      image: "https://binhminhitc.com/images/File-Server-to-SharePoint-Migration-Using-Kernel-Migrator-for-SharePoint.png",
-      tags: ["Enterprise", "Migration", "Cloud"],
-      category: "web",
-      url: "#",
-    },
-    {
-      title: "Zecurity",
-      description: "The 'Uber for Bodyguards' - on-demand personal security at your fingertips.",
-      image: "/zec.png",
-      tags: ["Security", "On-Demand", "Mobile"],
-      category: "web",
-      url: "#",
-    },
-    {
-      title: "Shopify Projects",
-      description: "Custom Shopify solutions with advanced SEO, marketing tools, and integrations.",
-      image: "https://www.trooinbound.com/wp-content/uploads/2023/02/shopify_hero_img-1.png",
-      tags: ["E-commerce", "Shopify", "Custom"],
-      category: "web",
-      url: "#",
-    },
-    {
-      title: "6am Mart",
-      description: "Multi-vendor delivery platform for food, grocery, pharmacy, and parcels.",
-      image: "/6am.png",
-      tags: ["Marketplace", "Delivery", "Multi-vendor"],
-      category: "web",
-      url: "#",
-    },
-    // --- Mobile Projects ---
-    {
-      title: "Quizitt Mobile",
-      description: "Mobile version of Quizitt built with React Native for seamless quiz experience.",
-      image: "/quizit.png",
-      tags: ["Mobile", "React Native", "AI"],
-      category: "mobile",
-      url: "https://quizitt.com",
-    },
-    {
-      title: "PetroGo Mobile",
-      description: "Mobile app for petrol pump management with real-time tracking and analytics.",
-      image: "/petrol_logo.png",
-      tags: ["Mobile", "React Native"],
-      category: "mobile",
-      url: "#",
-    },
-    // --- Branding Project ---
-    {
-      title: "Suraj Jamani",
-      description: "Personal brand development through creative strategy and impactful storytelling.",
-      image: "/suraj.png",
-      tags: ["Branding", "Personal Brand", "Strategy"],
-      category: "branding",
-      url: "/suraj-branding.pdf",
-    },
-    // --- AR/VR PROJECTS ---
-    {
-      title: "Walk The Plank",
-      description: "Experience the thrill of walking the plank on a 200th Storey Building in VR!",
-      video: "/videos/walkThePlank.mp4",
-      iconBg: "bg-blue-500",
-      icon: <Zap className="w-6 h-6 text-white" />,
-      category: "ar-vr",
-      tags: ["VR", "Experience", "Thrill"],
-      url: "#",
-    },
-    {
-      title: "Roller Coaster",
-      description: "Ride a roller coaster in the comfort of your home with our VR simulation.",
-      video: "/videos/roller.mp4",
-      iconBg: "bg-yellow-400",
-      icon: <Sparkles className="w-6 h-6 text-black" />,
-      category: "ar-vr",
-      tags: ["VR", "Simulation", "Entertainment"],
-      url: "#",
-    },
-    {
-      title: "Tower Crane Sim",
-      description: "Industrial-level virtual simulation for crane piloting and training.",
-      video: "/videos/craneSimulator.mp4",
-      iconBg: "bg-red-500",
-      icon: <Box className="w-6 h-6 text-white" />,
-      category: "ar-vr",
-      tags: ["VR", "Industrial", "Training"],
-      url: "#",
-    },
-  ];
-
-  const filteredProjects =
-    filter === "all" ? projects : projects.filter((project) => project.category === filter);
-
-  const categories = [
-    { id: "all", label: "All Work", icon: <Sparkles className="w-4 h-4" />, color: colors.gold },
-    { id: "web", label: "Web", icon: <Globe className="w-4 h-4" />, color: colors.electric },
-    { id: "mobile", label: "Mobile", icon: <Smartphone className="w-4 h-4" />, color: colors.coral },
-    { id: "branding", label: "Branding", icon: <Palette className="w-4 h-4" />, color: colors.violet },
-    { id: "ar-vr", label: "AR/VR", icon: <Box className="w-4 h-4" />, color: colors.cyan },
-  ];
+  const visible = filter === "all" ? projects : allProjects.filter((p) => p.categories.includes(filter));
 
   return (
-    <PageTransition>
-      <div ref={containerRef} className="min-h-screen flex flex-col bg-black overflow-hidden">
-        {/* Progress bar */}
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-2 bg-vision-gold z-50 origin-left"
-          style={{ scaleX }}
-        />
-
+    <>
+      <SEOBreadcrumbs title="Work" />
+      <div className="flex min-h-screen flex-col bg-black text-white">
         <Navbar />
 
-        {/* HERO SECTION - Neobrutalist */}
-        <section className="pt-32 pb-20 relative overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 20px,
-                white 20px,
-                white 22px
-              )`
-            }} />
-          </div>
-
-          {/* Floating shapes */}
-          <motion.div
-            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
-            className="absolute top-20 right-10 w-32 h-32 border-4 border-vision-gold"
-          />
-          <motion.div
-            animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
-            transition={{ duration: 7, repeat: Infinity }}
-            className="absolute bottom-20 left-10 w-24 h-24 bg-cyan-400"
-          />
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="absolute top-40 left-1/4 w-16 h-16 bg-coral-500 rounded-full"
-            style={{ backgroundColor: colors.coral }}
-          />
-
-          <div className="container relative z-10">
-            <div className="max-w-5xl mx-auto text-center">
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-block mb-8"
-              >
-                <div className="relative">
-                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-vision-gold" />
-                  <div className="relative bg-black border-4 border-white px-6 py-3">
-                    <span className="font-black uppercase tracking-widest text-white">Our Work</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Main title with staggered animation */}
-              <motion.h1
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-                className="text-6xl md:text-8xl lg:text-9xl font-black uppercase leading-none mb-6"
-              >
-                <span className="text-white block">PORT</span>
-                <span className="text-vision-gold block">FOLIO</span>
-              </motion.h1>
-
-              {/* Subtitle */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="text-xl md:text-2xl text-white/70 font-medium max-w-2xl mx-auto"
-              >
-                Digital experiences that push boundaries and break conventions.
-              </motion.p>
+        <main className="flex-1">
+          {/* Hero */}
+          <section className="border-b border-white/10 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:64px_64px]">
+            <div className="container pb-20 pt-32 md:pb-24 md:pt-40">
+              <p className="mb-6 inline-flex w-fit items-center gap-2 border-2 border-white/20 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white/70">
+                <span className="h-2 w-2 bg-vision-gold" aria-hidden="true" />
+                Our work
+              </p>
+              <h1 className="max-w-5xl text-5xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+                Built. Shipped. <span className="text-vision-gold">Live.</span>
+              </h1>
+              <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/70 md:text-xl">
+                AI products, platforms and apps we've taken from idea to launch for startups and growing businesses.
+              </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* MARQUEE SECTION */}
-        <section className="py-4 bg-vision-gold border-y-4 border-black overflow-hidden">
-          <Marquee speed={25}>
-            <span className="inline-flex items-center gap-8 px-8 font-black text-2xl text-black uppercase">
-              <span>Web Development</span>
-              <span className="w-3 h-3 bg-black rounded-full" />
-              <span>Mobile Apps</span>
-              <span className="w-3 h-3 bg-black rounded-full" />
-              <span>AR/VR Experiences</span>
-              <span className="w-3 h-3 bg-black rounded-full" />
-              <span>Brand Identity</span>
-              <span className="w-3 h-3 bg-black rounded-full" />
-              <span>UI/UX Design</span>
-              <span className="w-3 h-3 bg-black rounded-full" />
-            </span>
-          </Marquee>
-        </section>
-
-        {/* STATS SECTION */}
-        <section className="py-20 bg-black">
-          <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <StatBlock value="50+" label="Projects" color={colors.electric} />
-              <StatBlock value="98%" label="Satisfaction" color={colors.coral} />
-              <StatBlock value="5+" label="Years" color={colors.violet} />
-              <StatBlock value="24/7" label="Support" color={colors.cyan} />
+          {/* Featured */}
+          <section className="py-24 md:py-32">
+            <div className="container">
+              <div className="mb-14 max-w-2xl">
+                <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-vision-gold">Featured</p>
+                <h2 className="text-4xl font-black uppercase leading-none md:text-6xl">AI in production</h2>
+              </div>
+              <div className="flex flex-col gap-8">
+                {featured.map((project, i) => (
+                  <FeaturedCard key={project.title} project={project} index={i} />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* FILTER SECTION */}
-        <section className="py-12 bg-white border-y-4 border-black">
-          <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              {categories.map((cat, index) => (
-                <motion.div
-                  key={cat.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <FilterButton
-                    active={filter === cat.id}
-                    onClick={() => setFilter(cat.id)}
-                    color={cat.color}
-                  >
-                    <span className="flex items-center gap-2">
-                      {cat.icon}
-                      {cat.label}
-                    </span>
-                  </FilterButton>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* PROJECTS GRID */}
-        <section className="py-20 bg-black">
-          <div className="container">
-            {filter === "ar-vr" ? (
-              // Special layout for AR/VR projects
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-8"
-              >
-                <div className="text-center mb-12">
-                  <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="text-4xl md:text-6xl font-black text-white uppercase"
-                  >
-                    Immersive <span className="text-cyan-400">Experiences</span>
-                  </motion.h2>
+          {/* All work */}
+          <section id="all-work" className="scroll-mt-20 border-t border-white/10 bg-white/[0.02] py-24 md:py-32">
+            <div className="container">
+              <div className="mb-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+                <div className="max-w-2xl">
+                  <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-vision-gold">All work</p>
+                  <h2 className="text-4xl font-black uppercase leading-none md:text-6xl">More projects</h2>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {filteredProjects.map((project, index) => (
-                    project.video && (
-                      <NeoVideoCard key={project.title} project={project} index={index} />
-                    )
+                <div role="tablist" aria-label="Filter projects" className="flex flex-wrap gap-2">
+                  {filters.map((f) => (
+                    <button
+                      key={f.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={filter === f.id}
+                      onClick={() => setFilter(f.id)}
+                      className={cn(
+                        "border-2 px-4 py-2 text-sm font-bold uppercase tracking-wider transition-colors",
+                        filter === f.id
+                          ? "border-vision-gold bg-vision-gold text-black"
+                          : "border-white/20 text-white/70 hover:border-white hover:text-white",
+                      )}
+                    >
+                      {f.label}
+                    </button>
                   ))}
                 </div>
-              </motion.div>
-            ) : filter === "branding" ? (
-              // Special layout for branding
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="max-w-4xl mx-auto">
-                  <motion.div
-                    initial={{ opacity: 0, y: 50, rotate: -2 }}
-                    whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-                    whileHover={{ rotate: 1 }}
-                    className="relative group"
-                  >
-                    <div className="absolute inset-0 translate-x-4 translate-y-4 bg-violet-500 transition-transform group-hover:translate-x-6 group-hover:translate-y-6" />
-                    <div className="relative bg-white border-4 border-black overflow-hidden">
-                      <div className="grid md:grid-cols-2 gap-0">
-                        <div className="h-64 md:h-auto">
-                          <img
-                            src="/suraj.png"
-                            alt="Suraj Jamani"
-                            className="w-full h-full object-contain bg-gray-100 p-8"
-                          />
-                        </div>
-                        <div className="p-8 flex flex-col justify-center">
-                          <span
-                            className="inline-block px-4 py-2 text-xs font-black uppercase tracking-wider mb-4 w-fit"
-                            style={{ backgroundColor: colors.violet, color: "white" }}
-                          >
-                            Case Study
-                          </span>
-                          <h3 className="text-3xl md:text-4xl font-black uppercase mb-4">
-                            Suraj Jamani
-                          </h3>
-                          <p className="text-gray-700 font-medium mb-6">
-                            Personal brand development through creative strategy, content planning, and impactful storytelling across LinkedIn and Instagram.
-                          </p>
-                          <a
-                            href="/suraj-branding.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 font-black uppercase text-vision-gold hover:text-black transition-colors"
-                          >
-                            View Case Study
-                            <ArrowRight className="w-5 h-5" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            ) : (
-              // Default grid layout
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              >
-                {filteredProjects.map((project, index) => {
-                  if (project.category === "ar-vr" && project.video) {
-                    return <NeoVideoCard key={`${project.title}-${index}`} project={project} index={index} />;
-                  }
-                  if (project.category === "branding") {
-                    return null;
-                  }
-                  return <NeoBrutalCard key={`${project.title}-${index}`} project={project} index={index} />;
-                })}
-              </motion.div>
-            )}
-          </div>
-        </section>
+              </div>
 
-        {/* SECOND MARQUEE - Reverse */}
-        <section className="py-4 bg-white border-y-4 border-black overflow-hidden">
-          <Marquee reverse speed={20}>
-            <span className="inline-flex items-center gap-8 px-8 font-black text-2xl text-black uppercase">
-              <span>Let's Build</span>
-              <span className="w-3 h-3 bg-vision-gold rounded-full" />
-              <span>Something</span>
-              <span className="w-3 h-3 bg-vision-gold rounded-full" />
-              <span>Amazing</span>
-              <span className="w-3 h-3 bg-vision-gold rounded-full" />
-              <span>Together</span>
-              <span className="w-3 h-3 bg-vision-gold rounded-full" />
-            </span>
-          </Marquee>
-        </section>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {visible.map((project) => (
+                  <ProjectCard key={project.title} project={project} />
+                ))}
+              </div>
+            </div>
+          </section>
 
-        {/* CTA SECTION - Neobrutalist */}
-        <section className="py-24 bg-vision-gold relative overflow-hidden">
-          {/* Background elements */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-20 -right-20 w-64 h-64 border-8 border-black opacity-20"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-20 -left-20 w-48 h-48 bg-black opacity-10"
-          />
-
-          <div className="container relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-4xl mx-auto"
-            >
-              <h2 className="text-5xl md:text-7xl font-black text-black uppercase mb-6 leading-none">
-                Got a Project?
-                <br />
-                <span className="text-white">Let's Talk.</span>
+          {/* Final CTA */}
+          <section className="container py-24 md:py-32">
+            <div className="border-2 border-black bg-vision-gold px-6 py-16 text-center text-black shadow-[10px_10px_0_0_#fff] md:py-20">
+              <h2 className="mx-auto max-w-3xl text-4xl font-black uppercase leading-none md:text-6xl">
+                Your project next?
               </h2>
-              <p className="text-xl text-black/70 font-medium mb-10 max-w-2xl mx-auto">
-                Ready to create something extraordinary? We're here to turn your vision into reality.
+              <p className="mx-auto mt-6 max-w-xl text-lg font-medium text-black/75">
+                Tell us what's slowing your team down. We'll show you what AI can take off their plate.
               </p>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block"
+              <a
+                href={BOOK_CALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackButtonClick("Book a call", "Portfolio CTA")}
+                className="mt-10 inline-flex items-center gap-2 border-2 border-black bg-black px-8 py-4 font-black uppercase tracking-wider text-white transition-transform hover:-translate-y-0.5"
               >
-                <div className="relative group">
-                  <div className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-x-3 group-hover:translate-y-3" />
-                  <Button
-                    asChild
-                    className="relative bg-white hover:bg-white text-black font-black uppercase tracking-wider px-12 py-8 text-xl border-4 border-black rounded-none"
-                  >
-                    <Link to="/contact">
-                      Start a Project
-                      <ArrowRight className="w-6 h-6 ml-3" />
-                    </Link>
-                  </Button>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+                Book a free call <ArrowRight className="h-5 w-5" />
+              </a>
+            </div>
+          </section>
+        </main>
 
         <Footer />
       </div>
-    </PageTransition>
+    </>
   );
 };
 
